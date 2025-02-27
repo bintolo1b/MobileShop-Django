@@ -53,6 +53,98 @@ header {
     flex-direction: column;
     justify-content: center;
     margin-left: 8px;
+    position: relative;
+}
+
+.item-title:hover {
+    cursor: pointer;
+}
+
+.contact-container {
+    position: absolute;
+    top: 65px;
+    left: 955px;
+    background-color: white;
+    width: 410px;
+    padding: 15px 35px 35px;
+    display: none;
+}
+
+.item-title:hover + .contact-container,
+.contact-container:hover {
+    display: block;
+}
+
+.time-activate-title {
+    border: 2px solid #dc0000;
+    border-radius: 20px;
+    font-size: 7px;
+    padding: 8px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.item-title-1::before {
+    position: absolute;
+    display: block;
+    content: "";
+    top: 35px;
+    left: 0;
+    width: 100%;
+    height: 15px;
+}
+
+.sub-contact-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-title-container {
+    display: flex;
+    font-size: 14px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.contact-box {
+    white-space: normal;
+    margin-top: 10px;  
+    font-size: 14px;
+}
+
+.contact-box i,
+.contact-box .zalo-text,
+.contact-box .contact-phone-number,
+.contact-box .contact-address {
+    display: inline-block;
+    vertical-align: middle; 
+}
+
+.contact-box>i{
+    color: rgb(0, 183, 255);
+}
+
+.zalo-text {
+    color: rgb(0, 183, 255);
+}
+
+.contact-phone-number {
+    color: #eb0101;
+    font-size: 14px;
+}
+
+.contact-address {
+    font-size: 14px;
+}
+
+.url {
+    text-decoration: none;
+    color: rgb(0, 183, 255);
+}
+
+.contact-box p,
+.contact-box a {
+    display: inline; 
 }
 
 .sub1-item-title {
