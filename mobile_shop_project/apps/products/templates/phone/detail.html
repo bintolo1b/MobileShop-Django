@@ -126,17 +126,17 @@
        
         <div class="container">
             <div class="name-product">
-                <h1 class="">VIVO X200 Pro 5G Tặng gói BHV bảo hành cả nguồn, màn hình, vân tay
+                <h1 class="">{{product.name}}
                 </h1>
             </div>
             <div class="product-info">
                 <div class="product">
-                    <img id="main-image" src="{% static 'phone/img/phone1.png'%}" alt="Sản phẩm" class="product-image">
+                    <img id="main-image" src="{{phone_variants.0.img.url}}" alt="Sản phẩm" class="product-image">
                     <div class="image-thumbnails">
-                        <img src="{% static 'phone/img/phone1.png'%}" onclick="changeImage(this.src)">
-                        <img src="{% static 'phone/img/phone2.png'%}" onclick="changeImage(this.src)">
-                        <img src="{% static 'phone/img/phone3.png'%}" onclick="changeImage(this.src)">
-                        <img src="{% static 'phone/img/phone4.png'%}" onclick="changeImage(this.src)">
+                        {%for variant in phone_variants_distinct_color%}
+                            <img src="{{variant.img.url}}" onclick="changeImage(this.src)">
+                        {% endfor %}
+
                     </div>
                     <div class="product-description">
                         <h3 class="rect">Mô tả sản phẩm</h3>
@@ -157,42 +157,34 @@
                     <div class="memory-options">
                         <p class="label_l">Bộ nhớ:</p>
                         <div class="memory-container">
-                            <label for="memory-12" class="box-l">
-                                <input type="radio" id="memory-12" name="memory" value="12GB">
-                                12GB / 256GB 17.650.000₫
-
-                            </label>
-                            <label for="memory-16" class="box-l">
+                            {% for variant in phone_variants_distinct_configuration %}
+                                <label for="memory-12" class="box-l">
+                                    <input type="radio" id="memory-{{variant.configuration.ram}}" name="memory" value="{{variant.configuration.ram}}GB">
+                                    {{variant.configuration.ram}} / {{variant.configuration.rom}}
+                                </label>
+                            {% endfor %}
+                           
+                            {% comment %} <label for="memory-16" class="box-l">
                                 <input type="radio" id="memory-16" name="memory" value="16GB">
-                                16GB / 512GB 20.050.000₫
+                                16GB / 512GB
 
                             </label>
                             <label for="memory-32" class="box-l">
                                 <input type="radio" id="memory-32" name="memory" value="32GB">
-                                16GB / 1TB 22.650.000₫
-                            </label>
+                                16GB / 1TB
+                            </label> {% endcomment %}
                         </div>
                     </div>
                     
                     <div class="color-options">
                         <p class="label_l">Chọn màu:</p>
                         <div class="color-container">
-                            <label for="color-xanh" class="box-l" data-image="{% static 'phone/img/phone4.png'%}">
-                                <input type="radio" id="color-xanh" name="color" value="Xanh">
-                                Xanh 29.950.000₫
-                            </label>
-                            <label for="color-den" class="box-l" data-image="{% static 'phone/img/phone2.png'%}">
-                                <input type="radio" id="color-den" name="color" value="Đen">
-                                Đen 20.050.000₫
-                            </label>
-                            <label for="color-trang" class="box-l" data-image="{% static 'phone/img/phone1.png'%}">
-                                <input type="radio" id="color-trang" name="color" value="Trắng">
-                                Trắng 20.050.000₫
-                            </label>
-                            <label for="color-titanium" class="box-l" data-image="{% static 'phone/img/phone3.png'%}">
-                                <input type="radio" id="color-titanium" name="color" value="Titanium">
-                                Titanium 20.050.000₫
-                            </label>
+                            {% for variant in phone_variants_distinct_color  %}
+                                <label for="color-{{variant.color}}" class="box-l" data-image="{{variant.img.url}}">  
+                                    <input type="radio" id="color-{{variant.color}}" name="color" value="Xanh">
+                                    {{variant.color}}
+                                </label>
+                            {% endfor %}
                         </div>
                     </div>
                     
@@ -296,16 +288,17 @@
                 <div class="specs">
                     <h2 class="title">THÔNG SỐ KĨ THUẬT</h2>
                     <table class="specs-table">
-                        <tr><td><b>Thẻ SIM:</b></td><td>2 SIM, 5G</td></tr>
-                        <tr><td><b>Kiểu thiết kế:</b></td><td>Thanh cảm ứng</td></tr>
-                        <tr><td><b>Màn hình:</b></td><td>6.78 inch LTPO AMOLED, 120Hz</td></tr>
-                        <tr><td><b>Độ phân giải:</b></td><td>1260 x 2800 pixels</td></tr>
-                        <tr><td><b>CPU:</b></td><td>Mediatek Dimensity 9400</td></tr>
-                        <tr><td><b>RAM:</b></td><td>12GB/16GB</td></tr>
-                        <tr><td><b>Bộ nhớ:</b></td><td>256GB/512GB/1TB</td></tr>
-                        <tr><td><b>Camera sau:</b></td><td>50 MP + 200 MP + 50 MP</td></tr>
-                        <tr><td><b>Camera trước:</b></td><td>32 MP</td></tr>
-                        <tr><td><b>Pin:</b></td><td>6000 mAh, 90W sạc nhanh</td></tr>
+                        {% comment %} <tr><td><b>Thẻ SIM:</b></td><td>2 SIM, 5G</td></tr> {% endcomment %}
+                        {% comment %} <tr><td><b>Kiểu thiết kế:</b></td><td>Thanh cảm ứng</td></tr> {% endcomment %}
+                        <tr><td><b>Màn hình:</b></td><td>{{phone.screen}}</td></tr>
+                        <tr><td><b>CPU:</b></td><td>{{phone.cpu}}</td></tr>
+                        <tr><td><b>RAM:</b></td><td>{{phone.ram}}</td></tr>
+                        <tr><td><b>Bộ nhớ:</b></td><td>{{phone.rom}}</td></tr>
+                        <tr><td><b>Camera sau:</b></td><td>{{phone.back_camera}}</td></tr>
+                        <tr><td><b>Camera trước:</b></td><td>{{phone.front_camera}}</td></tr>
+                        <tr><td><b>Pin:</b></td><td>{{phone.battery}}</td></tr>
+                        <tr><td><b>Sạc:</b></td><td>{{phone.charger}}</td></tr>
+                        <tr><td><b>Loa:</b></td><td>{{phone.speaker}}</td></tr>
                     </table>
                     <button class="btn-info" id="btn-info-ev">Xem thêm thông tin</button>
                 </div>
@@ -313,7 +306,8 @@
                 <div class="video-section">
                     <h2 class="title">VIDEO SẢN PHẨM</h2>
                     <div class="video-container">
-                        <iframe width="100%" height="375" src="https://www.youtube.com/embed/mKVJ2ii1Soc"" frameborder="0" allowfullscreen></iframe>
+                        <iframe width="100%" height="375" src="https://www.youtube.com/embed/mKVJ2ii1Soc" frameborder="0" allowfullscreen>
+                        </iframe>
                     </div>
                 </div>
             </div>
@@ -520,6 +514,7 @@
                 let selectedLabel = this.closest('label');
                 let newImage = selectedLabel.getAttribute('data-image'); 
                 document.getElementById("main-image").src = newImage;
+                console.log(newImage)
             });
             });
         </script>

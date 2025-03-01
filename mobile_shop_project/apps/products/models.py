@@ -27,7 +27,7 @@ class Phone(Product):
     rom = models.TextField(blank=True)
     ram = models.TextField(blank=True)
     front_camera = models.TextField(blank=True)
-    back_cammera = models.TextField(blank=True)
+    back_camera = models.TextField(blank=True)
     battery = models.TextField(blank=True)
     charger = models.TextField(blank=True)
     speaker = models.TextField(blank=True)
