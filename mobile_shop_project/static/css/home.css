@@ -432,7 +432,7 @@ select option {
     content: '';
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('/static/img/iphone-16-pro---titan-tự-nhiên_1726075065.png');
+    background-image: url(/static/img/hot_icon.png);
 }
 
 .product-title {
@@ -500,6 +500,7 @@ select option {
 .product-item-name {
     font-size: 13px;
     font-weight: bold;
+    text-align: center;
 }
 
 .product-item-price {
