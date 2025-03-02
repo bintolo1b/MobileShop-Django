@@ -410,7 +410,7 @@ select option {
     background-color: #dd0000;
     border-radius: 10px;
     margin-left: 5px;
-    padding: 15px 15px 5px;
+    padding: 15px 15px 5px 5px;
 }
 
 .product-forehead {
@@ -476,6 +476,7 @@ select option {
     margin-bottom: 15px;
     align-items: center;
     width: calc(19% - 8px);
+    height: 285px;
     position: relative;
 }
 
@@ -648,33 +649,51 @@ select option {
     position: relative;
 }
 
-.chevron-left-container,
-.chevron-right-container {
-    padding: 10px;
-    border: 1px solid #b3b3b3;
-    background-color: white;
-    border-radius: 5px;
-    display: none;
+.products-details-container {
+    display: flex;
+    width: 100%;
+    overflow: hidden; /* Ẩn nội dung thừa */
+    position: relative;
 }
 
-.chevron-left-container {
-    position: absolute;
-    top: 50%;
-    left: 12px;
-    transform: translateY(calc(-50% - 5px));
+.product-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Sản phẩm canh trái */
+    width: 100%; /* Đảm bảo mỗi trang chiếm toàn bộ chiều rộng */
+    transition: transform 0.5s ease-in-out; /* Hiệu ứng trượt */
+    flex-shrink: 0; /* Không cho các trang co lại */
 }
 
-.chevron-right-container {
-    position: absolute;
-    top: 50%;
-    right: 22px;
-    transform: translateY(calc(-50% - 5px));
+.products-slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out; /* Áp dụng hiệu ứng trượt cho toàn bộ slider */
+    width: 100%; /* Mỗi lần trượt đúng 100% chiều rộng */
 }
 
-.products-details-container:hover .chevron-left-container,
-.products-details-container:hover .chevron-right-container {
-    display: block;
-}
+    .chevron-left-container,
+    .chevron-right-container {
+        padding: 10px;
+        border: 1px solid #b3b3b3;
+        background-color: white;
+        border-radius: 5px;
+        display: none;
+        cursor: pointer;
+    }
+
+    .chevron-left-container {
+        position: absolute;
+        top: 50%;
+        left: 12px;
+        transform: translateY(calc(-50% - 5px));
+    }
+
+    .chevron-right-container {
+        position: absolute;
+        top: 50%;
+        right: 22px;
+        transform: translateY(calc(-50% - 5px));
+    }
 
 footer {
     background-color: #f6f6f6;
