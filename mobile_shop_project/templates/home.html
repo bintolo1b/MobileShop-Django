@@ -305,7 +305,7 @@
                
                 <div class="product-items-list">
                     {% for phone in top_phones  %}
-                        <div class="product-item">
+                        <div class="product-item" data-id="{{ phone.id }}">
                             <img src="/media/{{ phone.img }}" alt="" class="product-item-img">
                             <span class="product-item-note">Đã Unlock Sim</span>
                             <div class="product-item-sale">
@@ -355,7 +355,7 @@
             </div>
             <div class="products-details-container">
                 {% for phone in top_iPhone_phones %}
-                    <div class="product-item">
+                    <div class="product-item" data-id="{{ phone.id }}">
                         <img src="/media/{{phone.img}}" alt="" class="product-item-img">
                         <span class="product-item-note">Đã Unlock Sim</span>
                         <div class="product-item-sale">
@@ -398,7 +398,7 @@
             </div>
             <div class="products-details-container">
                 {% for phone in top_Realme_phones  %}
-                    <div class="product-item">
+                    <div class="product-item" data-id="{{ phone.id }}">
                         <img src="/media/{{phone.img}}" alt="" class="product-item-img">
                         <span class="product-item-note">Đã Unlock Sim</span>
                         <div class="product-item-sale">
@@ -435,7 +435,7 @@
                 </div>
             </div>
         </div>
-        <div class="products-details">
+        {% comment %} <div class="products-details">
             <div class="product-details-forehead">
                 <div class="product-details-title">
                     <div class="product-details-label">
@@ -734,7 +734,7 @@
                     <i class="fa-solid fa-chevron-right"></i>
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
         <div class="products-details">
             <div class="product-details-forehead">
                 <div class="product-details-title">
@@ -758,7 +758,7 @@
             </div>
             <div class="products-details-container">
                 {% for phone in top_Xiaomi_phones %}
-                    <div class="product-item">
+                    <div class="product-item" data-id="{{ phone.id }}">
                         <img src="/media/{{phone.img}}" alt="" class="product-item-img">
                         <span class="product-item-note">Đã Unlock Sim</span>
                         <div class="product-item-sale">
@@ -905,6 +905,15 @@
         });
 
         autoSlide(); 
+    });
+
+    document.querySelectorAll('.product-item').forEach(item => {
+        item.addEventListener('click', function () {
+            const phoneId = this.getAttribute('data-id');
+            if (phoneId) {
+                window.location.href = `/products/phone/${phoneId}`;
+            }
+        });
     });
     </script>
 </body>
