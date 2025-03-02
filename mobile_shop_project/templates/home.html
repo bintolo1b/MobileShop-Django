@@ -303,36 +303,53 @@
                     </div>
                 </div>
                
-                <div class="product-items-list">
-                    {% for phone in top_phones  %}
-                        <div class="product-item">
-                            <img src="/media/{{ phone.img }}" alt="" class="product-item-img">
-                            <span class="product-item-note">Đã Unlock Sim</span>
-                            <div class="product-item-sale">
-                                <i class="fa-solid fa-fire"></i>
-                                <span class="product-item-sale-text">Giảm</span>
-                                <span class="product-item-sale-amount">1.000.000đ</span>
-                            </div>
-                            <span class="product-item-name">{{phone.name}}</span>
-                            <div class="product-item-price">
-                                <span class="product-item-new-price">{{phone.price}}</span>
-                                <span class="product-item-old-price">9.750.0000đ</span>
-                            </div>
-                            <div class="product-item-vote">
-                                <div class="product-item-stars">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
+                <div class="products-details-container">
+                    <div class="products-slider">
+                        {% for phone in top_phones %}
+                            {% if forloop.counter0|divisibleby:10 %}
+                                <div class="product-page">
+                            {% endif %}
+                
+                            <div class="product-item">
+                                <img src="/media/{{ phone.img }}" alt="" class="product-item-img">
+                                <span class="product-item-note">Đã Unlock Sim</span>
+                                <div class="product-item-sale">
+                                    <i class="fa-solid fa-fire"></i>
+                                    <span class="product-item-sale-text">Giảm</span>
+                                    <span class="product-item-sale-amount">1.000.000đ</span>
                                 </div>
-                                <div class="product-item-vote-number">
-                                    <span>{{phone.sold_quantity}}</span>
-                                    <span> lượt bán</span>
+                                <span class="product-item-name">{{ phone.name }}</span>
+                                <div class="product-item-price">
+                                    <span class="product-item-new-price">{{ phone.price }}</span>
+                                    <span class="product-item-old-price">9.750.000đ</span>
+                                </div>
+                                <div class="product-item-vote">
+                                    <div class="product-item-stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <div class="product-item-vote-number">
+                                        <span>{{ phone.sold_quantity }}</span>
+                                        <span>Lượt bán</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                
+                            {% if forloop.counter|divisibleby:10 or forloop.last %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                
+                    <div class="chevron-left-container">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="chevron-right-container">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
                 </div>
         </div>
         <div class="products-details">
@@ -354,37 +371,53 @@
                 </div>
             </div>
             <div class="products-details-container">
-                {% for phone in top_iPhone_phones %}
-                    <div class="product-item">
-                        <img src="/media/{{phone.img}}" alt="" class="product-item-img">
-                        <span class="product-item-note">Đã Unlock Sim</span>
-                        <div class="product-item-sale">
-                            <i class="fa-solid fa-fire"></i>
-                            <span class="product-item-sale-text">Giảm</span>
-                            <span class="product-item-sale-amount">1.000.000đ</span>
-                        </div>
-                        <span class="product-item-name">{{phone.name}}</span>
-                        <div class="product-item-price">
-                            <span class="product-item-new-price">{{phone.price}}</span>
-                            <span class="product-item-old-price">9.750.0000đ</span>
-                        </div>
-                        <div class="product-item-vote">
-                            <div class="product-item-stars">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
+                <div class="products-slider">
+                    {% for phone in top_iPhone_phones %}
+                        {% if forloop.counter0|divisibleby:10 %}
+                            <div class="product-page">
+                        {% endif %}
+            
+                        <div class="product-item">
+                            <img src="/media/{{ phone.img }}" alt="" class="product-item-img">
+                            <span class="product-item-note">Đã Unlock Sim</span>
+                            <div class="product-item-sale">
+                                <i class="fa-solid fa-fire"></i>
+                                <span class="product-item-sale-text">Giảm</span>
+                                <span class="product-item-sale-amount">1.000.000đ</span>
                             </div>
-                            <div class="product-item-vote-number">
-                                <span>{{phone.sold_quantity}}</span>
-                                <span>lượt bán</span>
+                            <span class="product-item-name">{{ phone.name }}</span>
+                            <div class="product-item-price">
+                                <span class="product-item-new-price">{{ phone.price }}</span>
+                                <span class="product-item-old-price">9.750.000đ</span>
+                            </div>
+                            <div class="product-item-vote">
+                                <div class="product-item-stars">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="product-item-vote-number">
+                                    <span>{{ phone.sold_quantity }}</span>
+                                    <span>Lượt bán</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-        
-        </div>
+            
+                        {% if forloop.counter|divisibleby:10 or forloop.last %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            
+                <div class="chevron-left-container">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="chevron-right-container">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
         </div>
         <div class="products-details">
             <div class="product-details-forehead">
@@ -397,36 +430,46 @@
                 </div>
             </div>
             <div class="products-details-container">
-                {% for phone in top_Realme_phones  %}
-                    <div class="product-item">
-                        <img src="/media/{{phone.img}}" alt="" class="product-item-img">
-                        <span class="product-item-note">Đã Unlock Sim</span>
-                        <div class="product-item-sale">
-                            <i class="fa-solid fa-fire"></i>
-                            <span class="product-item-sale-text">Giảm</span>
-                            <span class="product-item-sale-amount">1.000.000đ</span>
-                        </div>
-                        <span class="product-item-name">{{phone.name}}</span>
-                        <div class="product-item-price">
-                            <span class="product-item-new-price">{{phone.price}}</span>
-                            <span class="product-item-old-price">9.750.0000đ</span>
-                        </div>
-                        <div class="product-item-vote">
-                            <div class="product-item-stars">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
+                <div class="products-slider">
+                    {% for phone in top_Realme_phones %}
+                        {% if forloop.counter0|divisibleby:10 %}
+                            <div class="product-page">
+                        {% endif %}
+            
+                        <div class="product-item">
+                            <img src="/media/{{ phone.img }}" alt="" class="product-item-img">
+                            <span class="product-item-note">Đã Unlock Sim</span>
+                            <div class="product-item-sale">
+                                <i class="fa-solid fa-fire"></i>
+                                <span class="product-item-sale-text">Giảm</span>
+                                <span class="product-item-sale-amount">1.000.000đ</span>
                             </div>
-                            <div class="product-item-vote-number">
-                                <span>{{phone.sold_quantity}}</span>
-                                <span>Lượt bán</span>
+                            <span class="product-item-name">{{ phone.name }}</span>
+                            <div class="product-item-price">
+                                <span class="product-item-new-price">{{ phone.price }}</span>
+                                <span class="product-item-old-price">9.750.000đ</span>
+                            </div>
+                            <div class="product-item-vote">
+                                <div class="product-item-stars">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="product-item-vote-number">
+                                    <span>{{ phone.sold_quantity }}</span>
+                                    <span>Lượt bán</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-                
+            
+                        {% if forloop.counter|divisibleby:10 or forloop.last %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            
                 <div class="chevron-left-container">
                     <i class="fa-solid fa-chevron-left"></i>
                 </div>
@@ -434,6 +477,7 @@
                     <i class="fa-solid fa-chevron-right"></i>
                 </div>
             </div>
+            
         </div>
         <div class="products-details">
             <div class="product-details-forehead">
@@ -757,36 +801,46 @@
                 </div>
             </div>
             <div class="products-details-container">
-                {% for phone in top_Xiaomi_phones %}
-                    <div class="product-item">
-                        <img src="/media/{{phone.img}}" alt="" class="product-item-img">
-                        <span class="product-item-note">Đã Unlock Sim</span>
-                        <div class="product-item-sale">
-                            <i class="fa-solid fa-fire"></i>
-                            <span class="product-item-sale-text">Giảm</span>
-                            <span class="product-item-sale-amount">1.000.000đ</span>
-                        </div>
-                        <span class="product-item-name">{{phone.name}}</span>
-                        <div class="product-item-price">
-                            <span class="product-item-new-price">{{phone.price}}</span>
-                            <span class="product-item-old-price">9.750.0000đ</span>
-                        </div>
-                        <div class="product-item-vote">
-                            <div class="product-item-stars">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
+                <div class="products-slider">
+                    {% for phone in top_Xiaomi_phones %}
+                        {% if forloop.counter0|divisibleby:10 %}
+                            <div class="product-page">
+                        {% endif %}
+            
+                        <div class="product-item">
+                            <img src="/media/{{ phone.img }}" alt="" class="product-item-img">
+                            <span class="product-item-note">Đã Unlock Sim</span>
+                            <div class="product-item-sale">
+                                <i class="fa-solid fa-fire"></i>
+                                <span class="product-item-sale-text">Giảm</span>
+                                <span class="product-item-sale-amount">1.000.000đ</span>
                             </div>
-                            <div class="product-item-vote-number">
-                                <span>{{phone.sold_quantity}}</span>
-                                <span>lượt bán</span>
+                            <span class="product-item-name">{{ phone.name }}</span>
+                            <div class="product-item-price">
+                                <span class="product-item-new-price">{{ phone.price }}</span>
+                                <span class="product-item-old-price">9.750.000đ</span>
+                            </div>
+                            <div class="product-item-vote">
+                                <div class="product-item-stars">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="product-item-vote-number">
+                                    <span>{{ phone.sold_quantity }}</span>
+                                    <span>Lượt bán</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-              
+            
+                        {% if forloop.counter|divisibleby:10 or forloop.last %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            
                 <div class="chevron-left-container">
                     <i class="fa-solid fa-chevron-left"></i>
                 </div>
@@ -906,6 +960,62 @@
 
         autoSlide(); 
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const sliders = document.querySelectorAll(".products-slider"); // Select all sliders
+
+    sliders.forEach((slider) => {
+        const pages = slider.querySelectorAll(".product-page");
+        const container = slider.closest(".products-details-container"); // Get the parent container
+        const prevBtn = container.querySelector(".chevron-left-container");
+        const nextBtn = container.querySelector(".chevron-right-container");
+        const products = slider.querySelectorAll(".product-item");
+        let currentPage = 0;
+        const pageWidth = slider.offsetWidth; // Get the width of the container
+
+        // Show or hide chevrons based on the number of products only on hover
+        container.addEventListener("mouseenter", function () {
+            if (products.length > 10) {
+                prevBtn.style.display = "block";
+                nextBtn.style.display = "block";
+            }
+        });
+
+        container.addEventListener("mouseleave", function () {
+            prevBtn.style.display = "none";
+            nextBtn.style.display = "none";
+        });
+
+        function slideToPage(index) {
+            slider.style.transform = `translateX(-${index * pageWidth}px)`; // Move the slider
+        }
+
+        nextBtn.addEventListener("click", function () {
+            if (currentPage < pages.length - 1) {
+                currentPage++;
+                slideToPage(currentPage);
+            }
+        });
+
+        prevBtn.addEventListener("click", function () {
+            if (currentPage > 0) {
+                currentPage--;
+                slideToPage(currentPage);
+            }
+        });
+
+        window.addEventListener("resize", function () {
+            slider.style.transition = "none"; // Disable transition during resize
+            slideToPage(currentPage);
+            setTimeout(() => {
+                slider.style.transition = "transform 0.5s ease-in-out"; // Re-enable transition after resize
+            }, 100);
+        });
+    });
+});
+
+
+
     </script>
 </body>
 </html>
