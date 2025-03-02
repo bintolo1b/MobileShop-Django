@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from apps.products.models import PhoneVariant
+from django.contrib.auth.decorators import login_required
 from . import service
 
 def homepage(request):
@@ -14,3 +14,10 @@ def homepage(request):
                    'top_iPhone_phones': top_iPhone_phones,
                    'top_Realme_phones': top_Realme_phones
                    })
+
+def login(request):
+    return render(request, 'login.html')
+
+# @login_required
+def signup(request):
+    return render(request, 'signup.html')

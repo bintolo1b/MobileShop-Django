@@ -13,7 +13,7 @@
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    background: url(/mobile_shop_project/static/img/backgound.jpg);
+    background: url(/static/img/backgound.jpg);
   }
   .form {
     width: 360px;

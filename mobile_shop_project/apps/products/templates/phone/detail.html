@@ -131,7 +131,7 @@
             </div>
             <div class="product-info">
                 <div class="product">
-                    <img id="main-image" src="{{phone_variants.0.img.url}}" alt="Sản phẩm" class="product-image">
+                    <img id="main-image" src="{{phone_variants_distinct_color.0.img.url}}" alt="Sản phẩm" class="product-image">
                     <div class="image-thumbnails">
                         {%for variant in phone_variants_distinct_color%}
                             <img src="{{variant.img.url}}" onclick="changeImage(this.src)">
