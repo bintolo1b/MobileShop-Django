@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Phone, PhoneVariant, Product
+from django.core.paginator import Paginator
 from django.db.models import Min
+from . import service
 
 # Create your views here.
 def phone_detail(request, phone_id):
@@ -33,3 +35,11 @@ def phone_detail(request, phone_id):
         'phone_variants_distinct_color': phone_variants_distinct_color,
         'phone_variants_distinct_configuration': phone_variants_distinct_configuration
     })
+
+
+def phone_by_brand(request):
+    brand = request.GET.get('brand', '')  # Lấy brand từ request, mặc định là chuỗi rỗng
+    page = request.GET.get('page', 1)  # Lấy page, mặc định là 1
+
+    phones = service.get_phones_by_brand(brand, page)
+    return render(request, 'phone/category.html', {'phones': phones, 'brand': brand})
