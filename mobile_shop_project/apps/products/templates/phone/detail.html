@@ -123,8 +123,9 @@
             </div>
             <img class="menu-ad" src="{% static 'phone/img/ads.png'%}" alt="Quảng cáo">
         </div>
-       
+        
         <div class="container">
+            <input type="hidden" name="prodId" id="prodId" value="{{ product.id }}">
             <div class="name-product">
                 <h1 class="">{{product.name}}
                 </h1>
@@ -148,21 +149,25 @@
         
                 <div class="price-info">
                     <div class="main-price">
-                        <h3>22.550.000₫</h3>
+                        <h3 id="product-price"></h3>
                     </div> 
                     <div class="status-quantity">
-                        <p>Tình trạng: <span>Hết hàng</span></p>
+                        <p>Số lượng hiện có:  <span id="status-info"></span></p>
                     </div>
                     
                     <div class="memory-options">
                         <p class="label_l">Bộ nhớ:</p>
                         <div class="memory-container">
                             {% for variant in phone_variants_distinct_configuration %}
-                                <label for="memory-12" class="box-l">
-                                    <input type="radio" id="memory-{{variant.configuration.ram}}" name="memory" value="{{variant.configuration.ram}}GB">
-                                    {{variant.configuration.ram}} / {{variant.configuration.rom}}
+                                <label for="memory-{{ variant.configuration.ram }}-{{ variant.configuration.rom }}" class="box-l">
+                                    <input type="radio" 
+                                        id="memory-{{ variant.configuration.ram }}-{{ variant.configuration.rom }}" 
+                                        name="memory" 
+                                        value="{{ variant.configuration.ram }}-{{ variant.configuration.rom }}">
+                                    {{ variant.configuration.ram }} / {{ variant.configuration.rom }}
                                 </label>
                             {% endfor %}
+
                            
                             {% comment %} <label for="memory-16" class="box-l">
                                 <input type="radio" id="memory-16" name="memory" value="16GB">
@@ -181,7 +186,7 @@
                         <div class="color-container">
                             {% for variant in phone_variants_distinct_color  %}
                                 <label for="color-{{variant.color}}" class="box-l" data-image="{{variant.img.url}}">  
-                                    <input type="radio" id="color-{{variant.color}}" name="color" value="Xanh">
+                                    <input type="radio" id="color-{{variant.color}}" name="color" value="{{variant.color}}">
                                     {{variant.color}}
                                 </label>
                             {% endfor %}
@@ -299,7 +304,7 @@
                         <tr><td><b>Pin:</b></td><td>{{phone.battery}}</td></tr>
                         <tr><td><b>Sạc:</b></td><td>{{phone.charger}}</td></tr>
                         <tr><td><b>Loa:</b></td><td>{{phone.speaker}}</td></tr>
-                    </table>
+                    </table>    
                     <button class="btn-info" id="btn-info-ev">Xem thêm thông tin</button>
                 </div>
             

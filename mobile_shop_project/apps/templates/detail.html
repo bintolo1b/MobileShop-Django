@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/detail/detail.css">
+    <script src="../static/detail/detail.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="grid">
+           <div class="header-container">
+            <div class="header-logo-container">
+                <img src="../static/detail/img/dien_thoai_hay_logo.png" alt="">
+                <span class="header-logo-phone">
+                    0815.208.208 | 0818.215.215 
+                </span>
+            </div>
+            <div class="region-search-container">
+               <div class="region-search-block">
+                    <i class="fa-solid fa-location-dot position-icon"></i>
+                    <div class="region-selection-container">
+                        <p class="region-search-title">Xem giá tại</p>
+                        <select name="" id="" class="region-search-select">
+                            <option value="">Hà Nội</option>
+                            <option value="">Hồ Chí Minh</option>
+                        </select>
+                    </div>
+               </div>
+               <div class="region-search-content">
+                    <input type="search" class="region-search-input" placeholder="Tìm kiếm sản phẩm trên dienthoaihay.vn">
+               </div>
+            </div>
+            <div class="header-item">
+                <div class="item-icon-container">
+                    <i class="fa-solid fa-phone header-icon"></i>
+                </div>
+                <div class="item-title">
+                    <span class="sub1-item-title">Bán hàng</span>
+                    <span class="sub2-item-title">Online</span>
+                </div>
+            </div>
+            <div class="header-item">
+                <div class="item-icon-container">
+                    <i class="fa-regular fa-circle-check header-icon"></i>
+                </div>
+                <div class="item-title">
+                    <span class="sub1-item-title">Tra cứu</span>
+                    <span class="sub2-item-title">Sản phẩm</span>
+                </div>
+            </div>
+            <div class="header-item">
+                <div class="item-icon-container">
+                    <i class="fa-solid fa-cart-shopping header-icon"></i>
+                </div>
+                <div class="item-title">
+                    <span class="sub2-item-title">Giỏ hàng</span>
+                </div>
+            </div>
+           </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="menu-wrapper">
+            <div class="menu-container">
+              <div class="menu-header">
+                <i class="fas fa-bars"></i>
+                <h3>DANH MỤC SẢN PHẨM</h3>
+              </div>
+              <ul class="menu-list">
+                <li class="menu-item">
+                    <img src="../static/detail/img/xiaomi_logo.png" alt="" class="item-icon">
+                    <span class="item-name">Xiaomi</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="../static/detail/img/realmi_logo.png" alt="" class="item-icon">
+                    <span class="item-name">Realme</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="../static/detail/img/iQoo_logo.png" alt="" class="item-icon">
+                    <span class="item-name">iQoo</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="../static/detail/img/iPhone_logo.png" alt="" class="item-icon">
+                    <span class="item-name">iPhone</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="../static/detail/img/iPad_logo.png" alt="" class="item-icon">
+                    <span class="item-name">iPad</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="../static/detail/img/samsung_logo.png" alt="" class="item-icon">
+                    <span class="item-name">Samsung</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="../static/detail/img/vsmart_logo.png" alt="" class="item-icon">
+                    <span class="item-name">VSmart</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="../static/detail/img/headphone_logo.png" alt="" class="item-icon">
+                    <span class="item-name">Phụ kiện - Đồ chơi</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="../static/detail/img/samsung_logo.png" alt="" class="item-icon">
+                    <span class="item-name">Tin tức</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+              </ul>
+            </div>
+            <img class="menu-ad" src="../static/detail/img/ads.png" alt="Quảng cáo">
+        </div>
+       
+        <div class="container">
+            <div class="name-product">
+                <h1 class="">VIVO X200 Pro 5G Tặng gói BHV bảo hành cả nguồn, màn hình, vân tay
+                </h1>
+            </div>
+            <div class="product-info">
+                <div class="product">
+                    <img id="main-image" src="../static/detail/img/phone1.png" alt="Sản phẩm" class="product-image">
+                    <div class="image-thumbnails">
+                        <img src="../static/detail/img/phone1.png" onclick="changeImage(this.src)">
+                        <img src="../static/detail/img/phone2.png" onclick="changeImage(this.src)">
+                        <img src="../static/detail/img/phone3.png" onclick="changeImage(this.src)">
+                        <img src="../static/detail/img/phone4.png" onclick="changeImage(this.src)">
+                    </div>
+                    <div class="product-description">
+                        <h3 class="rect">Mô tả sản phẩm</h3>
+                        <p class="text">Máy mới nguyên seal 100% chưa qua sử dụng. Bộ phụ kiện chuẩn bao gồm thân máy, sạc, cáp, que chọc sim và sách hướng dẫn sử dụng. Duy nhất tại Dienthoaihay.vn sản phẩm được bảo hành VIP toàn diện cả nguồn, màn hình, vân tay
+
+                        </p>
+                    </div>
+                </div>
+        
+                <div class="price-info">
+                    <div class="main-price">
+                        <h3>22.550.000₫</h3>
+                    </div> 
+                    <div class="status-quantity">
+                        <p>Tình trạng: <span>Hết hàng</span></p>
+                    </div>
+                    
+                    <div class="memory-options">
+                        <p class="label_l">Bộ nhớ:</p>
+                        <div class="memory-container">
+                            <label for="memory-12" class="box-l">
+                                <input type="radio" id="memory-12" name="memory" value="12GB">
+                                12GB / 256GB 17.650.000₫
+
+                            </label>
+                            <label for="memory-16" class="box-l">
+                                <input type="radio" id="memory-16" name="memory" value="16GB">
+                                16GB / 512GB 20.050.000₫
+
+                            </label>
+                            <label for="memory-32" class="box-l">
+                                <input type="radio" id="memory-32" name="memory" value="32GB">
+                                16GB / 1TB 22.650.000₫
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="color-options">
+                        <p class="label_l">Chọn màu:</p>
+                        <div class="color-container">
+                            <label for="color-xanh" class="box-l" data-image="../static/detail/img/phone4.png">
+                                <input type="radio" id="color-xanh" name="color" value="Xanh">
+                                Xanh 29.950.000₫
+                            </label>
+                            <label for="color-den" class="box-l" data-image="../static/detail/img/phone2.png">
+                                <input type="radio" id="color-den" name="color" value="Đen">
+                                Đen 20.050.000₫
+                            </label>
+                            <label for="color-trang" class="box-l" data-image="../static/detail/img/phone1.png">
+                                <input type="radio" id="color-trang" name="color" value="Trắng">
+                                Trắng 20.050.000₫
+                            </label>
+                            <label for="color-titanium" class="box-l" data-image="../static/detail/img/phone3.png">
+                                <input type="radio" id="color-titanium" name="color" value="Titanium">
+                                Titanium 20.050.000₫
+                            </label>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    <div class="warranty">
+                        <label for="warranty" class="label_l">Bảo hành:</label>
+                        <select id="warranty" >
+                            <option value="" disabled selected>--Chọn--</option>
+                            <option>VIP</option>
+                            <option>Tiêu chuẩn</option>
+                    </select>
+                    </div>
+                    
+                    <div class="promotion-box">
+                        <div class="promotion-header">
+                            <i class="fa-solid fa-gift"></i> Khuyến mãi
+                        </div>
+                        <ul class="promotion-list">
+                            <li><i class="fa-solid fa-circle-check"></i> Trả góp nhanh, trả góp lãi suất 0% từ xa/ Online cực dễ (*)</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Tặng tai nghe Type C cao cấp trị giá 250K nâng cấp BH sVIP</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Mua Online: Giao hàng tận nhà - Nhận hàng thanh toán</li>
+                        </ul>
+                    </div>
+                    <div class="btn-add">
+                        <button class="rect1">MUA NGAY</button>
+                        <button class="rect2"> <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ</button>
+                    </div>
+                    <div class="btn-add">
+                        <button class="rect3">MUA NGAY TRẢ SAU (Trả góp online, duyệt từ xa)</button>
+                    </div>
+                    <div class="region-phone-number">
+                        <input type="search" class="region-search-input" placeholder="Nhập số điện thoại ở đây">
+                        
+                   </div>
+                   <div >
+                        <button class="btn-call"> <i class="fa-solid fa-phone"></i> ĐẶT NGAY</button>
+                   </div>
+                   <div class="phone-number-sup">
+                    <p>Gọi 0818.215.215 hoặc 0815.208.208
+                        để được tư vấn</p>
+                   </div>
+                </div>
+                <div class="more-info">
+                    <h3 class="rect">Có thể bạn quan tâm</h3>
+                    <div class="suggested-products">
+                        <div class="product-box">
+                            <div class="product-info">
+                                <img src="../static/detail/img/product1.png" alt="Xiaomi Redmi Note 12 Turbo Edition">
+                                <div class="prod-details">
+                                    <h4>Xiaomi Redmi Note 12 Turbo Edition</h4>
+                                    <p class="price">4.890.000₫</p>
+                                    <a href="#" class="view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="product-box">
+                            <div class="product-info">
+                                <img src="../static/detail/img/product2.png" alt="Xiaomi Redmi Note 12T Pro 5G">
+                                <div class="prod-details">
+                                    <h4>Xiaomi Redmi Note 12T Pro 5G</h4>
+                                    <p class="price">3.990.000₫</p>
+                                    <a href="#" class="view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="product-box">
+                            <div class="product-info">
+                                <img src="../static/detail/img/product3.png" alt="Xiaomi Redmi Note 12 Turbo Edition">
+                                <div class="prod-details">
+                                    <h4>Xiaomi Redmi K40 5G</h4>
+                                    <p class="price">4.790.000₫</p>
+                                    <a href="#" class="view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    
+                    <h3 class="rect">Tin tức liên quan</h3>
+                    <div class="news">
+                        <div class="news-box">
+                            <img src="../static/detail/img/news1.png" >
+                            <a href="#" class="news-link">Mua trả góp Online Home Paylater tại nhà - Tặng Voucher giảm giá lên tới 500K</a>
+                        </div>
+                        <div class="news-box">
+                            <img src="../static/detail/img/news2.png" >
+                            <a href="#" class="news-link">Hướng dẫn mua hàng trả góp Online từ xa tại Dienthoaihay.vn</a>
+                        </div>
+                        <div class="news-box">
+                            <img src="../static/detail/img/news3.png" >
+                            <a href="#" class="news-link">Trả góp Online Kredivo, MUA NGAY - TRẢ SAU: trả trước 0 đồng, phê duyệt 20s, giảm giá lên tới 500K</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="product-container">
+                <div class="specs">
+                    <h2 class="title">THÔNG SỐ KĨ THUẬT</h2>
+                    <table class="specs-table">
+                        <tr><td><b>Thẻ SIM:</b></td><td>2 SIM, 5G</td></tr>
+                        <tr><td><b>Kiểu thiết kế:</b></td><td>Thanh cảm ứng</td></tr>
+                        <tr><td><b>Màn hình:</b></td><td>6.78 inch LTPO AMOLED, 120Hz</td></tr>
+                        <tr><td><b>Độ phân giải:</b></td><td>1260 x 2800 pixels</td></tr>
+                        <tr><td><b>CPU:</b></td><td>Mediatek Dimensity 9400</td></tr>
+                        <tr><td><b>RAM:</b></td><td>12GB/16GB</td></tr>
+                        <tr><td><b>Bộ nhớ:</b></td><td>256GB/512GB/1TB</td></tr>
+                        <tr><td><b>Camera sau:</b></td><td>50 MP + 200 MP + 50 MP</td></tr>
+                        <tr><td><b>Camera trước:</b></td><td>32 MP</td></tr>
+                        <tr><td><b>Pin:</b></td><td>6000 mAh, 90W sạc nhanh</td></tr>
+                    </table>
+                    <button class="btn-info" id="btn-info-ev">Xem thêm thông tin</button>
+                </div>
+            
+                <div class="video-section">
+                    <h2 class="title">VIDEO SẢN PHẨM</h2>
+                    <div class="video-container">
+                        <iframe width="100%" height="375" src="https://www.youtube.com/embed/mKVJ2ii1Soc"" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review">
+                <h2 class="title">Đánh giá chi tiết vivo X200 Pro 5G</h2>
+                <div class="review-content">
+                    <p class="text">
+                        Vivo X200 Pro là mẫu smartphone thuộc dòng flagship mới nhất từ Vivo, sở hữu hiệu năng rất cao từ con chip Dimensity 9400 đầu tiên trên thế giới. Các thông số khác của máy sẽ ra sao? Mời bạn cùng khám phá qua những đánh giá tổng quan về sản phẩm từ Dienthoaihay nhé!
+                    </p>
+                    <img src="../static/detail/img/review1.png" alt="">
+                    <p class="text-bold">
+                        Hiệu năng Vivo X200 Pro đỉnh cao: Từ chip Dimensity 9400 đầu tiên trên thế giới
+                    </p>
+                    <p class="text">
+                        Dimensity 9400 là siêu chip flagship mới nhất, cao cấp nhất từ nhà sản xuất MediaTek cài đặt cho Vivo X200 Pro, mang đến mức hiệu năng khủng cùng hiệu quả tiết kiệm điện năng đáng kinh ngạc. Với cấu trí 8 nhân, phân bổ theo sơ đồ 1+3+4, tốc độ xung nhịp tương ứng đạt 3.63GHz, 3.3GHz và 2.4GHz trên tiến trình chỉ 3nm, con chip này hứa hẹn mang đến cho Vivo X200 Pro hiệu suất đỉnh cao, bứt phá bảng xếp hạng, cân mượt mà mọi tựa game thịnh hành. 
+                    </p>
+                    <img src="../static/detail/img/review2.png" alt="">
+                    <p class="text">
+                        Máy tích hợp cùng GPU Immortalis-G925 và nền tảng Android 15 mới nhất cùng giao diện người dùng OriginOS 5. Máy ra hàng các tùy chọn bộ nhớ lớn, RAM 12GB/256GB, RAM 16GB/512GB và RAM 16GB/1TB thoải mái đa nhiệm trơn tru, lưu trữ dữ liệu siêu khủng.Máy tích hợp cùng GPU Immortalis-G925 và nền tảng Android 15 mới nhất cùng giao diện người dùng OriginOS 5. Máy ra hàng các tùy chọn bộ nhớ lớn, RAM 12GB/256GB, RAM 16GB/512GB và RAM 16GB/1TB thoải mái đa nhiệm trơn tru, lưu trữ dữ liệu siêu khủng.
+                    </p>
+                    <p class="text-bold"> Viên pin Vivo X200 Pro: silicon -cacbon 6000mAh cực bền bỉ, sạc nhanh 90W</p>
+                    <p class="text">Vivo X200 Pro là biến thể sở hữu mức dung lượng pin cao nhất trong dòng X200 series được Vivo ra mắt lần này. Với viên pin 6000mAh, kết hợp công nghệ pin silicon-cacbon tiên tiến, vượt trội hoàn toàn so với các công nghệ pin Li-on, Li-Po trước đó trên hầu hết smartphone hiện hành, thiết bị này mang đến hiệu quả tiết kiệm tiêu thụ điện năng đặc biệt, tăng cường tuổi thọ pin và tối ưu tốt kích thước sản phẩm. </p>
+                    <img src="../static/detail/img/review3.png" alt="">
+                    <p class="text-bold">Màn hình Vivo X200 Pro chất lượng cao: 4500 nits siêu sáng, 120Hz mượt mà, 1.5K sắc nét, sống động</p>
+                    <p class="text">Màn hình hiển thị của X200 Pro được đánh giá rất cao khi Vivo cực trau chuốt cho sản phẩm mới của mình. Thông số nổi bật từ tấm nền LTPO AMOLED 6.78 inch tích hợp cảm biến vân tay mở khóa máy nhanh chóng, độ phân giải 1260 x 2800 pixels, tần số quét 120Hz, độ sáng tối đa 4500 nits, hứa hẹn mang đến người dùng trải nghiệm xem mãn nhãn, hiển thị sống động, sắc nét trong cả môi trường ánh sáng mạnh ngoài trời. Không những vậy, công nghệ tấm nền hiện đại này góp phần bảo vệ mắt tốt hơn, tiết kiệm mức điện năng tiêu thụ hơn so với đối thủ khác.</p>
+                    <img src="../static/detail/img/review4.png" alt="">
+                </div>
+                <button class="toggle-btn" onclick="toggleReview()">Xem thêm bài viết</button>
+                
+            </div>
+
+            <div class="qa-section">
+                <div class="qa-header">Hỏi đáp và đánh giá về vivo X200 Pro 5G</div>
+                
+                <div class="qa-content">
+                    <div class="qa-rating">
+                        <div class="qa-score">
+                            <span class="score">0.0</span>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="qa-bars">
+                            <div class="qa-row"><span>5 sao</span><div class="bar"></div><span>0</span></div>
+                            <div class="qa-row"><span>4 sao</span><div class="bar"></div><span>0</span></div>
+                            <div class="qa-row"><span>3 sao</span><div class="bar"></div><span>0</span></div>
+                            <div class="qa-row"><span>2 sao</span><div class="bar"></div><span>0</span></div>
+                            <div class="qa-row"><span>1 sao</span><div class="bar"></div><span>0</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="qa-ask">
+                        <p>Bạn có thắc mắc cần giải đáp?</p>
+                        <button class="qa-button">Gửi câu hỏi ngay</button>
+                    </div>
+                </div>
+                
+                <input type="text" class="qa-search" placeholder="Tìm câu hỏi...">
+            </div>
+            <div class="review-section">
+                <div class="review-header">
+                    <span class="stars">★★★★★</span> REVIEWER NÓI GÌ VỀ DIENTHOAIHAY.VN ?
+                </div>
+                <div class="review-container">
+                    <div class="review-card">
+                        <img src="../static/detail/img/reviewer1.png" alt="Reviewer Dương Dê">
+                        <h3>Reviewer Dương Dê</h3>
+                        <div class="review-text-1">
+                            <p>Mình thấy duy nhất Dienthoaihay.vn tặng gói bảo hành cả nguồn, màn hình, vân tay cho khách mua Xiaomi/ Realme, giúp các bạn mua mặt hàng này yên tâm tuyệt đối về chất lượng mà vẫn tiết kiệm chi phí. Rất uy tín và chuyên nghiệp!</p>
+                        </div>                    
+                    </div>
+                    <div class="review-card">
+                        <img src="../static/detail/img/reviewer2.png" alt="Reviewer Người Lạ">
+                        <h3>Reviewer Người Lạ</h3>
+                        <div class="review-text-1">
+                            <p>Dienthoaihay.vn là địa chỉ yên tâm tuyệt đối của mình mỗi khi cần mua điện thoại cho mình hoặc anh chị em bạn bè người thân. Gì cũng có, giá cũng rẻ, chất lượng và bảo hành đúng như cam kết!</p>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <img src="../static/detail/img/reviewer3.png" alt="Reviewer Vũ Hay Ho">
+                        <h3>Reviewer Vũ Hay Ho (NextGen)</h3>
+                        <div class="review-text">
+                            <p>Top 10 cách chọn mua iPhone/ iPad cũ giá rẻ, an toàn, đảm bảo kèm hậu mãi tốt Top1: Đến dienthoaihay.vn, không cần phải lo nghĩ về cách kiểm tra máy cũ vì bên này làm hết rồi. Nhận máy là dùng, sử dụng là phê hê hê!!!</p>
+
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <img src="../static/detail/img/reviewer4.png" alt="Reviewer Hùng 20cm">
+                        <h3>Reviewer Hùng 20cm (FA Channel)</h3>
+                        <div class="review-text">
+                            <p>Mình ở tp.HCM nghe tên Dienthoaihay.vn uy tín nên đặt hàng Online ship từ Hà Nội vào. Máy đóng gói rất cẩn thận. Mua hàng Online vẫn đầy đủ khuyến mại và bảo hành 12 tháng như cam kết. Các bạn ở xa mua Online cứ yên tâm!</p>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <img src="../static/detail/img/reviewer5.png" alt="Reviewer Tùng Lâm">
+                        <h3>Reviewer Tùng Lâm SmartWatch</h3>
+                        <div class="review-text">
+                            <p>Mình chuyên đồng hồ thông minh nên chọn điện thoại/ máy tính bảng mình chọn dienthoaihay.vn làm địa chỉ uy tín. Giá bán cạnh tranh, hậu mãi rất chuẩn, bán hàng chuyên nghiệp. Lâm SmartWatch</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-section">
+                <div class="about-container">
+                    <div class="about-column">
+                        <h3>VỀ CHÚNG TÔI</h3>
+                        <ul>
+                            <li><a href="#">Tin tức</a></li>
+                            <li><a href="#">Giới thiệu</a></li>
+                            <li><a href="#">Tuyển dụng</a></li>
+                            <li><a href="#">Hệ thống đại lý</a></li>
+                        </ul>
+                    </div>
+                    <div class="about-column">
+                        <h3>HỖ TRỢ KHÁCH HÀNG</h3>
+                        <ul>
+                            <li><a href="#">Phương thức thanh toán</a></li>
+                            <li><a href="#">Chính sách bảo hành - đổi trả</a></li>
+                            <li><a href="#">Giải đáp hàng Online</a></li>
+                        </ul>
+                    </div>
+                    <div class="about-column">
+                        <h3>HỆ THỐNG CỬA HÀNG</h3>
+                        <p><b>Cơ sở 1:</b> Số 215 Giáp Nhất, Nhân Chính, Thanh Xuân, Hà Nội<br>
+                           <b>Hotline:</b> 0818.215.215</p>
+                        <p><b>Cơ sở 2:</b> 208 Xã Đàn, Đống Đa, Hà Nội<br>
+                           <b>Hotline:</b> 0815.208.208</p>
+                        <p><b>Cơ sở 3:</b> 583 Lê Hồng Phong, Phường 10, Quận 10, tp Hồ Chí Minh<br>
+                           <b>Hotline:</b> 0825.583.583</p>
+                        <p><b>Cơ sở 4:</b> 258 Hoàng Văn Thụ, Phường 4, Quận Tân Bình, tp Hồ Chí Minh<br>
+                           <b>Hotline:</b> 0399.555.258</p>
+                    </div>
+                </div>
+            
+                <div class="about-bottom">
+                    <div class="payment-shipping">
+                        <h3>PHƯƠNG THỨC THANH TOÁN</h3>
+                        <div class="payment-icons">
+                            <img src="../static/detail/img/momo.png" alt="Momo">
+                            <img src="../static/detail/img/viettelpay.png" alt="VNPay">
+                            <img src="../static/detail/img/zalopay.png" alt="ZaloPay">
+                            <img src="../static/detail/img/visa.png" alt="Visa">
+                        </div>
+                        <h3>HÌNH THỨC VẬN CHUYỂN</h3>
+                        <img src="../static/detail/img/shipping.png" alt="Shipper">
+                    </div>
+                    <div class="certification">
+                        <img src="../static/detail/img/bocongthuong.png" alt="Bộ Công Thương">
+                    </div>
+                </div>
+            
+                <div class="copyright">
+                    © DIENTHOAIHAY.VN All Rights Reserved
+                </div>
+            </div>
+            
+            
+            
+        </div>
+
+        
+
+        <div id="modal1" class="modal">
+            <div class="modal__overlay">
+            </div>
+            <div class="modal__body">
+                <div class="modal__inner">
+                        <table class="specs-table1">
+                            <tr><td><b>Thẻ SIM:</b></td><td>2 SIM, 5G</td></tr>
+                            <tr><td><b>Kiểu thiết kế:</b></td><td>Thanh cảm ứng</td></tr>
+                            <tr><td><b>Màn hình:</b></td><td>6.78 inch LTPO AMOLED, 120Hz</td></tr>
+                            <tr><td><b>Độ phân giải:</b></td><td>1260 x 2800 pixels</td></tr>
+                            <tr><td><b>CPU:</b></td><td>Mediatek Dimensity 9400</td></tr>
+                            <tr><td><b>RAM:</b></td><td>12GB/16GB</td></tr>
+                            <tr><td><b>Bộ nhớ:</b></td><td>256GB/512GB/1TB</td></tr>
+                            <tr><td><b>Camera sau:</b></td><td>50 MP + 200 MP + 50 MP</td></tr>
+                            <tr><td><b>Camera trước:</b></td><td>32 MP</td></tr>
+                            <tr><td><b>Pin:</b></td><td>6000 mAh, 90W sạc nhanh</td></tr>
+                            <tr><td><b>Màu sắc:</b></td><td>Blue, Black, White, Titanium</td></tr>
+                            <tr><td><b>GPU:</b></td><td>Immortalis-G925</td></tr>
+                            <tr><td><b>Ngày ra mắt:</b></td><td>14/10/2024</td></tr>
+                            <tr><td><b>Hệ điều hành:</b></td><td>Android 15, OriginOS 5 (China)</td></tr>
+                            <tr><td><b>Loại sản phẩm:</b></td><td>Mới nguyên seal</td></tr>
+                            <tr><td><b>Mạng/ Băng tần:</b></td><td>GSM / HSPA / LTE / 5G</td></tr>
+                            <tr><td><b>Kích thước:</b></td><td>162.4 x 76 x 8.2 mm hoặc 8.5 mm</td></tr>
+                            <tr><td><b>Trọng lượng:</b></td><td>223 g hoặc 228 g (7.87 oz)</td></tr>
+                            <tr><td><b>Bluetooth:</b></td><td>5.4, A2DP, LE, aptX HD, LHDC 5</td></tr>
+                            <tr><td><b>Chuẩn bộ nhớ:</b></td><td>UFS 4.0</td></tr>
+                            <tr><td><b>WiFi:</b></td><td>Wi-Fi 802.11 a/b/g/n/ac/6/7, dual-band</td></tr>
+                            <tr><td><b>NFC:</b></td><td>Có</td></tr>
+                            <tr><td><b>Cổng kết nối:</b></td><td>USB Type-C 3.2, OTG</td></tr>
+                        </table>
+                    </div>
+            </div>
+        </div>
+
+        <script>
+            function changeImage(src) {
+                document.getElementById('main-image').src = src;
+            }
+            document.querySelectorAll('.color-options input').forEach(input => {
+                input.addEventListener('change', function () {
+                let selectedLabel = this.closest('label');
+                let newImage = selectedLabel.getAttribute('data-image'); 
+                document.getElementById("main-image").src = newImage;
+            });
+            });
+        </script>
+    
+      
+</body>
+</html>
