@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     const mainImage = document.getElementById("main-image");
     const priceElement = document.getElementById("product-price");
+    const statusElemnt= document.getElementById("status-info");
     const phoneId = document.getElementById("prodId");
 
     function getSelectedValue(name) {
@@ -47,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 console.log("Dữ liệu API nhận được:", data);
                 priceElement.textContent = data.price+"đ";
+                statusElemnt.textContent=data.stock;
             })
             .catch(error => console.error("Lỗi khi fetch dữ liệu:", error));
     }
