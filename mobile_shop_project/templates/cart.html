@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="grid">
+           <div class="header-container">
+            <div class="header-logo-container">
+                <img src="./assets/img/dien_thoai_hay_logo.png" alt="">
+                <span class="header-logo-phone">
+                    0815.208.208 | 0818.215.215 
+                </span>
+            </div>
+            <div class="region-search-container">
+               <div class="region-search-block">
+                    <i class="fa-solid fa-location-dot position-icon"></i>
+                    <div class="region-selection-container">
+                        <p class="region-search-title">Xem giá tại</p>
+                        <select name="" id="" class="region-search-select">
+                            <option value="">Hà Nội</option>
+                            <option value="">Hồ Chí Minh</option>
+                        </select>
+                    </div>
+               </div>
+               <div class="region-search-content">
+                    <input type="search" class="region-search-input" placeholder="Tìm kiếm sản phẩm trên dienthoaihay.vn">
+               </div>
+            </div>
+            <div class="header-item">
+                <div class="item-icon-container">
+                    <i class="fa-solid fa-phone header-icon"></i>
+                </div>
+                <div class="item-title">
+                    <span class="sub1-item-title">Bán hàng</span>
+                    <span class="sub2-item-title">Online</span>
+                </div>
+            </div>
+            <div class="header-item">
+                <div class="item-icon-container">
+                    <i class="fa-regular fa-circle-check header-icon"></i>
+                </div>
+                <div class="item-title">
+                    <span class="sub1-item-title">Tra cứu</span>
+                    <span class="sub2-item-title">Sản phẩm</span>
+                </div>
+            </div>
+            <div class="header-item">
+                <div class="item-icon-container">
+                    <i class="fa-solid fa-cart-shopping header-icon"></i>
+                </div>
+                <div class="item-title">
+                    <span class="sub2-item-title">Giỏ hàng</span>
+                </div>
+            </div>
+           </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="menu-wrapper">
+            <div class="menu-container">
+              <div class="menu-header">
+                <i class="fas fa-bars"></i>
+                <h3>DANH MỤC SẢN PHẨM</h3>
+              </div>
+              <ul class="menu-list">
+                <li class="menu-item">
+                    <img src="./assets/img/xiaomi_logo.png" alt="" class="item-icon">
+                    <span class="item-name">Xiaomi</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="./assets/img/realmi_logo.png" alt="" class="item-icon">
+                    <span class="item-name">Realme</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="./assets/img/iQoo_logo.png" alt="" class="item-icon">
+                    <span class="item-name">iQoo</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="./assets/img/iPhone_logo.png" alt="" class="item-icon">
+                    <span class="item-name">iPhone</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="./assets/img/iPad_logo.png" alt="" class="item-icon">
+                    <span class="item-name">iPad</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="./assets/img/samsung_logo.png" alt="" class="item-icon">
+                    <span class="item-name">Samsung</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="./assets/img/vsmart_logo.png" alt="" class="item-icon">
+                    <span class="item-name">VSmart</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="./assets/img/headphone_logo.png" alt="" class="item-icon">
+                    <span class="item-name">Phụ kiện - Đồ chơi</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+                <li class="menu-item">
+                    <img src="./assets/img/samsung_logo.png" alt="" class="item-icon">
+                    <span class="item-name">Tin tức</span>
+                    <i class="fa-solid fa-chevron-right arrow-right"></i>
+                </li>
+              </ul>
+            </div>
+            <img class="menu-ad" src="./assets/img/ads.png" alt="Quảng cáo">
+        </div>
+        <div class="my-cart">
+            <h1>Giỏ hàng của tôi</h1>
+        </div>
+
+        <div class="cart-container">
+            <div class="product">
+                <div class="product-info">
+                    <img src="https://via.placeholder.com/50" alt="vivo X200 Pro 5G">
+                    <div class="info-group">
+                        <div class="product-name">vivo X200 Pro 5G</div>
+                        <div class="product-color">Màu: Xanh</div>
+                        <div class="product-memory">Dung lượng: 6/128 GB</div>
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <div class="product-price">17.550.000₫</div>
+                    <div class="quantity-control">
+                        <button class="quantity-btn">−</button>
+                        <span class="quantity">1</span>
+                        <button class="quantity-btn">+</button>
+                    </div>
+                    <button class="remove-btn">Xóa</button>
+                </div>
+            </div>
+        
+            <div class="product">
+                <div class="product-info">
+                    <img src="https://via.placeholder.com/50" alt="Xiaomi 15">
+                    <div class="info-group">
+                        <div class="product-name">Xiaomi 15</div>
+                        <div class="product-color">Màu: Đen</div>
+                        <div class="product-memory">Dung lượng: 6/128 GB</div>
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <div class="product-price">17.390.000₫</div>
+                    <div class="quantity-control">
+                        <button class="quantity-btn">−</button>
+                        <span class="quantity">1</span>
+                        <button class="quantity-btn">+</button>
+                    </div>
+                    <button class="remove-btn">Xóa</button>
+                </div>
+            </div>
+        
+            <div class="product">
+                <div class="product-info">
+                    <img src="https://via.placeholder.com/50" alt="Xiaomi Redmi Note 14 5G">
+                    <div class="info-group">
+                        <div class="product-name">Xiaomi Redmi Note 14 5G</div>
+                        <div class="product-color">Màu: Đen</div>
+                        <div class="product-memory">Dung lượng: 6/128 GB</div>
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <div class="product-price">3.750.000₫</div>
+                    <div class="quantity-control">
+                        <button class="quantity-btn">−</button>
+                        <span class="quantity">1</span>
+                        <button class="quantity-btn">+</button>
+                    </div>
+                    <button class="remove-btn">Xóa</button>
+                </div>
+            </div>
+        
+            <div class="total">
+                Tổng cộng: <span class="total-price">38.690.000₫</span>
+            </div>
+            <div class="buy-con">
+                <button class="btn-buy">Thanh toán</button>
+            </div>
+            
+        </div>
+        
+        
+    </div>
+</body>
