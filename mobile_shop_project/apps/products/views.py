@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.db.models import Min
 from . import service
 
+
 # Create your views here.
 def phone_detail(request, phone_id):
     product = get_object_or_404(Product, id=phone_id)
@@ -39,7 +40,10 @@ def phone_detail(request, phone_id):
 
 def phone_by_brand(request):
     brand = request.GET.get('brand', '')  # Lấy brand từ request, mặc định là chuỗi rỗng
-    page = request.GET.get('page', 1)  # Lấy page, mặc định là 1
+    page = int(request.GET.get('page', 1))  # Lấy page, mặc định là 1
 
     phones = service.get_phones_by_brand(brand, page)
-    return render(request, 'phone/category.html', {'phones': phones, 'brand': brand})
+    totalPages = service.get_total_pages_of_phone_by_brand(brand)
+
+    page_numbers = list(range(1, totalPages + 1))
+    return render(request, 'phone/category.html', {'phones': phones, 'brand': brand, 'page_numbers': page_numbers, 'current_page': page})

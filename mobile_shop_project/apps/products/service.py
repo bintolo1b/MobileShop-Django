@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator
 from django.db.models import OuterRef, Subquery
 from .models import Product, PhoneVariant
+import math
 
 def get_phones_by_brand(brand, page_index, per_page=15):
     """
@@ -25,3 +26,12 @@ def get_phones_by_brand(brand, page_index, per_page=15):
     # Phân trang
     paginator = Paginator(products_qs, per_page)
     return paginator.get_page(page_index)
+
+def get_total_pages_of_phone_by_brand(brand):
+    products_qs = Product.objects.all()
+    if brand:
+        products_qs = products_qs.filter(phone__brand=brand)
+    total_products = products_qs.count()
+    total_pages = math.ceil(total_products / 15)
+
+    return total_pages

@@ -13,7 +13,7 @@
     <header>
         <div class="grid">
            <div class="header-container">
-            <div class="header-logo-container">
+            <div class="header-logo-container" onClick="window.location.href = '/'">
                 <img src="{% static 'img/dienthoaihay_logo.png'%}" alt="">
                 <span class="header-logo-phone">
                     0815.208.208 | 0818.215.215 
@@ -1020,7 +1020,14 @@
     });
 });
 
-
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', function () {
+            const brand = item.querySelectorAll('.item-name')[0].textContent;
+            if (brand) {
+                window.location.href = `/products/phonebybrand/?brand=${brand}&page=1`;
+            }
+        });
+    });
 
     </script>
 </body>
