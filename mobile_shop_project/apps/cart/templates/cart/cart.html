@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +13,7 @@
         <div class="grid">
            <div class="header-container">
             <div class="header-logo-container">
-                <img src="./assets/img/dien_thoai_hay_logo.png" alt="">
+                <img src="{% static 'img/dienthoaihay_logo.png'%}" alt="">
                 <span class="header-logo-phone">
                     0815.208.208 | 0818.215.215 
                 </span>
@@ -71,121 +72,84 @@
               </div>
               <ul class="menu-list">
                 <li class="menu-item">
-                    <img src="./assets/img/xiaomi_logo.png" alt="" class="item-icon">
+                    <img src="{% static 'img/xiaomi_logo.png'%}" alt="" class="item-icon">
                     <span class="item-name">Xiaomi</span>
                     <i class="fa-solid fa-chevron-right arrow-right"></i>
                 </li>
                 <li class="menu-item">
-                    <img src="./assets/img/realmi_logo.png" alt="" class="item-icon">
+                    <img src="{% static 'img/realmi_logo.png'%}" alt="" class="item-icon">
                     <span class="item-name">Realme</span>
                     <i class="fa-solid fa-chevron-right arrow-right"></i>
                 </li>
                 <li class="menu-item">
-                    <img src="./assets/img/iQoo_logo.png" alt="" class="item-icon">
+                    <img src="{% static 'img/iQoo_logo.png'%}" alt="" class="item-icon">
                     <span class="item-name">iQoo</span>
                     <i class="fa-solid fa-chevron-right arrow-right"></i>
                 </li>
                 <li class="menu-item">
-                    <img src="./assets/img/iPhone_logo.png" alt="" class="item-icon">
+                    <img src="{% static 'img/iPhone_logo.png'%}" alt="" class="item-icon">
                     <span class="item-name">iPhone</span>
                     <i class="fa-solid fa-chevron-right arrow-right"></i>
                 </li>
                 <li class="menu-item">
-                    <img src="./assets/img/iPad_logo.png" alt="" class="item-icon">
+                    <img src="{% static 'img/iPad_logo.png'%}" alt="" class="item-icon">
                     <span class="item-name">iPad</span>
                     <i class="fa-solid fa-chevron-right arrow-right"></i>
                 </li>
                 <li class="menu-item">
-                    <img src="./assets/img/samsung_logo.png" alt="" class="item-icon">
+                    <img src="{% static 'img/samsung_logo.png'%}" alt="" class="item-icon">
                     <span class="item-name">Samsung</span>
                     <i class="fa-solid fa-chevron-right arrow-right"></i>
                 </li>
                 <li class="menu-item">
-                    <img src="./assets/img/vsmart_logo.png" alt="" class="item-icon">
+                    <img src="{% static 'img/vsmart_logo.png'%}" alt="" class="item-icon">
                     <span class="item-name">VSmart</span>
                     <i class="fa-solid fa-chevron-right arrow-right"></i>
                 </li>
                 <li class="menu-item">
-                    <img src="./assets/img/headphone_logo.png" alt="" class="item-icon">
+                    <img src="{% static 'img/headphone_logo.png'%}" alt="" class="item-icon">
                     <span class="item-name">Phụ kiện - Đồ chơi</span>
                     <i class="fa-solid fa-chevron-right arrow-right"></i>
                 </li>
                 <li class="menu-item">
-                    <img src="./assets/img/samsung_logo.png" alt="" class="item-icon">
+                    <img src="{% static 'img/samsung_logo.png'%}" alt="" class="item-icon">
                     <span class="item-name">Tin tức</span>
                     <i class="fa-solid fa-chevron-right arrow-right"></i>
                 </li>
               </ul>
             </div>
-            <img class="menu-ad" src="./assets/img/ads.png" alt="Quảng cáo">
+            <img class="menu-ad" src="{% static 'img/ads.png'%}" alt="Quảng cáo">
         </div>
         <div class="my-cart">
             <h1>Giỏ hàng của tôi</h1>
         </div>
 
         <div class="cart-container">
-            <div class="product">
-                <div class="product-info">
-                    <img src="https://via.placeholder.com/50" alt="vivo X200 Pro 5G">
-                    <div class="info-group">
-                        <div class="product-name">vivo X200 Pro 5G</div>
-                        <div class="product-color">Màu: Xanh</div>
-                        <div class="product-memory">Dung lượng: 6/128 GB</div>
+            {% for item in cart_items %}
+                <div class="product">
+                    <div class="product-info">
+                        <img src="/media/{{item.img}}" alt="">
+                        <div class="info-group">
+                            <div class="product-name">{{item.name}}</div>
+                            <div class="product-color">Màu: {{item.color}}</div>
+                            <div class="product-memory">Dung lượng: {{item.ram}}/{{item.rom}}</div>
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <div class="product-price">{{item.subtotal}}₫</div>
+                        <div class="quantity-control">
+                            <button class="quantity-btn">−</button>
+                            <span class="quantity">{{item.quantity}}</span>
+                            <button class="quantity-btn">+</button>
+                        </div>
+                        <button class="remove-btn">Xóa</button>
                     </div>
                 </div>
-                <div class="product-actions">
-                    <div class="product-price">17.550.000₫</div>
-                    <div class="quantity-control">
-                        <button class="quantity-btn">−</button>
-                        <span class="quantity">1</span>
-                        <button class="quantity-btn">+</button>
-                    </div>
-                    <button class="remove-btn">Xóa</button>
-                </div>
-            </div>
-        
-            <div class="product">
-                <div class="product-info">
-                    <img src="https://via.placeholder.com/50" alt="Xiaomi 15">
-                    <div class="info-group">
-                        <div class="product-name">Xiaomi 15</div>
-                        <div class="product-color">Màu: Đen</div>
-                        <div class="product-memory">Dung lượng: 6/128 GB</div>
-                    </div>
-                </div>
-                <div class="product-actions">
-                    <div class="product-price">17.390.000₫</div>
-                    <div class="quantity-control">
-                        <button class="quantity-btn">−</button>
-                        <span class="quantity">1</span>
-                        <button class="quantity-btn">+</button>
-                    </div>
-                    <button class="remove-btn">Xóa</button>
-                </div>
-            </div>
-        
-            <div class="product">
-                <div class="product-info">
-                    <img src="https://via.placeholder.com/50" alt="Xiaomi Redmi Note 14 5G">
-                    <div class="info-group">
-                        <div class="product-name">Xiaomi Redmi Note 14 5G</div>
-                        <div class="product-color">Màu: Đen</div>
-                        <div class="product-memory">Dung lượng: 6/128 GB</div>
-                    </div>
-                </div>
-                <div class="product-actions">
-                    <div class="product-price">3.750.000₫</div>
-                    <div class="quantity-control">
-                        <button class="quantity-btn">−</button>
-                        <span class="quantity">1</span>
-                        <button class="quantity-btn">+</button>
-                    </div>
-                    <button class="remove-btn">Xóa</button>
-                </div>
-            </div>
+            {% endfor %}
+            
         
             <div class="total">
-                Tổng cộng: <span class="total-price">38.690.000₫</span>
+                Tổng cộng: <span class="total-price">{{total_price}}₫</span>
             </div>
             <div class="buy-con">
                 <button class="btn-buy">Thanh toán</button>
@@ -196,3 +160,14 @@
         
     </div>
 </body>
+</html>
+<script>
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', function () {
+            const brand = item.querySelectorAll('.item-name')[0].textContent;
+            if (brand) {
+                window.location.href = `/products/phonebybrand/?brand=${brand}&page=1`;
+            }
+        });
+    });
+</script>
