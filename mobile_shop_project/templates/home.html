@@ -1,0 +1,1029 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% comment %} <link rel="stylesheet" href="/mobile_shop_project/apps/assets/css/base.css">
+    <link rel="stylesheet" href="/mobile_shop_project/apps/assets/css/home.css"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="grid">
+           <div class="header-container">
+            <div class="header-logo-container">
+                <img src="{% static 'img/dienthoaihay_logo.png'%}" alt="">
+                <span class="header-logo-phone">
+                    0815.208.208 | 0818.215.215 
+                </span>
+            </div>
+            <div class="region-search-container">
+               <div class="region-search-block">
+                    <i class="fa-solid fa-location-dot position-icon"></i>
+                    <div class="region-selection-container">
+                        <p class="region-search-title">Xem giá tại</p>
+                        <select name="" id="" class="region-search-select">
+                            <option value="">Hà Nội</option>
+                            <option value="">Hồ Chí Minh</option>
+                        </select>
+                    </div>
+               </div>
+               <div class="region-search-content">
+                    <input type="search" class="region-search-input" placeholder="Tìm kiếm sản phẩm trên dienthoaihay.vn">
+               </div>
+            </div>
+            <div class="header-item">
+                <div class="item-icon-container">
+                    <i class="fa-solid fa-phone header-icon"></i>
+                </div>
+                <div class="item-title item-title-1">
+                    <span class="sub1-item-title">Bán hàng</span>
+                    <span class="sub2-item-title">Online</span>
+                </div>
+                <div class="contact-container">
+                    <div class="time-activate-title">
+                        <h1>BÁN HÀNG ONLINE(8H - 21H HÀNG NGÀY)</h1>
+                    </div>
+                    <div class="sub-contact-container">
+                        <div class="sub-title-container">
+                            <strong>Tư vấn bán hàng</strong>
+                            <p>(Gọi hoặc chat Zalo)</p>
+                        </div>
+                        <div class="contact-box">
+                            <i class="fa-solid fa-comment-dots"></i>
+                            <p class="zalo-text">Zalo</p>
+                            <strong class="contact-phone-number">0123.456.789</strong>
+                            <p class="contact-address">Đồng Kè, Hoà Khánh Bắc</p>                            
+                        </div>
+                        <div class="contact-box">
+                            <i class="fa-solid fa-comment-dots"></i>
+                            <p class="zalo-text">Zalo</p>
+                            <strong class="contact-phone-number">0123.456.789</strong>
+                            <p class="contact-address">Đồng Kè, Hoà Khánh Bắc</p>                            
+                        </div>
+                        <div class="contact-box">
+                            <i class="fa-solid fa-comment-dots"></i>
+                            <p class="zalo-text">Zalo</p>
+                            <strong class="contact-phone-number">0123.456.789</strong>
+                            <p class="contact-address">Đồng Kè, Hoà Khánh Bắc</p>                            
+                        </div>
+                        <div class="contact-box">
+                            <i class="fa-solid fa-comment-dots"></i>
+                            <p class="zalo-text">Zalo</p>
+                            <strong class="contact-phone-number">0123.456.789</strong>
+                            <p class="contact-address">Đồng Kè, Hoà Khánh Bắc</p>                            
+                        </div>
+                        <div class="contact-box">
+                            <i class="fa-solid fa-comment-dots"></i>
+                            <p class="zalo-text">Zalo</p>
+                            <strong class="contact-phone-number">0123.456.789</strong>
+                            <p class="contact-address">Đồng Kè, Hoà Khánh Bắc</p>                            
+                        </div>
+                        <div class="contact-box">
+                            <i class="fa-solid fa-comment-dots"></i>
+                            <p class="zalo-text">Zalo</p>
+                            <strong class="contact-phone-number">0123.456.789</strong>
+                            <p class="contact-address">Đồng Kè, Hoà Khánh Bắc</p>                            
+                        </div>
+                    </div>
+                    <div class="sub-contact-container">
+                        <div class="sub-title-container">
+                            <strong>Tư vấn qua facebook</strong>
+                        </div>
+                        <div class="contact-box">
+                            <p class="parah-1">- Truy cập ngay </p>
+                            <a href="" class="url">Fanpages Dienthoaihay.vn</a>
+                            <p class="parah-2">để được cập nhật giá, thông tin mới nhất về các sản phẩm công nghệ.</p>
+                        </div>
+                        <div class="contact-box">
+                            <a href="" class="url">
+                                Ấn vào đây
+                                <i class="fa-solid fa-comment-dots"></i>
+                            </a>
+                            <p class="parah-2">để chat trực tiếp với nhân viên tư vấn</p>
+                        </div>
+                    </div>
+                    <div class="sub-contact-container">
+                        <div class="sub-title-container">
+                            <strong>Hỗ trợ cửa hàng</strong>
+                        </div>
+                        <div class="contact-box">
+                            <p>Cơ sở 1: </p>
+                            <strong>K2/9, Đồng Kè, Hoà Khánh Bắc, Liên Chiểu, Đà Nẵng</strong>
+                            <p>- Gọi ngay: </p>
+                            <strong class="contact-phone-number">0123.456.789</strong>
+                        </div>
+                        <div class="contact-box">
+                            <p>Cơ sở 2: </p>
+                            <strong>K2/9, Đồng Kè, Hoà Khánh Bắc, Liên Chiểu, Đà Nẵng</strong>
+                            <p>- Gọi ngay: </p>
+                            <strong class="contact-phone-number">0123.456.789</strong>
+                        </div>
+                        <div class="contact-box">
+                            <p>Cơ sở 3: </p>
+                            <strong>K2/9, Đồng Kè, Hoà Khánh Bắc, Liên Chiểu, Đà Nẵng</strong>
+                            <p>- Gọi ngay: </p>
+                            <strong class="contact-phone-number">0123.456.789</strong>
+                        </div>
+                        <div class="contact-box">
+                            <p>Cơ sở 4: </p>
+                            <strong>K2/9, Đồng Kè, Hoà Khánh Bắc, Liên Chiểu, Đà Nẵng</strong>
+                            <p>- Gọi ngay: </p>
+                            <strong class="contact-phone-number">0123.456.789</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-item">
+                <div class="item-icon-container">
+                    <i class="fa-regular fa-circle-check header-icon"></i>
+                </div>
+                <div class="item-title">
+                    <span class="sub1-item-title">Tra cứu</span>
+                    <span class="sub2-item-title">Sản phẩm</span>
+                </div>
+            </div>
+            <div class="header-item">
+                <div class="item-icon-container">
+                    <i class="fa-solid fa-cart-shopping header-icon"></i>
+                </div>
+                <div class="item-title">
+                    <span class="sub2-item-title">Giỏ hàng</span>
+                </div>
+            </div>
+           </div>
+        </div>
+    </header>
+    <div class="main-container">
+        <div class="grid">
+            <div class="grid__row">
+                <div class="grid__colum-2">
+                    <div class="sidenav-menu">
+                        <ul class="menu-list">
+                            <li class="menu-item">
+                                <img src="{% static 'img/xiaomi_logo.png'%}" alt="" class="item-icon">
+                                <span class="item-name">Xiaomi</span>
+                                <i class="fa-solid fa-chevron-right arrow-right"></i>
+                            </li>
+                            <li class="menu-item">
+                                <img src="{% static 'img/realmi_logo.png'%}" alt="" class="item-icon">
+                                <span class="item-name">Realme</span>
+                                <i class="fa-solid fa-chevron-right arrow-right"></i>
+                            </li>
+                            <li class="menu-item">
+                                <img src="{% static 'img/iQoo_logo.png'%}" alt="" class="item-icon">
+                                <span class="item-name">iQoo</span>
+                                <i class="fa-solid fa-chevron-right arrow-right"></i>
+                            </li>
+                            <li class="menu-item">
+                                <img src="{% static 'img/iPhone_logo.png'%}" alt="" class="item-icon">
+                                <span class="item-name">iPhone</span>
+                                <i class="fa-solid fa-chevron-right arrow-right"></i>
+                            </li>
+                            <li class="menu-item">
+                                <img src="{% static 'img/iPad_logo.png'%}" alt="" class="item-icon">
+                                <span class="item-name">iPad</span>
+                                <i class="fa-solid fa-chevron-right arrow-right"></i>
+                            </li>
+                            <li class="menu-item">
+                                <img src="{% static 'img/samsung_logo.png'%}" alt="" class="item-icon">
+                                <span class="item-name">Samsung</span>
+                                <i class="fa-solid fa-chevron-right arrow-right"></i>
+                            </li>
+                            <li class="menu-item">
+                                <img src="{% static 'img/vsmart_logo.png'%}" alt="" class="item-icon">
+                                <span class="item-name">VSmart</span>
+                                <i class="fa-solid fa-chevron-right arrow-right"></i>
+                            </li>
+                            <li class="menu-item">
+                                <img src="{% static 'img/headphone_logo.png'%}" alt="" class="item-icon">
+                                <span class="item-name">Phụ kiện - Đồ chơi</span>
+                                <i class="fa-solid fa-chevron-right arrow-right"></i>
+                            </li>
+                            <li class="menu-item">
+                                <img src="{% static 'img/samsung_logo.png'%}" alt="" class="item-icon">
+                                <span class="item-name">Tin tức</span>
+                                <i class="fa-solid fa-chevron-right arrow-right"></i>
+                            </li>
+                        </ul>
+                    </div>
+                   </div>
+                   <div class="grid__colum-10" style="display: flex">
+                        <div class="advertisement-container">
+                            <div class="advertisement-slider">
+                                <div class="advertisement-track">
+                                    <img src="{% static 'img/slider1.jpg'%}" alt="" class="advertisement-img">
+                                    <img src="{% static 'img/slider2.jpg'%}" alt="" class="advertisement-img">
+                                    <img src="{% static 'img/slider3.jpg'%}" alt="" class="advertisement-img">
+                                    <img src="{% static 'img/slider4.jpg'%}" alt="" class="advertisement-img">
+                                    <img src="{% static 'img/slider5.jpg'%}" alt="" class="advertisement-img">
+                                </div>
+                                <div class="advertisement-dots">
+                                    <span class="dot active" data-index="0"></span>
+                                    <span class="dot" data-index="1"></span>
+                                    <span class="dot" data-index="2"></span>
+                                    <span class="dot" data-index="3"></span>
+                                    <span class="dot" data-index="4"></span>
+                                </div>
+                                
+                            </div>
+
+                            <div class="advertisement-item-list">
+                                <div class="advertisement-item">
+                                    <div class="advertisement-item-desc">
+                                        Sẵn T.Việt Note 13 Series
+                                    </div>
+                                </div>
+                                <div class="advertisement-item">
+                                    <div class="advertisement-item-desc">
+                                        iQOO Z9 Turbo series
+                                    </div>
+                                </div>
+                                <div class="advertisement-item">
+                                    <div class="advertisement-item-desc">
+                                        iQOO NEO 10 5G Snap 8 Gen 3
+                                    </div>
+                                </div>
+                                <div class="advertisement-item">
+                                    <div class="advertisement-item-desc">
+                                        Oneplus ACE 3V 12.256GB
+                                    </div>
+                                </div>
+                                <div class="advertisement-item">
+                                    <div class="advertisement-item-desc">
+                                        Realme Q5 Pro 8.256GB
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="banner-container">
+                            <img src="{% static 'img/banner1.jpg'%}" alt="" class="banner-img">
+                            <img src="{% static 'img/banner2.jpg'%}" alt="" class="banner-img">
+                            <img src="{% static 'img/banner3.jpg'%}" alt="" class="banner-img">
+                        </div>
+                   </div>
+                   <img src="{% static 'img/ad-banner.png'%}" alt="" class="main-banner">
+                   <div class="brand-container">
+                        <div class="brand-item">
+                            <img src="{% static 'img/xiaomi-brand.png'%}" alt="" class="brand-img">
+                        </div>
+                        <div class="brand-item">
+                            <img src="{% static 'img/realme-brand.png'%}" alt="" class="brand-img">
+                        </div>
+                        <div class="brand-item">
+                            <img src="{% static 'img/apple-brand.png'%}" alt="" class="brand-img">
+                        </div>
+                        <div class="brand-item">
+                            <img src="{% static 'img/samsung-brand.png'%}" alt="" class="brand-img">
+                        </div>
+                   </div>
+            </div>
+            <div class="products-container">
+                <div class="product-forehead">
+                    <div class="product-title">
+                        <h1>ÔI RẺ QUÁ!</h1>
+                    </div>
+                    <div class="product-brand-list">
+                        <div class="product-brand-name">
+                            IPHONE
+                        </div>
+                        <div class="product-brand-name">
+                            XIAOMI
+                        </div>
+                        <div class="product-brand-name">
+                            SAMSUNG
+                        </div>
+                        <div class="product-brand-name">
+                            REALME
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="products-details-container">
+                    <div class="products-slider">
+                        {% for phone in top_phones %}
+                            {% if forloop.counter0|divisibleby:10 %}
+                                <div class="product-page">
+                            {% endif %}
+                
+                            <div class="product-item" data-id="{{ phone.id }}">
+                                <img src="/media/{{ phone.img }}" alt="" class="product-item-img">
+                                <span class="product-item-note">Đã Unlock Sim</span>
+                                <div class="product-item-sale">
+                                    <i class="fa-solid fa-fire"></i>
+                                    <span class="product-item-sale-text">Giảm</span>
+                                    <span class="product-item-sale-amount">1.000.000đ</span>
+                                </div>
+                                <span class="product-item-name">{{ phone.name }}</span>
+                                <div class="product-item-price">
+                                    <span class="product-item-new-price">{{ phone.price }}</span>
+                                    <span class="product-item-old-price">9.750.000đ</span>
+                                </div>
+                                <div class="product-item-vote">
+                                    <div class="product-item-stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <div class="product-item-vote-number">
+                                        <span>{{ phone.sold_quantity }}</span>
+                                        <span>Lượt bán</span>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            {% if forloop.counter|divisibleby:10 or forloop.last %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                
+                    <div class="chevron-left-container">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div class="chevron-right-container">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+        </div>
+        <div class="products-details">
+            <div class="product-details-forehead">
+                <div class="product-details-title">
+                    <div class="product-details-label">
+                        <img src="{% static 'img/icon_dth.png'%}" alt="" class="product-details-label-img">
+                        <img src="{% static 'img/apple_brand-nbg.png'%}" alt="" class="product-details-label-brand">
+                    </div>
+                    <h1 class="product-detail-name">IPHONE NỔI BẬT</h1>
+                </div>
+                <div class="product-details-distribution">
+                    <div class="product-details-category">
+                        <h1>iPhone XS/iPhone XS Max</h1>
+                    </div>
+                    <div class="product-details-category">
+                        <h1>iPhone 7/iPhone 7 Plus</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="products-details-container">
+                <div class="products-slider">
+                    {% for phone in top_iPhone_phones %}
+                        {% if forloop.counter0|divisibleby:10 %}
+                            <div class="product-page">
+                        {% endif %}
+            
+                        <div class="product-item" data-id="{{ phone.id }}">
+                            <img src="/media/{{ phone.img }}" alt="" class="product-item-img">
+                            <span class="product-item-note">Đã Unlock Sim</span>
+                            <div class="product-item-sale">
+                                <i class="fa-solid fa-fire"></i>
+                                <span class="product-item-sale-text">Giảm</span>
+                                <span class="product-item-sale-amount">1.000.000đ</span>
+                            </div>
+                            <span class="product-item-name">{{ phone.name }}</span>
+                            <div class="product-item-price">
+                                <span class="product-item-new-price">{{ phone.price }}</span>
+                                <span class="product-item-old-price">9.750.000đ</span>
+                            </div>
+                            <div class="product-item-vote">
+                                <div class="product-item-stars">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="product-item-vote-number">
+                                    <span>{{ phone.sold_quantity }}</span>
+                                    <span>Lượt bán</span>
+                                </div>
+                            </div>
+                        </div>
+            
+                        {% if forloop.counter|divisibleby:10 or forloop.last %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            
+                <div class="chevron-left-container">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="chevron-right-container">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+        <div class="products-details">
+            <div class="product-details-forehead">
+                <div class="product-details-title">
+                    <div class="product-details-label">
+                        <img src="{% static 'img/icon_dth.png'%}" alt="" class="product-details-label-img">
+                        <img src="{% static 'img/realme_brand-nbg.png'%}" alt="" class="product-details-label-brand">
+                    </div>
+                    <h1 class="product-detail-name">REALME NỔI BẬT</h1>
+                </div>
+            </div>
+            <div class="products-details-container">
+                <div class="products-slider">
+                    {% for phone in top_Realme_phones %}
+                        {% if forloop.counter0|divisibleby:10 %}
+                            <div class="product-page">
+                        {% endif %}
+            
+                        <div class="product-item" data-id="{{ phone.id }}">
+                            <img src="/media/{{ phone.img }}" alt="" class="product-item-img">
+                            <span class="product-item-note">Đã Unlock Sim</span>
+                            <div class="product-item-sale">
+                                <i class="fa-solid fa-fire"></i>
+                                <span class="product-item-sale-text">Giảm</span>
+                                <span class="product-item-sale-amount">1.000.000đ</span>
+                            </div>
+                            <span class="product-item-name">{{ phone.name }}</span>
+                            <div class="product-item-price">
+                                <span class="product-item-new-price">{{ phone.price }}</span>
+                                <span class="product-item-old-price">9.750.000đ</span>
+                            </div>
+                            <div class="product-item-vote">
+                                <div class="product-item-stars">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="product-item-vote-number">
+                                    <span>{{ phone.sold_quantity }}</span>
+                                    <span>Lượt bán</span>
+                                </div>
+                            </div>
+                        </div>
+            
+                        {% if forloop.counter|divisibleby:10 or forloop.last %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            
+                <div class="chevron-left-container">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="chevron-right-container">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+            
+        </div>
+        {% comment %} <div class="products-details">
+            <div class="product-details-forehead">
+                <div class="product-details-title">
+                    <div class="product-details-label">
+                        <img src="{% static 'img/icon_dth.png'%}" alt="" class="product-details-label-img">
+                        <img src="{% static 'img/apple_brand-nbg.png'%}" alt="" class="product-details-label-brand">
+                    </div>
+                    <h1 class="product-detail-name">IPAD NỔI BẬT</h1>
+                </div>
+                <div class="product-details-distribution">
+                    <div class="product-details-category">
+                        <h1>iPad Mini</h1>
+                    </div>
+                    <div class="product-details-category">
+                        <h1>iPad 9.7</h1>
+                    </div>
+                    <div class="product-details-category">
+                        <h1>iPad 2/3/4</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="products-details-container">
+                <div class="product-item">
+                    <img src="{% static 'img/iphone-16-plus---hồng_1726074852.png'%}" alt="" class="product-item-img">
+                    <span class="product-item-note">Đã Unlock Sim</span>
+                    <div class="product-item-sale">
+                        <i class="fa-solid fa-fire"></i>
+                        <span class="product-item-sale-text">Giảm</span>
+                        <span class="product-item-sale-amount">1.000.000đ</span>
+                    </div>
+                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
+                    <div class="product-item-price">
+                        <span class="product-item-new-price">8.750.000đ</span>
+                        <span class="product-item-old-price">9.750.0000đ</span>
+                    </div>
+                    <div class="product-item-vote">
+                        <div class="product-item-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="product-item-vote-number">
+                            <span>1</span>
+                            <span>đánh giá</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'img/iphone-16-pro---titan-tự-nhiên_1726075065.png'%}" alt="" class="product-item-img">
+                    <span class="product-item-note">Đã Unlock Sim</span>
+                    <div class="product-item-sale">
+                        <i class="fa-solid fa-fire"></i>
+                        <span class="product-item-sale-text">Giảm</span>
+                        <span class="product-item-sale-amount">1.000.000đ</span>
+                    </div>
+                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
+                    <div class="product-item-price">
+                        <span class="product-item-new-price">8.750.000đ</span>
+                        <span class="product-item-old-price">9.750.0000đ</span>
+                    </div>
+                    <div class="product-item-vote">
+                        <div class="product-item-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="product-item-vote-number">
+                            <span>1</span>
+                            <span>đánh giá</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'img/iphone-16-pro-max---titan-sa-mạc_1726075323.jpg'%}" alt="" class="product-item-img">
+                    <span class="product-item-note">Đã Unlock Sim</span>
+                    <div class="product-item-sale">
+                        <i class="fa-solid fa-fire"></i>
+                        <span class="product-item-sale-text">Giảm</span>
+                        <span class="product-item-sale-amount">1.000.000đ</span>
+                    </div>
+                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
+                    <div class="product-item-price">
+                        <span class="product-item-new-price">8.750.000đ</span>
+                        <span class="product-item-old-price">9.750.0000đ</span>
+                    </div>
+                    <div class="product-item-vote">
+                        <div class="product-item-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="product-item-vote-number">
+                            <span>1</span>
+                            <span>đánh giá</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'img/vang_1662970924.jpg'%}" alt="" class="product-item-img">
+                    <span class="product-item-note">Đã Unlock Sim</span>
+                    <div class="product-item-sale">
+                        <i class="fa-solid fa-fire"></i>
+                        <span class="product-item-sale-text">Giảm</span>
+                        <span class="product-item-sale-amount">1.000.000đ</span>
+                    </div>
+                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
+                    <div class="product-item-price">
+                        <span class="product-item-new-price">8.750.000đ</span>
+                        <span class="product-item-old-price">9.750.0000đ</span>
+                    </div>
+                    <div class="product-item-vote">
+                        <div class="product-item-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="product-item-vote-number">
+                            <span>1</span>
+                            <span>đánh giá</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'img/iphone-16---xanh-mòng-két_1726074714.png'%}" alt="" class="product-item-img">
+                    <span class="product-item-note">Đã Unlock Sim</span>
+                    <div class="product-item-sale">
+                        <i class="fa-solid fa-fire"></i>
+                        <span class="product-item-sale-text">Giảm</span>
+                        <span class="product-item-sale-amount">1.000.000đ</span>
+                    </div>
+                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
+                    <div class="product-item-price">
+                        <span class="product-item-new-price">8.750.000đ</span>
+                        <span class="product-item-old-price">9.750.0000đ</span>
+                    </div>
+                    <div class="product-item-vote">
+                        <div class="product-item-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="product-item-vote-number">
+                            <span>1</span>
+                            <span>đánh giá</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'img/iphone-16-plus---hồng_1726074852.png'%}" alt="" class="product-item-img">
+                    <span class="product-item-note">Đã Unlock Sim</span>
+                    <div class="product-item-sale">
+                        <i class="fa-solid fa-fire"></i>
+                        <span class="product-item-sale-text">Giảm</span>
+                        <span class="product-item-sale-amount">1.000.000đ</span>
+                    </div>
+                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
+                    <div class="product-item-price">
+                        <span class="product-item-new-price">8.750.000đ</span>
+                        <span class="product-item-old-price">9.750.0000đ</span>
+                    </div>
+                    <div class="product-item-vote">
+                        <div class="product-item-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="product-item-vote-number">
+                            <span>1</span>
+                            <span>đánh giá</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'img/iphone-16-pro---titan-tự-nhiên_1726075065.png'%}" alt="" class="product-item-img">
+                    <span class="product-item-note">Đã Unlock Sim</span>
+                    <div class="product-item-sale">
+                        <i class="fa-solid fa-fire"></i>
+                        <span class="product-item-sale-text">Giảm</span>
+                        <span class="product-item-sale-amount">1.000.000đ</span>
+                    </div>
+                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
+                    <div class="product-item-price">
+                        <span class="product-item-new-price">8.750.000đ</span>
+                        <span class="product-item-old-price">9.750.0000đ</span>
+                    </div>
+                    <div class="product-item-vote">
+                        <div class="product-item-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="product-item-vote-number">
+                            <span>1</span>
+                            <span>đánh giá</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'img/iphone-16-pro-max---titan-sa-mạc_1726075323.jpg'%}" alt="" class="product-item-img">
+                    <span class="product-item-note">Đã Unlock Sim</span>
+                    <div class="product-item-sale">
+                        <i class="fa-solid fa-fire"></i>
+                        <span class="product-item-sale-text">Giảm</span>
+                        <span class="product-item-sale-amount">1.000.000đ</span>
+                    </div>
+                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
+                    <div class="product-item-price">
+                        <span class="product-item-new-price">8.750.000đ</span>
+                        <span class="product-item-old-price">9.750.0000đ</span>
+                    </div>
+                    <div class="product-item-vote">
+                        <div class="product-item-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="product-item-vote-number">
+                            <span>1</span>
+                            <span>đánh giá</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'img/vang_1662970924.jpg'%}" alt="" class="product-item-img">
+                    <span class="product-item-note">Đã Unlock Sim</span>
+                    <div class="product-item-sale">
+                        <i class="fa-solid fa-fire"></i>
+                        <span class="product-item-sale-text">Giảm</span>
+                        <span class="product-item-sale-amount">1.000.000đ</span>
+                    </div>
+                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
+                    <div class="product-item-price">
+                        <span class="product-item-new-price">8.750.000đ</span>
+                        <span class="product-item-old-price">9.750.0000đ</span>
+                    </div>
+                    <div class="product-item-vote">
+                        <div class="product-item-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="product-item-vote-number">
+                            <span>1</span>
+                            <span>đánh giá</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'img/iphone-16-pro---titan-tự-nhiên_1726075065.png'%}" alt="" class="product-item-img">
+                    <span class="product-item-note">Đã Unlock Sim</span>
+                    <div class="product-item-sale">
+                        <i class="fa-solid fa-fire"></i>
+                        <span class="product-item-sale-text">Giảm</span>
+                        <span class="product-item-sale-amount">1.000.000đ</span>
+                    </div>
+                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
+                    <div class="product-item-price">
+                        <span class="product-item-new-price">8.750.000đ</span>
+                        <span class="product-item-old-price">9.750.0000đ</span>
+                    </div>
+                    <div class="product-item-vote">
+                        <div class="product-item-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="product-item-vote-number">
+                            <span>1</span>
+                            <span>đánh giá</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chevron-left-container">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="chevron-right-container">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div> {% endcomment %}
+        <div class="products-details">
+            <div class="product-details-forehead">
+                <div class="product-details-title">
+                    <div class="product-details-label">
+                        <img src="{% static 'img/icon_dth.png'%}" alt="" class="product-details-label-img">
+                        <img src="{% static 'img/xiaomi_brand-nbg.png'%}" alt="" class="product-details-label-brand">
+                    </div>
+                    <h1 class="product-detail-name">XIAOMI NỔI BẬT</h1>
+                </div>
+                <div class="product-details-distribution">
+                    <div class="product-details-category">
+                        <h1>Mi</h1>
+                    </div>
+                    <div class="product-details-category">
+                        <h1>Redmi</h1>
+                    </div>
+                    <div class="product-details-category">
+                        <h1>Redmi Note</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="products-details-container">
+                <div class="products-slider">
+                    {% for phone in top_Xiaomi_phones %}
+                        {% if forloop.counter0|divisibleby:10 %}
+                            <div class="product-page">
+                        {% endif %}
+            
+                        <div class="product-item" data-id="{{ phone.id }}">
+                            <img src="/media/{{ phone.img }}" alt="" class="product-item-img">
+                            <span class="product-item-note">Đã Unlock Sim</span>
+                            <div class="product-item-sale">
+                                <i class="fa-solid fa-fire"></i>
+                                <span class="product-item-sale-text">Giảm</span>
+                                <span class="product-item-sale-amount">1.000.000đ</span>
+                            </div>
+                            <span class="product-item-name">{{ phone.name }}</span>
+                            <div class="product-item-price">
+                                <span class="product-item-new-price">{{ phone.price }}</span>
+                                <span class="product-item-old-price">9.750.000đ</span>
+                            </div>
+                            <div class="product-item-vote">
+                                <div class="product-item-stars">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="product-item-vote-number">
+                                    <span>{{ phone.sold_quantity }}</span>
+                                    <span>Lượt bán</span>
+                                </div>
+                            </div>
+                        </div>
+            
+                        {% if forloop.counter|divisibleby:10 or forloop.last %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            
+                <div class="chevron-left-container">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="chevron-right-container">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+    <div class="grid">
+            <div class="footer-container">
+                <div class="footer-item">
+                    <h1 class="footer-item-header">VỀ CHÚNG TÔI</h1>
+                    <span>Tin tức</span>
+                    <span>Giới thiệu</span>
+                    <span>Tuyển dụng</span>
+                    <span>Hệ thống đại lý</span>
+                </div>
+                <div class="footer-item">
+                    <h1 class="footer-item-header">HỖ TRỢ KHÁCH HÀNG</h1>
+                    <span>Phương thức thanh toán</span>
+                    <span>Chính sách bảo hành - đổi trả</span>
+                    <span>Giải đáp mua hàng online</span>
+                   </div>
+                <div class="footer-item">
+                    <h1 class="footer-item-header">HỆ THỐNG CỬA HÀNG</h1>
+                    <span class="footer-item-branch">
+                        <span class="footer-item-branch-detail">
+                            <strong>Cơ sở 1: </strong>
+                            <p>K2/9, Đồng Kè,Hoà Khánh Bắc, Liên Chiểu, Đà Nẵng</p>
+                        </span>
+                        <span class="footer-item-hotline">
+                            <strong>Hotline: </strong>
+                            <p>0123456789</p>
+                        </span>
+                    </span>
+                    <span class="footer-item-branch">
+                        <span class="footer-item-branch-detail">
+                            <strong>Cơ sở 1: </strong>
+                            <p>K2/9, Đồng Kè,Hoà Khánh Bắc, Liên Chiểu, Đà Nẵng</p>
+                        </span>
+                        <span class="footer-item-hotline">
+                            <strong>Hotline: </strong>
+                            <p>0123456789</p>
+                        </span>
+                    </span>
+                    <span class="footer-item-branch">
+                        <span class="footer-item-branch-detail">
+                            <strong>Cơ sở 1: </strong>
+                            <p>K2/9, Đồng Kè,Hoà Khánh Bắc, Liên Chiểu, Đà Nẵng</p>
+                        </span>
+                        <span class="footer-item-hotline">
+                            <strong>Hotline: </strong>
+                            <p>0123456789</p>
+                        </span>
+                    </span>
+                </div>
+                <div class="footer-item">
+                    <h1>PHƯƠNG THỨC THANH TOÁN</h1>
+                    <div class="footer-item-payment">
+                        <img src="{% static 'img/momo_1726113661.jpg'%}" alt="" class="footer-item-payment-img">
+                        <img src="{% static 'img/viettel-pay_1726113969.jpg'%}" alt="" class="footer-item-payment-img">
+                        <img src="{% static 'img/zalo-pay_1726113839.jpg'%}" alt="" class="footer-item-payment-img">
+                        <img src="{% static 'img/kisspng-visa.jpg'%}" alt="" class="footer-item-payment-img">
+                    </div>
+                </div>
+                <div class="footer-item">
+                    <h1 class="footer-item-header">HÌNH THỨC VẬN CHUYỂN</h1>
+                    <img src="{% static 'img/giaohang_1629813393.jpg'%}" alt="" class="footer-item-ship-img">
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+       document.addEventListener("DOMContentLoaded", function () {
+        const track = document.querySelector(".advertisement-track");
+        const dots = document.querySelectorAll(".dot");
+        const images = document.querySelectorAll(".advertisement-img");
+        const items = document.querySelectorAll(".advertisement-item"); 
+        let index = 0;
+        let interval;
+
+        function slideTo(i) {
+            index = i;
+            track.style.transform = `translateX(-${index * 671}px)`;
+            updateDots();
+        }
+
+        function updateDots() {
+            dots.forEach(dot => dot.classList.remove("active"));
+            dots[index].classList.add("active");
+        }
+
+        function autoSlide() {
+            interval = setInterval(() => {
+                index = (index + 1) % images.length;
+                slideTo(index);
+            }, 3000);
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener("click", function () {
+                clearInterval(interval);
+                slideTo(Number(this.dataset.index));
+                autoSlide();
+            });
+        });
+
+        items.forEach((item, i) => {
+            item.addEventListener("click", function () {
+                clearInterval(interval);
+                slideTo(i);
+                autoSlide();
+            });
+        });
+
+        autoSlide(); 
+    });
+
+    document.querySelectorAll('.product-item').forEach(item => {
+        item.addEventListener('click', function () {
+            const phoneId = this.getAttribute('data-id');
+            if (phoneId) {
+                window.location.href = `/products/phone/${phoneId}`;
+            }
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+    const sliders = document.querySelectorAll(".products-slider"); // Select all sliders
+
+    sliders.forEach((slider) => {
+        const pages = slider.querySelectorAll(".product-page");
+        const container = slider.closest(".products-details-container"); // Get the parent container
+        const prevBtn = container.querySelector(".chevron-left-container");
+        const nextBtn = container.querySelector(".chevron-right-container");
+        const products = slider.querySelectorAll(".product-item");
+        let currentPage = 0;
+        const pageWidth = slider.offsetWidth; // Get the width of the container
+
+        // Show or hide chevrons based on the number of products only on hover
+        container.addEventListener("mouseenter", function () {
+            if (products.length > 10) {
+                prevBtn.style.display = "block";
+                nextBtn.style.display = "block";
+            }
+        });
+
+        container.addEventListener("mouseleave", function () {
+            prevBtn.style.display = "none";
+            nextBtn.style.display = "none";
+        });
+
+        function slideToPage(index) {
+            slider.style.transform = `translateX(-${index * pageWidth}px)`; // Move the slider
+        }
+
+        nextBtn.addEventListener("click", function () {
+            if (currentPage < pages.length - 1) {
+                currentPage++;
+                slideToPage(currentPage);
+            }
+        });
+
+        prevBtn.addEventListener("click", function () {
+            if (currentPage > 0) {
+                currentPage--;
+                slideToPage(currentPage);
+            }
+        });
+
+        window.addEventListener("resize", function () {
+            slider.style.transition = "none"; // Disable transition during resize
+            slideToPage(currentPage);
+            setTimeout(() => {
+                slider.style.transition = "transform 0.5s ease-in-out"; // Re-enable transition after resize
+            }, 100);
+        });
+    });
+});
+
+
+
+    </script>
+</body>
+</html>

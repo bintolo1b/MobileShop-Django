@@ -13,6 +13,8 @@ class Client(models.Model):
     username = models.OneToOneField(CustomUser, on_delete=models.PROTECT, to_field='username', db_column='username')
     class Meta:
         db_table = "client"
+    def __str__(self):
+        return self.username.username
 
 class Staff(models.Model):
     username = models.OneToOneField(CustomUser, on_delete=models.PROTECT, to_field='username', db_column='username')
