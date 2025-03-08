@@ -145,7 +145,7 @@
                     <span class="sub2-item-title">Sản phẩm</span>
                 </div>
             </div>
-            <div class="header-item">
+            <div class="header-item user-item">
                 <div class="item-icon-container">
                     <i class="fa-solid fa-cart-shopping header-icon"></i>
                 </div>
@@ -153,6 +153,21 @@
                     <span class="sub2-item-title">Giỏ hàng</span>
                 </div>
             </div>
+            <div class="header-item">
+                <a href="/login" id="loginLink">Đăng nhập</a>
+                <span id="usernameDisplay" style="display: none;">User</span>
+                <div id="userPopup" class="popup">
+                    <div class="info-item">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Thông tin cá nhân
+                    </div>
+                    <button id="logoutButton">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </button>
+                </div>
+            </div>
+                  
            </div>
         </div>
     </header>
@@ -913,122 +928,6 @@
             </div>
         </div>
     </footer>
-    <script>
-       document.addEventListener("DOMContentLoaded", function () {
-        const track = document.querySelector(".advertisement-track");
-        const dots = document.querySelectorAll(".dot");
-        const images = document.querySelectorAll(".advertisement-img");
-        const items = document.querySelectorAll(".advertisement-item"); 
-        let index = 0;
-        let interval;
-
-        function slideTo(i) {
-            index = i;
-            track.style.transform = `translateX(-${index * 671}px)`;
-            updateDots();
-        }
-
-        function updateDots() {
-            dots.forEach(dot => dot.classList.remove("active"));
-            dots[index].classList.add("active");
-        }
-
-        function autoSlide() {
-            interval = setInterval(() => {
-                index = (index + 1) % images.length;
-                slideTo(index);
-            }, 3000);
-        }
-
-        dots.forEach(dot => {
-            dot.addEventListener("click", function () {
-                clearInterval(interval);
-                slideTo(Number(this.dataset.index));
-                autoSlide();
-            });
-        });
-
-        items.forEach((item, i) => {
-            item.addEventListener("click", function () {
-                clearInterval(interval);
-                slideTo(i);
-                autoSlide();
-            });
-        });
-
-        autoSlide(); 
-    });
-
-    document.querySelectorAll('.product-item').forEach(item => {
-        item.addEventListener('click', function () {
-            const phoneId = this.getAttribute('data-id');
-            if (phoneId) {
-                window.location.href = `/products/phone/${phoneId}`;
-            }
-        });
-    });
-    document.addEventListener("DOMContentLoaded", function () {
-    const sliders = document.querySelectorAll(".products-slider"); // Select all sliders
-
-    sliders.forEach((slider) => {
-        const pages = slider.querySelectorAll(".product-page");
-        const container = slider.closest(".products-details-container"); // Get the parent container
-        const prevBtn = container.querySelector(".chevron-left-container");
-        const nextBtn = container.querySelector(".chevron-right-container");
-        const products = slider.querySelectorAll(".product-item");
-        let currentPage = 0;
-        const pageWidth = slider.offsetWidth; // Get the width of the container
-
-        // Show or hide chevrons based on the number of products only on hover
-        container.addEventListener("mouseenter", function () {
-            if (products.length > 10) {
-                prevBtn.style.display = "block";
-                nextBtn.style.display = "block";
-            }
-        });
-
-        container.addEventListener("mouseleave", function () {
-            prevBtn.style.display = "none";
-            nextBtn.style.display = "none";
-        });
-
-        function slideToPage(index) {
-            slider.style.transform = `translateX(-${index * pageWidth}px)`; // Move the slider
-        }
-
-        nextBtn.addEventListener("click", function () {
-            if (currentPage < pages.length - 1) {
-                currentPage++;
-                slideToPage(currentPage);
-            }
-        });
-
-        prevBtn.addEventListener("click", function () {
-            if (currentPage > 0) {
-                currentPage--;
-                slideToPage(currentPage);
-            }
-        });
-
-        window.addEventListener("resize", function () {
-            slider.style.transition = "none"; // Disable transition during resize
-            slideToPage(currentPage);
-            setTimeout(() => {
-                slider.style.transition = "transform 0.5s ease-in-out"; // Re-enable transition after resize
-            }, 100);
-        });
-    });
-});
-
-    document.querySelectorAll('.menu-item').forEach(item => {
-        item.addEventListener('click', function () {
-            const brand = item.querySelectorAll('.item-name')[0].textContent;
-            if (brand) {
-                window.location.href = `/products/phonebybrand/?brand=${brand}&page=1`;
-            }
-        });
-    });
-
-    </script>
+<script src="{% static 'js/home.js' %}"></script>
 </body>
 </html>

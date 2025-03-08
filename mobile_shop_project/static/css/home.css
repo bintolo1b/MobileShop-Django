@@ -56,6 +56,75 @@ header {
     position: relative;
 }
 
+.header-item>a {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+}
+
+.user-item {
+    position: relative;
+}
+
+.popup {
+    right: 155px;
+    top: 65px;
+    position: absolute;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    display: none;
+}
+
+.popup.show {
+    display: block;
+}
+
+
+.popup i {
+    margin-right: 5px;
+}
+
+.info-item {
+    color: #333;
+    font-size: 14px;
+    background-color: transparent;
+    padding: 10px 15px 10px;
+}
+
+.header-item #logoutButton {
+    color: #333;
+    font-size: 14px;
+    background-color: transparent;
+    border: none;
+    padding: 10px 65px 10px 15px;
+}
+
+.info-item:hover,
+#logoutButton:hover {
+    cursor: pointer;
+    background-color: #dcdcdc;
+}
+
+.info-item:hover {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#logoutButton:hover {
+    border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#usernameDisplay {
+    color: white;
+    font-size: 15px;
+}
+
+#usernameDisplay:hover {
+    cursor: pointer;
+}
+
 .item-title:hover {
     cursor: pointer;
 }
