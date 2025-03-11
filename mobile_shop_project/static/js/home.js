@@ -116,45 +116,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 const loginLink = document.querySelector(".header-item a[href='/login']");
 const logoutButton = document.querySelector("#logoutButton");
 
-// async function checkAuthStatus() {
-// try {
-//     const response = await fetch("/checklogin/", { credentials: "include" });
+const usernameDisplay = document.getElementById("usernameDisplay");
+const userPopup = document.getElementById("userPopup");
 
-//     if (response.ok) {
-//         const data = await response.json();
-//         const loginLink = document.getElementById("loginLink");
-//         const usernameDisplay = document.getElementById("usernameDisplay");
-//         const logoutButton = document.getElementById("logoutButton");
-
-//         if (data.user) {  
-//             loginLink.style.display = "none";  
-//             usernameDisplay.textContent = data.user; 
-//             usernameDisplay.style.display = "inline-block";
-//             logoutButton.style.display = "inline-block"; 
-//         } else {  
-//             loginLink.style.display = "inline-block"; 
-//             usernameDisplay.style.display = "none"; 
-//             logoutButton.style.display = "none"; 
-//         }
-//     } else {
-//         console.error("🚨 Lỗi: Phản hồi từ server không hợp lệ.");
-//     }
-// } catch (error) {
-//     console.error("🚨 Lỗi khi kiểm tra trạng thái đăng nhập:", error);
-// }
-// }
-
-// document.addEventListener("DOMContentLoaded", checkAuthStatus);
-
-// await checkAuthStatus();
-
-// const usernameDisplay = document.getElementById("usernameDisplay");
-// const userPopup = document.getElementById("userPopup");
-
-// usernameDisplay.addEventListener("click", function (event) {
-//     event.stopPropagation(); 
-//     userPopup.classList.add("show");
-// });
+usernameDisplay.addEventListener("click", function (event) {
+    event.stopPropagation(); 
+    userPopup.classList.add("show");
+});
 
 document.addEventListener("click", function (event) {
     if (!userPopup.contains(event.target) && event.target !== usernameDisplay) {

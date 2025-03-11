@@ -9,27 +9,43 @@
     <title>Document</title>
 </head>
 <body>
-  <div class="login-box">
+  <div class="signup-box">
     <h2>Đăng ký</h2>
     <form>
       <div class="user-box">
-        <input type="text" name="" required="">
+        <input type="text" name="" required="" class="username">
         <label>Tên người dùng</label>
       </div>
       <div class="user-box">
-        <input type="text" name="" required="">
-        <label>Số điện thoại</label>
-      </div>
-      <div class="user-box">
-        <input type="password" name="" required="">
+        <input type="password" name="" required="" class="password">
         <label>Mật khẩu</label>
       </div>
       <div class="user-box">
-        <input type="password" name="" required="">
+        <input type="password" name="" required="" class="confirm_password">
         <label>Xác nhận mật khẩu</label>
       </div>
       <div class="user-box">
-        <a href="">
+        <input type="text" name="" required="" class="firstname">
+        <label>Tên</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="" required="" class="lastname">
+        <label>Họ</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="" required="" class="email">
+        <label>Email</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="" required="" class="phone">
+        <label>Số điện thoại</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="" required="" class="address">
+        <label>Địa chỉ</label>
+      </div>
+      <div class="user-box">
+        <a href="/login">
           <i class="fa-solid fa-backward"></i>
           Đăng nhập
         </a>
@@ -44,4 +60,5 @@
     </form>
   </div>
 </body>
+<script src="{% static 'js/signup.js' %}"></script>
 </html>
