@@ -154,8 +154,10 @@
                 </div>
             </div>
             <div class="header-item">
+                {% if not request.session.username %}
                 <a href="/login" id="loginLink">Đăng nhập</a>
-                <span id="usernameDisplay" style="display: none;">User</span>
+                {% else %}
+                <span id="usernameDisplay">{{ request.session.username }}</span>
                 <div id="userPopup" class="popup">
                     <div class="info-item">
                         <i class="fa-solid fa-circle-info"></i>
@@ -166,6 +168,7 @@
                         Đăng xuất
                     </button>
                 </div>
+                {% endif %}
             </div>
                   
            </div>

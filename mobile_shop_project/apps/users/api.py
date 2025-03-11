@@ -17,6 +17,8 @@ def login_view(request):
     print(user)
 
     if user:
+        request.session['username'] = username
+        
         login(request, user)  # 👉 Lưu trạng thái đăng nhập vào session
         return Response({"message": "Login successful"})
     
