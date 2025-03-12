@@ -255,7 +255,7 @@
                             <span class="quantity">{{item.quantity}}</span>
                             <button class="quantity-btn">+</button>
                         </div>
-                        <button class="remove-btn">Xóa</button>
+                        <button class="remove-btn" data-variant-id="{{item.variant_id}}">Xóa</button>
                     </div>
                 </div>
             {% endfor %}
@@ -282,6 +282,58 @@
             const brand = item.querySelectorAll('.item-name')[0].textContent;
             if (brand) {
                 window.location.href = `/products/phonebybrand/?brand=${brand}&page=1`;
+            }
+        });
+    });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    document.querySelectorAll('.remove-btn').forEach(button => {
+        button.addEventListener('click', async function() {
+            const productDiv = this.closest('.product');
+            const variantId = this.getAttribute('data-variant-id');
+            
+            try {
+                const response = await fetch(`/cart/api/remove-from-cart/${variantId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    credentials: 'include'
+                });
+    
+                if (response.ok) {
+                    // Xóa sản phẩm khỏi giao diện
+                    productDiv.remove();
+                    
+                    // Cập nhật tổng tiền
+                    const data = await response.json();
+                    const totalPriceElement = document.querySelector('.total-price');
+                    if (totalPriceElement) {
+                        location.reload(); // Reload để cập nhật tổng tiền
+                    }
+                } else if (response.status === 401) {
+                    alert('Vui lòng đăng nhập để xóa sản phẩm');
+                    window.location.href = '/login';
+                } else {
+                    alert('Có lỗi xảy ra khi xóa sản phẩm');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra khi xóa sản phẩm');
             }
         });
     });

@@ -327,7 +327,7 @@
                     </div>
                     <div class="btn-add">
                         <button class="rect1">MUA NGAY</button>
-                        <button class="rect2"> <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ</button>
+                        <button class="rect2" id="add-to-cart-btn"> <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ</button>
                     </div>
                     <div class="btn-add">
                         <button class="rect3">MUA NGAY TRẢ SAU (Trả góp online, duyệt từ xa)</button>
@@ -622,7 +622,7 @@
         </div>
 
         <script>
-            function changeImage(src) {
+            {% comment %} function changeImage(src) {
                 document.getElementById('main-image').src = src;
             }
             document.querySelectorAll('.color-options input').forEach(input => {
@@ -633,6 +633,33 @@
                 console.log(newImage)
             });
             });
+            let selectedVariantId = null; {% endcomment %}
+
+            // Add data attributes to store variant info
+            {% for variant in phone_variants_distinct_configuration %}
+                document.querySelector('#memory-{{ variant.configuration.ram }}-{{ variant.configuration.rom }}')
+                    .setAttribute('data-variants', JSON.stringify({
+                        {% for v in phone_variants %}
+                            {% if v.configuration.ram == variant.configuration.ram and v.configuration.rom == variant.configuration.rom %}
+                                '{{v.color}}': {{v.id}},
+                            {% endif %}
+                        {% endfor %}
+                    }));
+            {% endfor %}
+
+            // Update selectedVariantId when options change
+            {% comment %} function updateSelectedVariant() {
+                const selectedColor = document.querySelector('input[name="color"]:checked');
+                const selectedMemory = document.querySelector('input[name="memory"]:checked');
+                
+                if (selectedColor && selectedMemory) {
+                    const variants = JSON.parse(selectedMemory.getAttribute('data-variants'));
+                    selectedVariantId = variants[selectedColor.value];
+                }
+            }
+
+            document.querySelectorAll('input[name="color"], input[name="memory"]')
+                .forEach(input => input.addEventListener('change', updateSelectedVariant)); {% endcomment %}
         </script>
     
     <script src="{% static 'js/home.js' %}"></script>

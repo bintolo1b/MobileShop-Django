@@ -227,7 +227,6 @@ select option {
 .menu-wrapper {
     display: flex;
     align-items: flex-start;
-    padding-top: 60px;
     gap: 10px; 
     justify-content: center;
     width: 100%;
@@ -323,7 +322,8 @@ select option {
 .cart-container {
     max-width: 1000px;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 20px;   
+    margin-bottom: 20px;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;

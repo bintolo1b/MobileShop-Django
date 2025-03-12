@@ -26,6 +26,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const priceElement = document.getElementById("product-price");
     const statusElemnt= document.getElementById("status-info");
     const phoneId = document.getElementById("prodId");
+    let selectedVariantId = null;
+
+    document.querySelectorAll('.color-options input').forEach(input => {
+        input.addEventListener('change', function () {
+            let selectedLabel = this.closest('label');
+            let newImage = selectedLabel.getAttribute('data-image');
+            document.getElementById("main-image").src = newImage;
+        });
+    });
 
     function getSelectedValue(name) {
         const selected = document.querySelector(`input[name="${name}"]:checked`);
@@ -49,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log("Dữ liệu API nhận được:", data);
                 priceElement.textContent = data.price+"đ";
                 statusElemnt.textContent=data.stock;
+                
             })
             .catch(error => console.error("Lỗi khi fetch dữ liệu:", error));
     }
@@ -57,6 +67,78 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchProductData();
     memoryOptions.forEach(input => input.addEventListener("change", fetchProductData));
     colorOptions.forEach(input => input.addEventListener("change", fetchProductData));
+
+
+    function initializeVariants() {
+        document.querySelectorAll('[id^="memory-"]').forEach(element => {
+            const dataVariants = element.getAttribute('data-variants');
+            if (dataVariants) {
+                console.log(`Loaded variants for ${element.id}:`, dataVariants);
+            }
+        });
+    }
+
+    function updateSelectedVariant() {
+        const selectedColor = document.querySelector('input[name="color"]:checked');
+        const selectedMemory = document.querySelector('input[name="memory"]:checked');
+        
+        if (selectedColor && selectedMemory) {
+            const variants = JSON.parse(selectedMemory.getAttribute('data-variants'));
+            selectedVariantId = variants[selectedColor.value];
+            console.log('Selected variant ID:', selectedVariantId);
+        }
+    }
+
+    // Thêm event listeners cho color và memory inputs
+    document.querySelectorAll('input[name="color"], input[name="memory"]')
+        .forEach(input => input.addEventListener('change', updateSelectedVariant));
+
+    initializeVariants();
+    updateSelectedVariant();
+
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    
+    addToCartBtn.addEventListener('click', async function() {
+        console.log("Clicking add to cart with variant ID:", selectedVariantId);
+        if (!selectedVariantId) {
+            alert('Vui lòng chọn màu sắc và bộ nhớ');
+            return;
+        }
+    
+        const apiUrl = 'http://127.0.0.1:8000/cart/add-to-cart/';
+        console.log("Cart API URL:", apiUrl);
+        
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                phone_variant_id: selectedVariantId,
+                quantity: 1
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Đã thêm sản phẩm vào giỏ hàng');
+            } else if (response.status === 401) {
+                alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng');
+                window.location.href = '/login';
+            } else {
+                response.text().then(text => {
+                    console.error("Error response:", text);
+                    alert(`Có lỗi xảy ra khi thêm vào giỏ hàng: ${text}`);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Có lỗi xảy ra khi thêm vào giỏ hàng');
+        });
+    });
+
 
 });
 function toggleReview() {
@@ -70,4 +152,18 @@ function toggleReview() {
         content.classList.add("expanded");
         button.textContent = "Ẩn bớt";
     }
+}
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }

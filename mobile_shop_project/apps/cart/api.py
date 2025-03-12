@@ -41,4 +41,17 @@ def addToCart_view(request):
         return Response({"message": "Không tìm thấy sản phẩm"}, status=404)
     except Exception as e:
         return Response({"message": f"Lỗi: {str(e)}"}, status=400)
+
+@api_view(["DELETE"])
+def removeFromCart_view(request, variant_id):
+    if not request.user.is_authenticated:
+        return Response({"message": "Vui lòng đăng nhập"}, status=401)
     
+    try:
+        client = Client.objects.get(username=request.user)
+        cart = Cart.objects.get(client=client)
+        cart_item = Cart_PhoneVariant.objects.get(cart=cart, phone_variant_id=variant_id)
+        cart_item.delete()
+        return Response({"message": "Đã xóa sản phẩm khỏi giỏ hàng"}, status=200)
+    except (Client.DoesNotExist, Cart.DoesNotExist, Cart_PhoneVariant.DoesNotExist):
+        return Response({"message": "Không tìm thấy sản phẩm trong giỏ hàng"}, status=404)
