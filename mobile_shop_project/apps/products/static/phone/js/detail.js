@@ -45,23 +45,24 @@ document.addEventListener('DOMContentLoaded', function () {
         const ram = getSelectedValue("memory")?.split("-")[0];
         const rom = getSelectedValue("memory")?.split("-")[1];
         const color = getSelectedValue("color");
-
+    
         if (!ram || !rom || !color) {
             return;
         }
-
+    
         const apiUrl = `http://127.0.0.1:8000/products/api/phonevariant/?phone_id=${phoneId.value}&ram=${ram}&rom=${rom}&color=${encodeURIComponent(color)}`;
         console.log("Fetching data from:", apiUrl);
+    
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
                 console.log("Dữ liệu API nhận được:", data);
-                priceElement.textContent = data.price+"đ";
-                statusElemnt.textContent=data.stock;
-                
+                priceElement.textContent = parseInt(data.price).toLocaleString('vi-VN') + "đ";
+                statusElemnt.textContent = data.stock;
             })
             .catch(error => console.error("Lỗi khi fetch dữ liệu:", error));
     }
+    
     
 
     fetchProductData();
