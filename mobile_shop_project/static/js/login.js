@@ -32,8 +32,7 @@ document.querySelector("form").onsubmit = async function (e) {
     })
     .then(response => response.json().then(data => {
         if (response.ok) {
-            alert("Đăng nhập thành công");
-            window.location.href = '/'; // Chuyển về trang chính
+            window.location.href = '/'; 
         } else {
             alert(`❌ Lỗi ${response.status}: ${data.message || "Unknown error"}`);
         }

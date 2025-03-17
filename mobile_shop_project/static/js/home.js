@@ -103,6 +103,14 @@ sliders.forEach((slider) => {
 });
 });
 
+const priceElements = document.querySelectorAll('.product-item-new-price');
+
+priceElements.forEach(item => {
+  const price = parseInt(item.dataset.price); 
+  item.textContent = price.toLocaleString('vi-VN') + 'đ';
+});
+
+
 document.querySelectorAll('.menu-item').forEach(item => {
     item.addEventListener('click', function () {
         const brand = item.querySelectorAll('.item-name')[0].textContent;
@@ -158,7 +166,6 @@ logoutButton.onclick = async function () {
 
         const data = await response.json();
         if (response.ok) {
-            alert("Đăng xuất thành công");
             location.reload(); 
         } else {
             alert(`❌ Lỗi ${response.status}: ${data.message || "Unknown error"}`);
