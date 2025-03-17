@@ -1,3 +1,40 @@
+const logout = async function () {
+    function getCSRFToken() {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith("csrftoken=")) {
+                    cookieValue = cookie.substring("csrftoken=".length, cookie.length);
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    try {
+        const response = await fetch("/users/logout/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCSRFToken()
+            },
+            credentials: "include"
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            window.location.href = "/"
+        } else {
+            alert(`❌ Lỗi ${response.status}: ${data.message || "Unknown error"}`);
+        }
+        } catch (error) {
+            console.error("🚨 Lỗi khi đăng xuất:", error);
+        }
+    };
+
 document.addEventListener("DOMContentLoaded", function () {
     const track = document.querySelector(".advertisement-track");
     const dots = document.querySelectorAll(".dot");
@@ -138,40 +175,7 @@ document.addEventListener("click", function (event) {
     }
 });
 
-logoutButton.onclick = async function () {
-    function getCSRFToken() {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== "") {
-            const cookies = document.cookie.split(";");
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.startsWith("csrftoken=")) {
-                    cookieValue = cookie.substring("csrftoken=".length, cookie.length);
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    try {
-        const response = await fetch("/users/logout/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": getCSRFToken()
-            },
-            credentials: "include"
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-            location.reload(); 
-        } else {
-            alert(`❌ Lỗi ${response.status}: ${data.message || "Unknown error"}`);
-        }
-    } catch (error) {
-        console.error("🚨 Lỗi khi đăng xuất:", error);
-    }
-};
+    logoutButton.onclick = logout;
 });
+
+

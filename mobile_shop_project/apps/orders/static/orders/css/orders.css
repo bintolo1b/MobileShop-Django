@@ -1,0 +1,268 @@
+/* Orders CSS */
+.main-container {
+    background-color: #f6f6f6;
+    padding-top: 80px;
+    padding-bottom: 30px;
+    min-height: 100vh;
+}
+
+.orders-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+    position: relative;
+    display: flex;
+    gap: 30px;
+}
+
+
+.user-info {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+.user-info h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 0;
+}
+
+.order-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.order-title h3 {
+    font-size: 18px;
+    color: #555;
+}
+
+
+.order-sidebar {
+    width: 280px;
+    height: fit-content;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+    text-align: center;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidebar-item i {
+    margin-right: 10px;
+    color: #666;
+    font-size: 18px;
+}
+
+.sidebar-item span {
+    color: #333;
+    font-size: 14px;
+}
+
+.sidebar-item.active {
+    background-color: #f0f7ff;
+    border-left: 3px solid #1a73e8;
+}
+
+.sidebar-item.active i,
+.sidebar-item.active span {
+    color: #1a73e8;
+    font-weight: 500;
+}
+
+.sidebar-item:hover {
+    background-color: #f5f5f5;
+}
+
+.sidebar-item-logout {
+    border-top: 1px solid #eee;
+    margin-top: 15px;
+    padding-top: 15px;
+}
+
+.sidebar-item.logout span {
+    color: #dd0000;
+}
+
+
+.order-content {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.order-filters {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.out-btn{
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.3s;
+}
+.out-btn:hover{
+    border-color: #dd0000;
+    color: #dd0000;
+}
+.filter-btn {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.3s;
+}
+
+.filter-btn:hover {
+    border-color: #1a73e8;
+    color: #1a73e8;
+}
+
+.filter-btn.active {
+    background-color: #1a73e8;
+    color: #fff;
+    border-color: #1a73e8;
+}
+
+
+.order-details {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.order-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
+}
+
+.order-id {
+    font-size: 14px;
+    color: #666;
+}
+
+.order-number {
+    font-weight: 500;
+    color: #333;
+}
+
+.order-status .status-delivered {
+    color: #00a65a;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.order-product {
+    display: flex;
+    padding: 15px;
+    align-items: center;
+}
+
+.product-image {
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.product-info {
+    flex-grow: 1;
+}
+
+.product-name {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    text-align: right;
+    width: 150px;
+}
+
+.total-price {
+    font-size: 16px;
+    font-weight: 500;
+    color: #dd0000;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .orders-container {
+        flex-direction: column;
+    }
+    
+    .order-sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .order-content {
+        width: 100%;
+    }
+    
+    .order-filters {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .order-title {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .date-range {
+        margin-top: 10px;
+    }
+    
+    .order-product {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .product-image {
+        margin-bottom: 10px;
+    }
+    
+    .product-price {
+        width: 100%;
+        text-align: left;
+        margin-top: 10px;
+    }
+}

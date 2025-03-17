@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
     <link rel="stylesheet" href="{%static 'css/base.css'%}">
     <link rel="stylesheet" href="{%static 'css/home.css'%}">
+    <link rel="stylesheet" href="{%static 'orders/css/orders.css'%}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -175,166 +177,89 @@
            </div>
         </div>
     </header>
-
     <div class="main-container">
-        <div class="menu-wrapper">
-            <div class="menu-container">
-              <div class="menu-header">
-                <i class="fas fa-bars"></i>
-                <h3>DANH MỤC SẢN PHẨM</h3>
-              </div>
-              <ul class="menu-list">
-                <li class="menu-item">
-                    <img src="{% static 'img/xiaomi_logo.png'%}" alt="" class="item-icon">
-                    <span class="item-name">Xiaomi</span>
-                    <i class="fa-solid fa-chevron-right arrow-right"></i>
-                </li>
-                <li class="menu-item">
-                    <img src="{% static 'img/realmi_logo.png'%}" alt="" class="item-icon">
-                    <span class="item-name">Realme</span>
-                    <i class="fa-solid fa-chevron-right arrow-right"></i>
-                </li>
-                <li class="menu-item">
-                    <img src="{% static 'img/iQoo_logo.png'%}" alt="" class="item-icon">
-                    <span class="item-name">iQoo</span>
-                    <i class="fa-solid fa-chevron-right arrow-right"></i>
-                </li>
-                <li class="menu-item">
-                    <img src="{% static 'img/iPhone_logo.png'%}" alt="" class="item-icon">
-                    <span class="item-name">iPhone</span>
-                    <i class="fa-solid fa-chevron-right arrow-right"></i>
-                </li>
-                <li class="menu-item">
-                    <img src="{% static 'img/iPad_logo.png'%}" alt="" class="item-icon">
-                    <span class="item-name">iPad</span>
-                    <i class="fa-solid fa-chevron-right arrow-right"></i>
-                </li>
-                <li class="menu-item">
-                    <img src="{% static 'img/samsung_logo.png'%}" alt="" class="item-icon">
-                    <span class="item-name">Samsung</span>
-                    <i class="fa-solid fa-chevron-right arrow-right"></i>
-                </li>
-                <li class="menu-item">
-                    <img src="{% static 'img/vsmart_logo.png'%}" alt="" class="item-icon">
-                    <span class="item-name">VSmart</span>
-                    <i class="fa-solid fa-chevron-right arrow-right"></i>
-                </li>
-                <li class="menu-item">
-                    <img src="{% static 'img/headphone_logo.png'%}" alt="" class="item-icon">
-                    <span class="item-name">Phụ kiện - Đồ chơi</span>
-                    <i class="fa-solid fa-chevron-right arrow-right"></i>
-                </li>
-                <li class="menu-item">
-                    <img src="{% static 'img/samsung_logo.png'%}" alt="" class="item-icon">
-                    <span class="item-name">Tin tức</span>
-                    <i class="fa-solid fa-chevron-right arrow-right"></i>
-                </li>
-              </ul>
+        <div class="orders-container">
+            <div class="order-sidebar">
+                <div class="user-info">
+                    <h2>Anh Võ Văn Tuấn</h2>
+                </div>
+                <div class="sidebar-item active">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>Đơn hàng đã mua</span>
+                </div>
+                <div class="sidebar-item">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Thông tin và sổ địa chỉ</span>
+                </div>
+                <div class="sidebar-item-logout">
+                    <button class="out-btn" onClick=logout()>Đăng Xuất</button>
+                </div>
             </div>
-            <img class="menu-ad" src="{% static 'img/ads.png'%}" alt="Quảng cáo">
-        </div>
-        <div class="my-cart">
-            <h1>Giỏ hàng của tôi</h1>
-        </div>
-
-        <div class="cart-container">
-            {% for item in cart_items %}
-                <div class="product">
-                    <div class="product-info">
-                        <img src="/media/{{item.img}}" alt="">
-                        <div class="info-group">
-                            <div class="product-name">{{item.name}}</div>
-                            <div class="product-color">Màu: {{item.color}}</div>
-                            <div class="product-memory">Dung lượng: {{item.ram}}/{{item.rom}}</div>
+            
+            <div class="order-content">
+                <div class="order-title">
+                    <h3>Đơn hàng đã mua</h3>
+                </div>
+                
+                <div class="order-filters">
+                    <button class="filter-btn active">Tất cả</button>
+                    <button class="filter-btn">Chờ xử lý</button>
+                    <button class="filter-btn">Đã xác nhận</button>
+                    <button class="filter-btn">Đang chuyển hàng</button>
+                    <button class="filter-btn">Đang giao hàng</button>
+                    <button class="filter-btn">Đã hủy</button>
+                    <button class="filter-btn">Thành công</button>
+                </div>
+                
+                <div class="order-details">
+                    <div class="order-info">
+                        <div class="order-id">
+                            <span>Đơn hàng: </span>
+                            <span class="order-number">#02388SH22110290582</span>
+                        </div>
+                        <div class="order-status">
+                            <span class="status-delivered">Đã nhận hàng</span>
                         </div>
                     </div>
-                    <div class="product-actions">
-                        <div class="product-price">{{item.subtotal}}₫</div>
-                        <div class="quantity-control">
-                            <button class="quantity-btn">−</button>
-                            <span class="quantity">{{item.quantity}}</span>
-                            <button class="quantity-btn">+</button>
+                    
+                    <div class="order-product">
+                        <div class="product-image">
+                            <img src="{% static 'img/iphone-16-plus---hồng_1726074852.png'%}" alt="">
                         </div>
-                        <button class="remove-btn" data-variant-id="{{item.variant_id}}">Xóa</button>
+                        <div class="product-info">
+                            <h4 class="product-name">Iphone 16 Pro Max</h4>
+                        </div>
+                        <div class="product-price">
+                            <span class="total-price">29.900.00đ</span>
+                        </div>
                     </div>
                 </div>
-            {% endfor %}
-            
-        
-            <div class="total">
-                Tổng cộng: <span class="total-price">{{total_price}}₫</span>
+
+                <div class="order-details">
+                    <div class="order-info">
+                        <div class="order-id">
+                            <span>Đơn hàng: </span>
+                            <span class="order-number">#02388SH22110290582</span>
+                        </div>
+                        <div class="order-status">
+                            <span class="status-delivered">Đã nhận hàng</span>
+                        </div>
+                    </div>
+                    
+                    <div class="order-product">
+                        <div class="product-image">
+                            <img src="{% static 'img/iphone-16-plus---hồng_1726074852.png'%}" alt="">
+                        </div>
+                        <div class="product-info">
+                            <h4 class="product-name">Iphone 15 Pro Max</h4>
+                        </div>
+                        <div class="product-price">
+                            <span class="total-price">19.900.00đ</span>
+                        </div>
+                    </div>
             </div>
-            <div class="buy-con">
-                <button class="btn-buy">Thanh toán</button>
-            </div>
-            
         </div>
-        
-        
     </div>
 </body>
-<script src="{% static 'js/home.js' %}"></script>
-
+<script src="{%static 'js/home.js'%}"></script>
 </html>
-<script>
-    document.querySelectorAll('.menu-item').forEach(item => {
-        item.addEventListener('click', function () {
-            const brand = item.querySelectorAll('.item-name')[0].textContent;
-            if (brand) {
-                window.location.href = `/products/phonebybrand/?brand=${brand}&page=1`;
-            }
-        });
-    });
-
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    
-    document.querySelectorAll('.remove-btn').forEach(button => {
-        button.addEventListener('click', async function() {
-            const productDiv = this.closest('.product');
-            const variantId = this.getAttribute('data-variant-id');
-            
-            try {
-                const response = await fetch(`/cart/api/remove-from-cart/${variantId}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken')
-                    },
-                    credentials: 'include'
-                });
-    
-                if (response.ok) {
-                    // Xóa sản phẩm khỏi giao diện
-                    productDiv.remove();
-                    
-                    // Cập nhật tổng tiền
-                    const data = await response.json();
-                    const totalPriceElement = document.querySelector('.total-price');
-                    if (totalPriceElement) {
-                        location.reload(); // Reload để cập nhật tổng tiền
-                    }
-                } else if (response.status === 401) {
-                    alert('Vui lòng đăng nhập để xóa sản phẩm');
-                    window.location.href = '/login';
-                } else {
-                    alert('Có lỗi xảy ra khi xóa sản phẩm');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Có lỗi xảy ra khi xóa sản phẩm');
-            }
-        });
-    });
-</script>

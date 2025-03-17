@@ -159,9 +159,9 @@
                 {% else %}
                 <span id="usernameDisplay">{{ request.session.username }}</span>
                 <div id="userPopup" class="popup">
-                    <div class="info-item">
-                        <i class="fa-solid fa-circle-info"></i>
-                        Thông tin cá nhân
+                    <div class="info-item" onClick="window.location.href = '/orders'">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        Đơn hàng
                     </div>
                     <button id="logoutButton">
                         <i class="fa-solid fa-right-from-bracket"></i>
@@ -336,7 +336,7 @@
                                 </div>
                                 <span class="product-item-name">{{ phone.name }}</span>
                                 <div class="product-item-price">
-                                    <span class="product-item-new-price">{{ phone.price }}</span>
+                                    <span class="product-item-new-price" data-price="{{ phone.price }}">{{ phone.price }}</span>
                                     <span class="product-item-old-price">9.750.000đ</span>
                                 </div>
                                 <div class="product-item-vote">
@@ -403,7 +403,7 @@
                             </div>
                             <span class="product-item-name">{{ phone.name }}</span>
                             <div class="product-item-price">
-                                <span class="product-item-new-price">{{ phone.price }}</span>
+                                <span class="product-item-new-price" data-price="{{ phone.price }}">{{ phone.price }}</span>
                                 <span class="product-item-old-price">9.750.000đ</span>
                             </div>
                             <div class="product-item-vote">
@@ -462,7 +462,7 @@
                             </div>
                             <span class="product-item-name">{{ phone.name }}</span>
                             <div class="product-item-price">
-                                <span class="product-item-new-price">{{ phone.price }}</span>
+                                <span class="product-item-new-price" data-price="{{ phone.price }}">{{ phone.price }}</span>
                                 <span class="product-item-old-price">9.750.000đ</span>
                             </div>
                             <div class="product-item-vote">
