@@ -18,6 +18,9 @@ class Product(models.Model):
     status = models.CharField(max_length=50, null=False, blank=False)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = "product"
 

@@ -8,19 +8,24 @@ def login_view(request):
     username = request.data.get("username")
     password = request.data.get("password")
 
-    print(username, password)
-
     if not username or not password:
         return Response({"message": "Username and password are required"}, status=400)
 
     user = authenticate(username=username, password=password)
-    print(user)
 
     if user:
-        request.session['username'] = username
-        
+        # xóa session cũ
+        request.session.flush() 
+
         login(request, user)  # 👉 Lưu trạng thái đăng nhập vào session
-        return Response({"message": "Login successful"})
+
+        request.session['username'] = username
+        request.session['role'] = user.role
+        
+        return Response({
+            "message": "Login successful",
+            "role": user.role  # 👉 Trả về role của user
+        })
     
     return Response({"message": "Invalid credentials"}, status=401)
 
@@ -77,12 +82,6 @@ def logup_view(request):
     except Exception as e:
         return Response({"message": f"Lỗi: {str(e)}"}, status=400)
 
-
-@api_view(["GET"])
-def check_login_status(request):
-    if request.user.is_authenticated:
-        return Response({"message": "Logged in", "user": request.user.username})
-    return Response({"message": "Not logged in"}, status=401)
 
 @api_view(["POST"])
 def logout_view(request):

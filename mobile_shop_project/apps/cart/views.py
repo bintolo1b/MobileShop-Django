@@ -3,12 +3,15 @@ from apps.products.models import PhoneVariant
 from apps.users.models import Client, CustomUser
 from .models import Cart, Cart_PhoneVariant
 from . import service
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+def is_client(user):
+    return user.is_authenticated and user.role == "client"
 
-@login_required
+@user_passes_test(is_client)
 def cart_view(request):
     try:
         # Lấy client từ user đã đăng nhập

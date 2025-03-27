@@ -155,8 +155,8 @@
                     <span class="sub2-item-title">Giỏ hàng</span>
                 </div>
             </div>
-            <div class="header-item">
-                {% if not request.session.username %}
+            <div class="header-item user-item">
+                {% if not request.session.username%}
                 <a href="/login" id="loginLink">Đăng nhập</a>
                 {% else %}
                 <span id="usernameDisplay">{{ request.session.username }}</span>
@@ -165,10 +165,12 @@
                         <i class="fa-solid fa-bag-shopping"></i>
                         Đơn hàng
                     </div>
-                    <button id="logoutButton">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        Đăng xuất
-                    </button>
+                    <div>
+                        <button id="logoutButton">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            Đăng xuất
+                        </button>
+                    </div>
                 </div>
                 {% endif %}
             </div>

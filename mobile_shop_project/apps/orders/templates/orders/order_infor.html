@@ -1,4 +1,4 @@
-{% load static %}
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,10 +7,11 @@
     <title>Document</title>
     <!-- <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
+    <link rel="stylesheet" href="{%static 'orders/css/order_infor.css'%}">
     <link rel="stylesheet" href="{%static 'css/base.css'%}">
-    <link rel="stylesheet" href="{%static 'css/home.css'%}">
-    <link rel="stylesheet" href="{%static 'orders/css/orders.css'%}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="{%static 'orders/js/order_infor.js'%}" defer></script>
 </head>
 <body>
     <header>
@@ -156,15 +157,15 @@
                     <span class="sub2-item-title">Giỏ hàng</span>
                 </div>
             </div>
-            <div class="header-item user-item">
-                {% if not request.session.username%}
+            <div class="header-item">
+                {% if not request.session.username %}
                 <a href="/login" id="loginLink">Đăng nhập</a>
                 {% else %}
                 <span id="usernameDisplay">{{ request.session.username }}</span>
                 <div id="userPopup" class="popup">
-                    <div class="info-item" onClick="window.location.href = '/orders'">
-                        <i class="fa-solid fa-bag-shopping"></i>
-                        Đơn hàng
+                    <div class="info-item">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Thông tin cá nhân
                     </div>
                     <button id="logoutButton">
                         <i class="fa-solid fa-right-from-bracket"></i>
@@ -177,101 +178,88 @@
            </div>
         </div>
     </header>
-    <div class="main-container">
-        <div class="orders-container">
-            <div class="order-sidebar">
-                <div class="user-info">
-                    <h2>Anh Võ Văn Tuấn</h2>
+    
+    <!-- main -->
+    <div class="container">
+        {% for item in cart_items  %}
+            <div class="order-product">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/media/{{item.img}}" alt="iPhone 15 Pro Max">
+                    </div>
+                    <div class="product-details">
+                        <h4 class="product-name">{{item.name}}</h4>
+                        <div class="product-specs">
+                            <div class="product-color">
+                                <span class="label">Màu:</span>
+                                <span class="value">{{item.color}}</span>
+                            </div>
+                            <div class="product-memory">
+                                <span class="label">Dung lượng:</span>
+                                <span class="value">{{item.ram}}/{{item.rom}}</span>
+                            </div>
+                            <div class="quantity">
+                                <span class="label">Số lượng:</span>
+                                <span class="value">{{item.quantity}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-price">
+                        <span class="total-price">{{item.price}}₫</span>
+                    </div>
                 </div>
-                <div class="sidebar-item active">
-                    <i class="fas fa-file-invoice"></i>
-                    <span>Đơn hàng đã mua</span>
+            
+            </div>
+        {% endfor %}
+        
+        
+        <div class="customer-info">
+            <div class="info-title">THÔNG TIN KHÁCH HÀNG</div>
+            <div class="input-group">
+                <input type="text" placeholder="Họ và tên" value="{{client_name}}">
+            </div>
+            <div class="input-group">
+                <input type="tel" placeholder="Số điện thoại" value="{{phone_number}}">
+            </div>
+            <div class="input-group">
+                <input type="email" placeholder="Email của bạn" value="{{email}}">
+                <small>(*) Hóa đơn VAT sẽ được gửi qua email này</small>
+            </div>
+        </div>
+        
+        <div class="delivery-info">
+            <div class="info-title">THÔNG TIN NHẬN HÀNG</div>
+            <div class="location-group">
+                <div class="input-group">
+                    <label for="city">Tỉnh/Thành phố</label>
+                    <select id="city" name="city">
+                        <option value="Hồ Chí Minh" selected>Hồ Chí Minh</option>
+                        <option value="Hà Nội">Hà Nội</option>
+                    </select>
                 </div>
-                <div class="sidebar-item">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Thông tin và sổ địa chỉ</span>
-                </div>
-                <div class="sidebar-item-logout">
-                    <button class="out-btn" onClick=logout()>Đăng Xuất</button>
+                
+                <div class="input-group">
+                    <label for="district">Quận/Huyện</label>
+                    <select id="district">
+                    </select>
                 </div>
             </div>
             
-            <div class="order-content">
-                <div class="order-title">
-                    <h3>Đơn hàng đã mua</h3>
-                </div>
-                
-                <div class="order-filters">
-                    <button class="filter-btn active">Tất cả</button>
-                    <button class="filter-btn">Chờ xử lý</button>
-                    <button class="filter-btn">Đã xác nhận</button>
-                    <button class="filter-btn">Đang chuyển hàng</button>
-                    <button class="filter-btn">Đang giao hàng</button>
-                    <button class="filter-btn">Đã hủy</button>
-                    <button class="filter-btn">Thành công</button>
-                </div>
-                
-                <div class="order-details">
-                    <div class="order-info">
-                        <div class="order-id">
-                            <span>Đơn hàng: </span>
-                            <span class="order-number">#02388SH22110290582</span>
-                        </div>
-                        <div class="order-status">
-                            <span class="status-delivered">Đã nhận hàng</span>
-                        </div>
-                    </div>
-                    
-                    <div class="order-product">
-                        <div class="product-image">
-                            <img src="{% static 'img/iphone-16-plus---hồng_1726074852.png'%}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <h4 class="product-name">Iphone 16 Pro Max</h4>
-                        </div>
-                        <div class="product-price">
-                            <span class="total-price">29.900.00đ</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="order-details">
-                    <div class="order-info">
-                        <div class="order-id">
-                            <span>Đơn hàng: </span>
-                            <span class="order-number">#02388SH22110290582</span>
-                        </div>
-                        <div class="order-status">
-                            <span class="status-delivered">Đã nhận hàng</span>
-                        </div>
-                    </div>
-                    
-                    <div class="order-product">
-                        <div class="product-image">
-                            <img src="{% static 'img/iphone-16-plus---hồng_1726074852.png'%}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <h4 class="product-name">Iphone 15 Pro Max</h4>
-                        </div>
-                        <div class="product-price">
-                            <span class="total-price">19.900.00đ</span>
-                        </div>
-                    </div>
+            <div class="input-group">
+                <input type="text" placeholder="Nhập địa chỉ cụ thể" value="{{address}}">
+            </div>
+            
+            <div class="input-group">
+                <textarea placeholder="Ghi chú khác (nếu có)" rows="3"></textarea>
             </div>
         </div>
+        
+        <div class="order-total">
+            <span>Tổng tiền tạm tính:</span>
+            <span>{{total_price}}</span>
+        </div>
+        
+        <button class="continue-button">XÁC NHẬN ĐẶT HÀNG</button>
     </div>
 </body>
-<script src="{%static 'js/home.js'%}"></script>
-<script>
-document.querySelectorAll(".filter-btn").forEach((item) => {
-    item.addEventListener("click", () => {
-        document.querySelectorAll(".filter-btn").forEach((btn) => {
-            btn.classList.remove("active");
-        });
-
-        item.classList.add("active");
-    });
-});
-
-</script>
 </html>

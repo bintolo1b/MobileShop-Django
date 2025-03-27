@@ -32,7 +32,10 @@ document.querySelector("form").onsubmit = async function (e) {
     })
     .then(response => response.json().then(data => {
         if (response.ok) {
-            window.location.href = '/'; 
+            if (data.role == 'staff')
+                window.location.href = '/users/staff'; 
+            else if (data.role == 'client')
+                window.location.href = '/'; 
         } else {
             alert(`❌ Lỗi ${response.status}: ${data.message || "Unknown error"}`);
         }
