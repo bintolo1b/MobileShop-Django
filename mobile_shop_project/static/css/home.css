@@ -53,6 +53,9 @@ header {
     flex-direction: column;
     justify-content: center;
     margin-left: 8px;
+}
+
+.item-title:first-child {
     position: relative;
 }
 
@@ -67,8 +70,9 @@ header {
 }
 
 .popup {
-    right: 155px;
-    top: 65px;
+    width: 125px;
+    right: 0;
+    top: 40px;
     position: absolute;
     background-color: white;
     border-radius: 5px;
@@ -97,7 +101,7 @@ header {
     font-size: 14px;
     background-color: transparent;
     border: none;
-    padding: 10px 65px 10px 15px;
+    padding: 10px 21px 10px 15px;
 }
 
 .info-item:hover,
@@ -139,10 +143,10 @@ header {
     display: none;
 }
 
-.item-title:hover + .contact-container,
+/* .item-title-1:hover + .contact-container,
 .contact-container:hover {
     display: block;
-}
+} */
 
 .time-activate-title {
     border: 2px solid #dc0000;
@@ -159,7 +163,7 @@ header {
     content: "";
     top: 35px;
     left: 0;
-    width: 100%;
+    width: 50%;
     height: 15px;
 }
 

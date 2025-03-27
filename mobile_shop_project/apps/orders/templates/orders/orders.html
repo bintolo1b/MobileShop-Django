@@ -156,7 +156,7 @@
                     <span class="sub2-item-title">Giỏ hàng</span>
                 </div>
             </div>
-            <div class="header-item">
+            <div class="header-item user-item">
                 {% if not request.session.username %}
                 <a href="/login" id="loginLink">Đăng nhập</a>
                 {% else %}
@@ -262,4 +262,16 @@
     </div>
 </body>
 <script src="{%static 'js/home.js'%}"></script>
+<script>
+document.querySelectorAll(".filter-btn").forEach((item) => {
+    item.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+            btn.classList.remove("active");
+        });
+
+        item.classList.add("active");
+    });
+});
+
+</script>
 </html>

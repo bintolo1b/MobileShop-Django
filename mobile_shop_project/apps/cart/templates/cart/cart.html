@@ -146,7 +146,7 @@
                     <span class="sub2-item-title">Sản phẩm</span>
                 </div>
             </div>
-            <div class="header-item user-item" onClick="window.location.href = '/cart'">
+            <div class="header-item" onClick="window.location.href = '/cart'">
                 <div class="item-icon-container">
                     <i class="fa-solid fa-cart-shopping header-icon"></i>
                 </div>
@@ -154,7 +154,7 @@
                     <span class="sub2-item-title">Giỏ hàng</span>
                 </div>
             </div>
-            <div class="header-item">
+            <div class="header-item user-item">
                 {% if not request.session.username %}
                 <a href="/login" id="loginLink">Đăng nhập</a>
                 {% else %}
@@ -249,7 +249,7 @@
                         </div>
                     </div>
                     <div class="product-actions">
-                        <div class="product-price">{{item.subtotal}}₫</div>
+                        <div class="product-price" data-price="{{ item.subtotal}}">{{item.subtotal}}₫</div>
                         <div class="quantity-control">
                             <button class="quantity-btn">−</button>
                             <span class="quantity">{{item.quantity}}</span>
@@ -262,7 +262,7 @@
             
         
             <div class="total">
-                Tổng cộng: <span class="total-price">{{total_price}}₫</span>
+                Tổng cộng: <span class="total-price" data-price="{{total_price}}">{{total_price}}₫</span>
             </div>
             <div class="buy-con">
                 <button class="btn-buy">Thanh toán</button>
@@ -277,6 +277,14 @@
 
 </html>
 <script>
+    document.querySelectorAll('.product-price, .total-price').forEach(item => {
+        const price = parseInt(item.dataset.price, 10); 
+        if (!isNaN(price)) {
+            item.textContent = price.toLocaleString('vi-VN') + '₫';
+        }
+    });
+
+
     document.querySelectorAll('.menu-item').forEach(item => {
         item.addEventListener('click', function () {
             const brand = item.querySelectorAll('.item-name')[0].textContent;

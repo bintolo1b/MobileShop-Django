@@ -145,7 +145,7 @@
                     <span class="sub2-item-title">Sản phẩm</span>
                 </div>
             </div>
-            <div class="header-item user-item" onClick="window.location.href = '/cart'">
+            <div class="header-item" onClick="window.location.href = '/cart'">
                 <div class="item-icon-container">
                     <i class="fa-solid fa-cart-shopping header-icon"></i>
                 </div>
@@ -153,7 +153,7 @@
                     <span class="sub2-item-title">Giỏ hàng</span>
                 </div>
             </div>
-            <div class="header-item">
+            <div class="header-item user-item">
                 {% if not request.session.username %}
                 <a href="/login" id="loginLink">Đăng nhập</a>
                 {% else %}
@@ -833,7 +833,7 @@
                             </div>
                             <span class="product-item-name">{{ phone.name }}</span>
                             <div class="product-item-price">
-                                <span class="product-item-new-price">{{ phone.price }}</span>
+                                <span class="product-item-new-price" data-price="{{ phone.price }}">{{ phone.price }}</span>
                                 <span class="product-item-old-price">9.750.000đ</span>
                             </div>
                             <div class="product-item-vote">
