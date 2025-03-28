@@ -3,44 +3,47 @@ from rest_framework.decorators import api_view
 from .models import Cart, Cart_PhoneVariant
 from apps.products.models import PhoneVariant
 from apps.users.models import Client, CustomUser
+from django.contrib.auth.decorators import user_passes_test
 
 @api_view(["POST"])
 def addToCart_view(request):
-    # Lấy phone_variant_id từ request
-    phone_variant_id = request.data.get('phone_variant_id')
-    quantity = request.data.get('quantity', 1)
-    
-    if not request.user.is_authenticated:
-        return Response({"message": "Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng"}, status=401)
-    
     try:
-        # Lấy client từ user
-        client = Client.objects.get(username=request.user)
+        phone_variant_id = request.data.get('phone_variant_id')
         
-        # Lấy cart của client
-        cart, created = Cart.objects.get_or_create(client=client)
-        
-        # Lấy phone variant
+        if not phone_variant_id:
+            return Response({"message": "Thiếu phone_variant_id"}, status=400)
+
+        quantity = int(request.data.get('quantity', 1))
+        if quantity <= 0:
+            return Response({"message": "Số lượng phải lớn hơn 0"}, status=400)
+
+        if not request.user.is_authenticated:
+            return Response({"message": "Vui lòng đăng nhập"}, status=401)
+
+        client = Client.objects.filter(username=request.user).first()
+        if not client:
+            return Response({"message": "Chỉ client mới có thể thêm sản phẩm vào giỏ hàng"}, status=403)
+
+        cart, _ = Cart.objects.get_or_create(client=client)
         phone_variant = PhoneVariant.objects.get(id=phone_variant_id)
-        
-        # Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+
         cart_item, item_created = Cart_PhoneVariant.objects.get_or_create(
             cart=cart,
             phone_variant=phone_variant,
             defaults={'quantity': quantity}
         )
-        
-        # Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
+
         if not item_created:
             cart_item.quantity += quantity
             cart_item.save()
-        
+
         return Response({"message": "Đã thêm sản phẩm vào giỏ hàng thành công"}, status=200)
-    
+
     except PhoneVariant.DoesNotExist:
         return Response({"message": "Không tìm thấy sản phẩm"}, status=404)
+    
     except Exception as e:
-        return Response({"message": f"Lỗi: {str(e)}"}, status=400)
+        return Response({"message": f"Lỗi không xác định: {str(e)}"}, status=400)
 
 @api_view(["DELETE"])
 def removeFromCart_view(request, variant_id):

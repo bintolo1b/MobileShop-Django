@@ -5,6 +5,13 @@ from apps.store.models import Store
 class CustomUser(AbstractUser):
     phone = models.CharField(max_length=10, null=False)
     address = models.TextField(blank=True)
+    ROLE_CHOICES = (
+        ('client', 'Client'),
+        ('staff', 'Staff'),
+        ('shopowner', 'ShopOwner'),
+        ('admin', 'Admin'),
+    )
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='client')
 
     class Meta:
         db_table = "CustomUser"
@@ -22,8 +29,12 @@ class Staff(models.Model):
     store = models.ForeignKey(Store, on_delete=models.PROTECT)
     class Meta:
         db_table = "staff"
+    def __str__(self):
+        return self.username.username
 
 class ShopOwner(models.Model):
     username = models.OneToOneField(CustomUser, on_delete=models.PROTECT, to_field='username', db_column='username')
     class Meta:
         db_table = "shopowner"
+    def __str__(self):
+        return self.username.username

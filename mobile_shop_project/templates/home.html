@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -145,7 +146,7 @@
                     <span class="sub2-item-title">Sản phẩm</span>
                 </div>
             </div>
-            <div class="header-item user-item" onClick="window.location.href = '/cart'">
+            <div class="header-item" onClick="window.location.href = '/cart'">
                 <div class="item-icon-container">
                     <i class="fa-solid fa-cart-shopping header-icon"></i>
                 </div>
@@ -153,15 +154,15 @@
                     <span class="sub2-item-title">Giỏ hàng</span>
                 </div>
             </div>
-            <div class="header-item">
-                {% if not request.session.username %}
+            <div class="header-item user-item">
+                {% if not request.session.username%}
                 <a href="/login" id="loginLink">Đăng nhập</a>
                 {% else %}
                 <span id="usernameDisplay">{{ request.session.username }}</span>
                 <div id="userPopup" class="popup">
-                    <div class="info-item">
-                        <i class="fa-solid fa-circle-info"></i>
-                        Thông tin cá nhân
+                    <div class="info-item" onClick="window.location.href = '/orders'">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        Đơn hàng
                     </div>
                     <button id="logoutButton">
                         <i class="fa-solid fa-right-from-bracket"></i>
@@ -284,16 +285,16 @@
                    </div>
                    <img src="{% static 'img/ad-banner.png'%}" alt="" class="main-banner">
                    <div class="brand-container">
-                        <div class="brand-item">
+                        <div class="brand-item" onClick="window.location.href = '/products/phonebybrand/?brand=Xiaomi&page=1'">
                             <img src="{% static 'img/xiaomi-brand.png'%}" alt="" class="brand-img">
                         </div>
-                        <div class="brand-item">
+                        <div class="brand-item" onClick="window.location.href = '/products/phonebybrand/?brand=Realme&page=1'">
                             <img src="{% static 'img/realme-brand.png'%}" alt="" class="brand-img">
                         </div>
-                        <div class="brand-item">
+                        <div class="brand-item" onClick="window.location.href = '/products/phonebybrand/?brand=iPhone&page=1'">
                             <img src="{% static 'img/apple-brand.png'%}" alt="" class="brand-img">
                         </div>
-                        <div class="brand-item">
+                        <div class="brand-item" onClick="window.location.href = '/products/phonebybrand/?brand=Samsung&page=1'">
                             <img src="{% static 'img/samsung-brand.png'%}" alt="" class="brand-img">
                         </div>
                    </div>
@@ -336,7 +337,7 @@
                                 </div>
                                 <span class="product-item-name">{{ phone.name }}</span>
                                 <div class="product-item-price">
-                                    <span class="product-item-new-price">{{ phone.price }}</span>
+                                    <span class="product-item-new-price" data-price="{{ phone.price }}">{{ phone.price }}</span>
                                     <span class="product-item-old-price">9.750.000đ</span>
                                 </div>
                                 <div class="product-item-vote">
@@ -403,7 +404,7 @@
                             </div>
                             <span class="product-item-name">{{ phone.name }}</span>
                             <div class="product-item-price">
-                                <span class="product-item-new-price">{{ phone.price }}</span>
+                                <span class="product-item-new-price" data-price="{{ phone.price }}">{{ phone.price }}</span>
                                 <span class="product-item-old-price">9.750.000đ</span>
                             </div>
                             <div class="product-item-vote">
@@ -462,7 +463,7 @@
                             </div>
                             <span class="product-item-name">{{ phone.name }}</span>
                             <div class="product-item-price">
-                                <span class="product-item-new-price">{{ phone.price }}</span>
+                                <span class="product-item-new-price" data-price="{{ phone.price }}">{{ phone.price }}</span>
                                 <span class="product-item-old-price">9.750.000đ</span>
                             </div>
                             <div class="product-item-vote">
@@ -833,7 +834,7 @@
                             </div>
                             <span class="product-item-name">{{ phone.name }}</span>
                             <div class="product-item-price">
-                                <span class="product-item-new-price">{{ phone.price }}</span>
+                                <span class="product-item-new-price" data-price="{{ phone.price }}">{{ phone.price }}</span>
                                 <span class="product-item-old-price">9.750.000đ</span>
                             </div>
                             <div class="product-item-vote">

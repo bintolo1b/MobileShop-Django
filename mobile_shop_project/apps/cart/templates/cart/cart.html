@@ -146,7 +146,7 @@
                     <span class="sub2-item-title">Sản phẩm</span>
                 </div>
             </div>
-            <div class="header-item user-item" onClick="window.location.href = '/cart'">
+            <div class="header-item" onClick="window.location.href = '/cart'">
                 <div class="item-icon-container">
                     <i class="fa-solid fa-cart-shopping header-icon"></i>
                 </div>
@@ -154,15 +154,15 @@
                     <span class="sub2-item-title">Giỏ hàng</span>
                 </div>
             </div>
-            <div class="header-item">
-                {% if not request.session.username %}
+            <div class="header-item user-item">
+                {% if not request.session.username%}
                 <a href="/login" id="loginLink">Đăng nhập</a>
                 {% else %}
                 <span id="usernameDisplay">{{ request.session.username }}</span>
                 <div id="userPopup" class="popup">
-                    <div class="info-item">
-                        <i class="fa-solid fa-circle-info"></i>
-                        Thông tin cá nhân
+                    <div class="info-item" onClick="window.location.href = '/orders'">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        Đơn hàng
                     </div>
                     <button id="logoutButton">
                         <i class="fa-solid fa-right-from-bracket"></i>
@@ -236,7 +236,7 @@
         <div class="my-cart">
             <h1>Giỏ hàng của tôi</h1>
         </div>
-
+        {% if cart_items %}
         <div class="cart-container">
             {% for item in cart_items %}
                 <div class="product">
@@ -249,7 +249,7 @@
                         </div>
                     </div>
                     <div class="product-actions">
-                        <div class="product-price">{{item.subtotal}}₫</div>
+                        <div class="product-price" data-price="{{ item.subtotal}}">{{item.subtotal}}₫</div>
                         <div class="quantity-control">
                             <button class="quantity-btn">−</button>
                             <span class="quantity">{{item.quantity}}</span>
@@ -262,13 +262,20 @@
             
         
             <div class="total">
-                Tổng cộng: <span class="total-price">{{total_price}}₫</span>
+                Tổng cộng: <span class="total-price" data-price="{{total_price}}">{{total_price}}₫</span>
             </div>
             <div class="buy-con">
-                <button class="btn-buy">Thanh toán</button>
+                <button onclick="window.location.href='/orders/order_infor'" class="btn-buy">Thanh toán</button>
             </div>
-            
         </div>
+        {% else %}
+        <div class="empty-cart">
+            <img src="{% static 'img/cart_empty.jpg'%}" alt="">
+            <p>Giỏ hàng của bạn đang trống</p>
+            <p>Hãy chọn thêm sản phẩm để mua sắm nhé</p>
+            <button onclick="window.location.href='/'" class="continue-shopping">Tiếp tục mua sắm</button>
+        </div>
+        {% endif %}
         
         
     </div>
@@ -277,6 +284,14 @@
 
 </html>
 <script>
+    document.querySelectorAll('.product-price, .total-price').forEach(item => {
+        const price = parseInt(item.dataset.price, 10); 
+        if (!isNaN(price)) {
+            item.textContent = price.toLocaleString('vi-VN') + '₫';
+        }
+    });
+
+
     document.querySelectorAll('.menu-item').forEach(item => {
         item.addEventListener('click', function () {
             const brand = item.querySelectorAll('.item-name')[0].textContent;
