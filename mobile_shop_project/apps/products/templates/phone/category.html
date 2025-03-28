@@ -294,6 +294,7 @@
                     </select>
                 </div>
                 <div class="products-details-container">
+                    {% if phones %}
                     {% for phone in phones %}
                         <div class="product-item" onClick='window.location.href="/products/phone/{{phone.id}}"'>
                             <img src="/media/{{phone.img}}" alt="" class="product-item-img">
@@ -323,6 +324,12 @@
                             </div>
                         </div>
                     {% endfor %}    
+                    {% else %}
+                        <div class="default-container">
+                            <img src="{% static 'phone/img/Cart-empty-v2.webp' %}" alt="" class="default-img"><br>
+                            <p class="default-inform">Tiếc quá! Không có sản phẩm nào trong danh mục này 🤗🤗</p>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="page-container">
                     {% for i in page_numbers %}

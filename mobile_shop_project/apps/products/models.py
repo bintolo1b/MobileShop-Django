@@ -17,6 +17,7 @@ class Product(models.Model):
     brand = models.CharField(max_length=100, null=False, blank=False)   
     status = models.CharField(max_length=50, null=False, blank=False)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    youtube_link = models.CharField(max_length=100, null=False, blank=True, unique=False, default="TOT40aILhxo")
 
     def __str__(self):
         return self.name
