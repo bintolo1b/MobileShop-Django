@@ -68,4 +68,35 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     formatPrice();
+
+    const paymentInputs = document.querySelectorAll('input[name="payment"]');
+    const onlinePaymentDetails = document.getElementById('onlinePaymentDetails');
+    const continueButton = document.querySelector('.continue-button');
+
+    paymentInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            if (this.value === 'online') {
+                onlinePaymentDetails.style.display = 'block';
+                continueButton.textContent = 'Xác nhận thanh toán';
+            } else {
+                onlinePaymentDetails.style.display = 'none';
+                continueButton.textContent = 'Đặt hàng';
+            }
+        });
+    });
+
+    // Xử lý preview ảnh thanh toán
+    const paymentProofInput = document.getElementById('payment-proof');
+    const previewContainer = document.getElementById('preview-container');
+
+    paymentProofInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewContainer.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
 });

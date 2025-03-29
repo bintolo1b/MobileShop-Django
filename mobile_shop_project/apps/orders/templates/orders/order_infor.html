@@ -223,7 +223,6 @@
             </div>
             <div class="input-group">
                 <input type="email" placeholder="Email của bạn" value="{{email}}">
-                <small>(*) Hóa đơn VAT sẽ được gửi qua email này</small>
             </div>
         </div>
         
@@ -258,8 +257,46 @@
             <span>Tổng tiền tạm tính:</span>
             <span>{{total_price}}</span>
         </div>
+        <div class="payment-method">
+            <div class="info-title">PHƯƠNG THỨC THANH TOÁN</div>
+            <div class="payment-options">
+                <div class="payment-option">
+                    <input type="radio" id="cod" name="payment" value="cod" checked>
+                    <label for="cod">
+                        <i class="fas fa-money-bill-wave"></i>
+                        Thanh toán khi nhận hàng
+                    </label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" id="online" name="payment" value="online">
+                    <label for="online">
+                        <i class="fas fa-credit-card"></i>
+                        Thanh toán online (Ví điện tử, Ngân hàng)
+                    </label>
+                </div>
+            </div>
         
-        <button class="continue-button">XÁC NHẬN ĐẶT HÀNG</button>
+            <!-- Phần thanh toán online - ẩn mặc định -->
+            <div id="onlinePaymentDetails" class="online-payment-details" style="display: none;">
+                <div class="qr-section">
+                    <img src="{% static 'img/qr_code.png' %}" alt="QR Code" class="qr-code">
+                    <div class="payment-info">
+                        <h4>Thông tin chuyển khoản</h4>
+                        <p>Số tài khoản: 123456789</p>
+                        <p>Chủ tài khoản: Vo Van Tuan</p>
+                        <p>Ngân hàng: MB bank</p>
+                        <p>Nội dung: DH[Số điện thoại]</p>
+                    </div>
+                </div>
+                
+                <div class="upload-section">
+                    <label for="payment-proof">Quý khách vui lòng tải lên ảnh chụp màn hình chuyển khoản tại đây</label>
+                    <input type="file" id="payment-proof" accept="image/*">
+                    <div id="preview-container" class="preview-container"></div>
+                </div>
+            </div>
+        </div>
+        <button class="continue-button" onclick="window.location.href='/orders'">Đặt hàng</button>
     </div>
 </body>
 </html>

@@ -45,6 +45,37 @@ def addToCart_view(request):
     except Exception as e:
         return Response({"message": f"Lỗi không xác định: {str(e)}"}, status=400)
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import Cart, Cart_PhoneVariant
+from apps.users.models import Client
+
+@api_view(['PUT'])
+def update_quantity(request, variant_id):
+    try:
+        if not request.user.is_authenticated:
+            return Response({"message": "Vui lòng đăng nhập"}, status=401)
+            
+        quantity = int(request.GET.get('quantity', 1))
+        client = Client.objects.get(username=request.user)
+        cart = Cart.objects.get(client=client)
+        cart_item = Cart_PhoneVariant.objects.get(cart=cart, phone_variant_id=variant_id)
+        
+        cart_item.quantity = quantity
+        cart_item.save()
+        
+        total_price = sum(item.phone_variant.price * item.quantity 
+                         for item in Cart_PhoneVariant.objects.filter(cart=cart))
+        
+        return Response({
+            "message": "Cập nhật số lượng thành công",
+            "total_price": total_price
+        }, status=200)
+        
+    except Exception as e:
+        return Response({"message": str(e)}, status=400)
+
+
 @api_view(["DELETE"])
 def removeFromCart_view(request, variant_id):
     if not request.user.is_authenticated:

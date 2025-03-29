@@ -352,4 +352,79 @@
             }
         });
     });
+    document.querySelectorAll('.quantity-control').forEach(control => {
+        const decreaseBtn = control.querySelector('.quantity-btn:first-child');
+        const increaseBtn = control.querySelector('.quantity-btn:last-child');
+        const quantitySpan = control.querySelector('.quantity');
+        const productDiv = control.closest('.product');
+        const priceDiv = productDiv.querySelector('.product-price');
+        const variantId = productDiv.querySelector('.remove-btn').getAttribute('data-variant-id');
+        const basePrice = parseInt(priceDiv.getAttribute('data-price')) / parseInt(quantitySpan.textContent);
+    
+        decreaseBtn.addEventListener('click', async () => {
+            let quantity = parseInt(quantitySpan.textContent);
+            if (quantity > 1) {
+                try {
+                    const response = await fetch(`/cart/api/update-quantity/${variantId}/?quantity=${quantity - 1}`, {
+                        method: 'PUT',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        credentials: 'include'
+                    });
+    
+                    if (response.ok) {
+                        quantity--;
+                        quantitySpan.textContent = quantity;
+                        const newTotal = basePrice * quantity;
+                        priceDiv.textContent = newTotal.toLocaleString('vi-VN') + '₫';
+                        priceDiv.setAttribute('data-price', newTotal);
+                        
+                        // Cập nhật tổng tiền
+                        const data = await response.json();
+                        const totalPriceElement = document.querySelector('.total-price');
+                        if (totalPriceElement && data.total_price) {
+                            totalPriceElement.textContent = parseInt(data.total_price).toLocaleString('vi-VN') + '₫';
+                            totalPriceElement.setAttribute('data-price', data.total_price);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Có lỗi xảy ra khi cập nhật số lượng');
+                }
+            }
+        });
+    
+        increaseBtn.addEventListener('click', async () => {
+            let quantity = parseInt(quantitySpan.textContent);
+            try {
+                const response = await fetch(`/cart/api/update-quantity/${variantId}/?quantity=${quantity + 1}`, {
+                    method: 'PUT',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    credentials: 'include'
+                });
+    
+                if (response.ok) {
+                    quantity++;
+                    quantitySpan.textContent = quantity;
+                    const newTotal = basePrice * quantity;
+                    priceDiv.textContent = newTotal.toLocaleString('vi-VN') + '₫';
+                    priceDiv.setAttribute('data-price', newTotal);
+                    
+                    // Cập nhật tổng tiền
+                    const data = await response.json();
+                    const totalPriceElement = document.querySelector('.total-price');
+                    if (totalPriceElement && data.total_price) {
+                        totalPriceElement.textContent = parseInt(data.total_price).toLocaleString('vi-VN') + '₫';
+                        totalPriceElement.setAttribute('data-price', data.total_price);
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra khi cập nhật số lượng');
+            }
+        });
+    });
 </script>

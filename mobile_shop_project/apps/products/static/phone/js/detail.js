@@ -100,6 +100,61 @@ document.addEventListener('DOMContentLoaded', function () {
     const addToCartBtn = document.getElementById('add-to-cart-btn');
     
     addToCartBtn.addEventListener('click', async function() {
+        const productImage = document.getElementById('main-image');
+        const all_cart = document.querySelectorAll('.item-icon-container');
+        const cart = all_cart[2];
+
+        const flyingImage = productImage.cloneNode();
+        const productRect = productImage.getBoundingClientRect();
+        const cartRect = cart.getBoundingClientRect();
+
+        const cartCenterX = cartRect.left + (cartRect.width / 2);
+        const cartCenterY = cartRect.top + (cartRect.height / 2);
+
+        flyingImage.classList.add('flying-image');
+        flyingImage.style.width = productRect.width + 'px';
+        flyingImage.style.height = productRect.height + 'px';
+        flyingImage.style.left = productRect.left + 'px';
+        flyingImage.style.top = productRect.top + 'px';
+
+        document.body.appendChild(flyingImage);
+
+        setTimeout(() => {
+            flyingImage.classList.add('flying');
+            flyingImage.style.left = cartCenterX + 'px';
+            flyingImage.style.top = cartCenterY + 'px';
+        }, 0);
+        
+        const animateCart = async () => {
+            // Start cart animation
+            cart.classList.add('cart-animation');
+            
+            // Add flying image
+            document.body.appendChild(flyingImage);
+    
+            // Start flying animation
+            await new Promise(resolve => {
+                setTimeout(() => {
+                    flyingImage.classList.add('flying');
+                    flyingImage.style.left = cartCenterX + 'px';
+                    flyingImage.style.top = cartCenterY + 'px';
+                    resolve();
+                }, 0);
+            });
+    
+            // Remove flying image and cart animation
+            await new Promise(resolve => {
+                setTimeout(() => {
+                    flyingImage.remove();
+                    cart.classList.remove('cart-animation');
+                    resolve();
+                }, 800); // Match transition time from CSS
+            });
+        };
+        await animateCart();
+        
+
+
         console.log("Clicking add to cart with variant ID:", selectedVariantId);
         if (!selectedVariantId) {
             alert('Vui lòng chọn màu sắc và bộ nhớ');
@@ -123,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => {
             if (response.ok) {
-                alert('Đã thêm sản phẩm vào giỏ hàng');
+                // alert('Đã thêm sản phẩm vào giỏ hàng');
             } else if (response.status === 401) {
                 alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng');
                 window.location.href = '/login';

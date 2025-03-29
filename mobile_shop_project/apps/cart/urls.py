@@ -6,4 +6,5 @@ urlpatterns = [
     path('', views.cart_view),
     path('add-to-cart/', api.addToCart_view),
     path('api/remove-from-cart/<int:variant_id>/', api.removeFromCart_view, name='remove_from_cart'),
+    path('api/update-quantity/<int:variant_id>/', api.update_quantity, name='update_quantity'),
 ]
