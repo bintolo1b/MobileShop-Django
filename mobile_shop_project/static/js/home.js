@@ -178,4 +178,52 @@ document.addEventListener("click", function (event) {
     logoutButton.onclick = logout;
 });
 
+// Search functionality
+const searchInput = document.querySelector('.region-search-input');
+const searchSuggestions = document.querySelector('.search-suggestions');
+
+// Show suggestions when input is focused
+searchInput.addEventListener('focus', () => {
+    searchSuggestions.classList.add('active');
+});
+
+// Hide suggestions when clicking outside
+document.addEventListener('click', (e) => {
+    if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+        searchSuggestions.classList.remove('active');
+    }
+});
+
+// Handle suggestion item click
+document.querySelectorAll('.suggestion-item').forEach(item => {
+    item.addEventListener('click', () => {
+        searchInput.value = item.querySelector('span').textContent;
+        searchSuggestions.classList.remove('active');
+        // Here you can add the logic to perform the search
+    });
+});
+
+// Handle input changes
+searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const suggestions = document.querySelectorAll('.suggestion-item');
+    
+    suggestions.forEach(suggestion => {
+        const text = suggestion.querySelector('span').textContent.toLowerCase();
+        if (text.includes(searchTerm)) {
+            suggestion.style.display = 'flex';
+            // Highlight matching text
+            const span = suggestion.querySelector('span');
+            if (searchTerm) {
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                span.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
+            } else {
+                span.textContent = text;
+            }
+        } else {
+            suggestion.style.display = 'none';
+        }
+    });
+});
+
 
