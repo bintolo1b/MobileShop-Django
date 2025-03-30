@@ -33,6 +33,24 @@
                </div>
                <div class="region-search-content">
                     <input type="search" class="region-search-input" placeholder="Tìm kiếm sản phẩm trên dienthoaihay.vn">
+                    <div class="search-suggestions">
+                        <div class="suggestion-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>iPhone 15 Pro Max</span>
+                        </div>
+                        <div class="suggestion-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Samsung Galaxy S24 Ultra</span>
+                        </div>
+                        <div class="suggestion-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Xiaomi 14 Pro</span>
+                        </div>
+                        <div class="suggestion-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Realme GT5 Pro</span>
+                        </div>
+                    </div>
                </div>
             </div>
             <div class="header-item">
@@ -305,22 +323,19 @@
                         <h1>ÔI RẺ QUÁ!</h1>
                     </div>
                     <div class="product-brand-list">
-                        <div class="product-brand-name">
+                        <div class="product-brand-name" data-brand="iPhone" onclick="showBrandPhones('iPhone')">
                             IPHONE
                         </div>
-                        <div class="product-brand-name">
+                        <div class="product-brand-name" data-brand="Xiaomi" onclick="showBrandPhones('Xiaomi')">
                             XIAOMI
                         </div>
-                        <div class="product-brand-name">
-                            SAMSUNG
-                        </div>
-                        <div class="product-brand-name">
+                        <div class="product-brand-name" data-brand="Realme" onclick="showBrandPhones('Realme')">
                             REALME
                         </div>
                     </div>
                 </div>
                
-                <div class="products-details-container">
+                <div class="products-details-container all-products-container">
                     <div class="products-slider">
                         {% for phone in top_phones %}
                             {% if forloop.counter0|divisibleby:10 %}
@@ -496,306 +511,6 @@
             </div>
             
         </div>
-        {% comment %} <div class="products-details">
-            <div class="product-details-forehead">
-                <div class="product-details-title">
-                    <div class="product-details-label">
-                        <img src="{% static 'img/icon_dth.png'%}" alt="" class="product-details-label-img">
-                        <img src="{% static 'img/apple_brand-nbg.png'%}" alt="" class="product-details-label-brand">
-                    </div>
-                    <h1 class="product-detail-name">IPAD NỔI BẬT</h1>
-                </div>
-                <div class="product-details-distribution">
-                    <div class="product-details-category">
-                        <h1>iPad Mini</h1>
-                    </div>
-                    <div class="product-details-category">
-                        <h1>iPad 9.7</h1>
-                    </div>
-                    <div class="product-details-category">
-                        <h1>iPad 2/3/4</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="products-details-container">
-                <div class="product-item">
-                    <img src="{% static 'img/iphone-16-plus---hồng_1726074852.png'%}" alt="" class="product-item-img">
-                    <span class="product-item-note">Đã Unlock Sim</span>
-                    <div class="product-item-sale">
-                        <i class="fa-solid fa-fire"></i>
-                        <span class="product-item-sale-text">Giảm</span>
-                        <span class="product-item-sale-amount">1.000.000đ</span>
-                    </div>
-                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
-                    <div class="product-item-price">
-                        <span class="product-item-new-price">8.750.000đ</span>
-                        <span class="product-item-old-price">9.750.0000đ</span>
-                    </div>
-                    <div class="product-item-vote">
-                        <div class="product-item-stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="product-item-vote-number">
-                            <span>1</span>
-                            <span>đánh giá</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="{% static 'img/iphone-16-pro---titan-tự-nhiên_1726075065.png'%}" alt="" class="product-item-img">
-                    <span class="product-item-note">Đã Unlock Sim</span>
-                    <div class="product-item-sale">
-                        <i class="fa-solid fa-fire"></i>
-                        <span class="product-item-sale-text">Giảm</span>
-                        <span class="product-item-sale-amount">1.000.000đ</span>
-                    </div>
-                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
-                    <div class="product-item-price">
-                        <span class="product-item-new-price">8.750.000đ</span>
-                        <span class="product-item-old-price">9.750.0000đ</span>
-                    </div>
-                    <div class="product-item-vote">
-                        <div class="product-item-stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="product-item-vote-number">
-                            <span>1</span>
-                            <span>đánh giá</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="{% static 'img/iphone-16-pro-max---titan-sa-mạc_1726075323.jpg'%}" alt="" class="product-item-img">
-                    <span class="product-item-note">Đã Unlock Sim</span>
-                    <div class="product-item-sale">
-                        <i class="fa-solid fa-fire"></i>
-                        <span class="product-item-sale-text">Giảm</span>
-                        <span class="product-item-sale-amount">1.000.000đ</span>
-                    </div>
-                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
-                    <div class="product-item-price">
-                        <span class="product-item-new-price">8.750.000đ</span>
-                        <span class="product-item-old-price">9.750.0000đ</span>
-                    </div>
-                    <div class="product-item-vote">
-                        <div class="product-item-stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="product-item-vote-number">
-                            <span>1</span>
-                            <span>đánh giá</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="{% static 'img/vang_1662970924.jpg'%}" alt="" class="product-item-img">
-                    <span class="product-item-note">Đã Unlock Sim</span>
-                    <div class="product-item-sale">
-                        <i class="fa-solid fa-fire"></i>
-                        <span class="product-item-sale-text">Giảm</span>
-                        <span class="product-item-sale-amount">1.000.000đ</span>
-                    </div>
-                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
-                    <div class="product-item-price">
-                        <span class="product-item-new-price">8.750.000đ</span>
-                        <span class="product-item-old-price">9.750.0000đ</span>
-                    </div>
-                    <div class="product-item-vote">
-                        <div class="product-item-stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="product-item-vote-number">
-                            <span>1</span>
-                            <span>đánh giá</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="{% static 'img/iphone-16---xanh-mòng-két_1726074714.png'%}" alt="" class="product-item-img">
-                    <span class="product-item-note">Đã Unlock Sim</span>
-                    <div class="product-item-sale">
-                        <i class="fa-solid fa-fire"></i>
-                        <span class="product-item-sale-text">Giảm</span>
-                        <span class="product-item-sale-amount">1.000.000đ</span>
-                    </div>
-                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
-                    <div class="product-item-price">
-                        <span class="product-item-new-price">8.750.000đ</span>
-                        <span class="product-item-old-price">9.750.0000đ</span>
-                    </div>
-                    <div class="product-item-vote">
-                        <div class="product-item-stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="product-item-vote-number">
-                            <span>1</span>
-                            <span>đánh giá</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="{% static 'img/iphone-16-plus---hồng_1726074852.png'%}" alt="" class="product-item-img">
-                    <span class="product-item-note">Đã Unlock Sim</span>
-                    <div class="product-item-sale">
-                        <i class="fa-solid fa-fire"></i>
-                        <span class="product-item-sale-text">Giảm</span>
-                        <span class="product-item-sale-amount">1.000.000đ</span>
-                    </div>
-                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
-                    <div class="product-item-price">
-                        <span class="product-item-new-price">8.750.000đ</span>
-                        <span class="product-item-old-price">9.750.0000đ</span>
-                    </div>
-                    <div class="product-item-vote">
-                        <div class="product-item-stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="product-item-vote-number">
-                            <span>1</span>
-                            <span>đánh giá</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="{% static 'img/iphone-16-pro---titan-tự-nhiên_1726075065.png'%}" alt="" class="product-item-img">
-                    <span class="product-item-note">Đã Unlock Sim</span>
-                    <div class="product-item-sale">
-                        <i class="fa-solid fa-fire"></i>
-                        <span class="product-item-sale-text">Giảm</span>
-                        <span class="product-item-sale-amount">1.000.000đ</span>
-                    </div>
-                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
-                    <div class="product-item-price">
-                        <span class="product-item-new-price">8.750.000đ</span>
-                        <span class="product-item-old-price">9.750.0000đ</span>
-                    </div>
-                    <div class="product-item-vote">
-                        <div class="product-item-stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="product-item-vote-number">
-                            <span>1</span>
-                            <span>đánh giá</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="{% static 'img/iphone-16-pro-max---titan-sa-mạc_1726075323.jpg'%}" alt="" class="product-item-img">
-                    <span class="product-item-note">Đã Unlock Sim</span>
-                    <div class="product-item-sale">
-                        <i class="fa-solid fa-fire"></i>
-                        <span class="product-item-sale-text">Giảm</span>
-                        <span class="product-item-sale-amount">1.000.000đ</span>
-                    </div>
-                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
-                    <div class="product-item-price">
-                        <span class="product-item-new-price">8.750.000đ</span>
-                        <span class="product-item-old-price">9.750.0000đ</span>
-                    </div>
-                    <div class="product-item-vote">
-                        <div class="product-item-stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="product-item-vote-number">
-                            <span>1</span>
-                            <span>đánh giá</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="{% static 'img/vang_1662970924.jpg'%}" alt="" class="product-item-img">
-                    <span class="product-item-note">Đã Unlock Sim</span>
-                    <div class="product-item-sale">
-                        <i class="fa-solid fa-fire"></i>
-                        <span class="product-item-sale-text">Giảm</span>
-                        <span class="product-item-sale-amount">1.000.000đ</span>
-                    </div>
-                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
-                    <div class="product-item-price">
-                        <span class="product-item-new-price">8.750.000đ</span>
-                        <span class="product-item-old-price">9.750.0000đ</span>
-                    </div>
-                    <div class="product-item-vote">
-                        <div class="product-item-stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="product-item-vote-number">
-                            <span>1</span>
-                            <span>đánh giá</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="{% static 'img/iphone-16-pro---titan-tự-nhiên_1726075065.png'%}" alt="" class="product-item-img">
-                    <span class="product-item-note">Đã Unlock Sim</span>
-                    <div class="product-item-sale">
-                        <i class="fa-solid fa-fire"></i>
-                        <span class="product-item-sale-text">Giảm</span>
-                        <span class="product-item-sale-amount">1.000.000đ</span>
-                    </div>
-                    <span class="product-item-name">Apple iPhone 16 Pro Max</span>
-                    <div class="product-item-price">
-                        <span class="product-item-new-price">8.750.000đ</span>
-                        <span class="product-item-old-price">9.750.0000đ</span>
-                    </div>
-                    <div class="product-item-vote">
-                        <div class="product-item-stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="product-item-vote-number">
-                            <span>1</span>
-                            <span>đánh giá</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="chevron-left-container">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </div>
-                <div class="chevron-right-container">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div>
-            </div>
-        </div> {% endcomment %}
         <div class="products-details">
             <div class="product-details-forehead">
                 <div class="product-details-title">
