@@ -8,3 +8,7 @@ def is_staff(user):
 @user_passes_test(is_staff)
 def staff_home(request):
     return render(request, 'staff/staff_home.html')
+
+@user_passes_test(is_staff)
+def staff_order(request):
+    return render(request, 'staff/staff_order.html')

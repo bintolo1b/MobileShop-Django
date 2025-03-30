@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -290,10 +291,10 @@
     <div class="dashboard-container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <img src="/mobile_shop_project/static/img/logo-dth_1592615391.png" alt="">
+                <img src="{% static 'img/logo-dth_1592615391.png' %}" alt="">
             </div>
             <ul class="nav-menu">
-                <li class="nav-item" onclick="window.location.href=''">
+                <li class="nav-item" onclick="window.location.href='/users/staff/'">
                     <i class="fas fa-home"></i>
                     Tổng Quan
                 </li>

@@ -58,3 +58,7 @@ def order_infor_view(request):
         return render(request, 'orders/order_infor.html', {'error': 'Không tìm thấy thông tin khách hàng'})
     except Exception as e:
         return render(request, 'orders/order_infor.html', {'error': str(e)})
+    
+@user_passes_test(is_client)
+def customer_infor(request):
+    return render(request, 'orders/customer_infor.html')

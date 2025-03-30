@@ -1,4 +1,4 @@
-{% load static %}
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +7,9 @@
     <title>Document</title>
     <!-- <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
-    <link rel="stylesheet" href="{%static 'css/base.css'%}">
-    <link rel="stylesheet" href="{%static 'css/home.css'%}">
-    <link rel="stylesheet" href="{%static 'orders/css/orders.css'%}">
+    <link rel="stylesheet" href= "{% static 'orders/css/customer_info.css'%}">
+    <link rel="stylesheet" href="{% static 'css/base.css'%}">
+    <link rel="stylesheet" href="{% static 'css/home.css'%}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -156,15 +156,15 @@
                     <span class="sub2-item-title">Giỏ hàng</span>
                 </div>
             </div>
-            <div class="header-item user-item">
-                {% if not request.session.username%}
+            <div class="header-item">
+                {% if not request.session.username %}
                 <a href="/login" id="loginLink">Đăng nhập</a>
                 {% else %}
                 <span id="usernameDisplay">{{ request.session.username }}</span>
                 <div id="userPopup" class="popup">
-                    <div class="info-item" onClick="window.location.href = '/orders'">
-                        <i class="fa-solid fa-bag-shopping"></i>
-                        Đơn hàng
+                    <div class="info-item">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Thông tin cá nhân
                     </div>
                     <button id="logoutButton">
                         <i class="fa-solid fa-right-from-bracket"></i>
@@ -183,95 +183,55 @@
                 <div class="user-info">
                     <h2>Anh Võ Văn Tuấn</h2>
                 </div>
-                <div class="sidebar-item active">
+                <div class="sidebar-item" onClick="window.location.href='/orders/'">
                     <i class="fas fa-file-invoice"></i>
                     <span>Đơn hàng đã mua</span>
                 </div>
-                <div class="sidebar-item" onClick='window.location.href="/orders/customer_infor/"'>
+                <div class="sidebar-item active">
                     <i class="fas fa-user-circle"></i>
                     <span>Thông tin và sổ địa chỉ</span>
                 </div>
                 <div class="sidebar-item-logout">
-                    <button class="out-btn" onClick=logout()>Đăng Xuất</button>
+                    <button class="out-btn">Đăng Xuất</button>
                 </div>
             </div>
-            
-            <div class="order-content">
-                <div class="order-title">
-                    <h3>Đơn hàng đã mua</h3>
-                </div>
-                
-                <div class="order-filters">
-                    <button class="filter-btn active">Tất cả</button>
-                    <button class="filter-btn">Chờ xử lý</button>
-                    <button class="filter-btn">Đã xác nhận</button>
-                    <button class="filter-btn">Đang chuyển hàng</button>
-                    <button class="filter-btn">Đang giao hàng</button>
-                    <button class="filter-btn">Đã hủy</button>
-                    <button class="filter-btn">Thành công</button>
-                </div>
-                
-                <div class="order-details">
-                    <div class="order-info">
-                        <div class="order-id">
-                            <span>Đơn hàng: </span>
-                            <span class="order-number">#02388SH22110290582</span>
-                        </div>
-                        <div class="order-status">
-                            <span class="status-delivered">Đã nhận hàng</span>
-                        </div>
-                    </div>
-                    
-                    <div class="order-product">
-                        <div class="product-image">
-                            <img src="{% static 'img/iphone-16-plus---hồng_1726074852.png'%}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <h4 class="product-name">Iphone 16 Pro Max</h4>
-                        </div>
-                        <div class="product-price">
-                            <span class="total-price">29.900.00đ</span>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="order-details">
-                    <div class="order-info">
-                        <div class="order-id">
-                            <span>Đơn hàng: </span>
-                            <span class="order-number">#02388SH22110290582</span>
-                        </div>
-                        <div class="order-status">
-                            <span class="status-delivered">Đã nhận hàng</span>
-                        </div>
+
+
+            <div class="custom-content">
+                <div class="custom-title">
+                    <h1>Thông tin cá nhân</h1>
+                </div>
+                
+                <div class="custom-form">
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <input type="text" value="Võ Văn Tuấn" placeholder="Nhập họ và tên">
                     </div>
                     
-                    <div class="order-product">
-                        <div class="product-image">
-                            <img src="{% static 'img/iphone-16-plus---hồng_1726074852.png'%}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <h4 class="product-name">Iphone 15 Pro Max</h4>
-                        </div>
-                        <div class="product-price">
-                            <span class="total-price">19.900.00đ</span>
-                        </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="tel" value="0123456789" placeholder="Nhập số điện thoại">
                     </div>
+    
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" value="nauts@gmail.com" placeholder="Nhập email">
+                    </div>
+    
+                    <div class="form-group">
+                        <label>Địa chỉ</label>
+                        <textarea placeholder="Nhập địa chỉ"></textarea>
+                    </div>
+    
+                    <div class="form-actions">
+                        <button class="save-btn">Lưu thay đổi</button>
+                    </div>
+                </div>
             </div>
         </div>
+
+        
     </div>
 </body>
-<script src="{%static 'js/home.js'%}"></script>
-<script>
-document.querySelectorAll(".filter-btn").forEach((item) => {
-    item.addEventListener("click", () => {
-        document.querySelectorAll(".filter-btn").forEach((btn) => {
-            btn.classList.remove("active");
-        });
-
-        item.classList.add("active");
-    });
-});
-
-</script>
 </html>
