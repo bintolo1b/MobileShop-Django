@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from .models import Client, Order, PhoneVariant
+from .models import Client, Order, PhoneVariant, PhoneVariant_Order
 from apps.cart.models import Cart, Cart_PhoneVariant
 from django.utils import timezone
 import json
@@ -76,3 +76,52 @@ def confirm_payment_view(request):
             
         except Exception as e:
             return Response({"message": f"Lỗi: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+@api_view(["GET"])
+def order_detail_view(request, order_id):
+    try:
+        # Lấy thông tin đơn hàng
+        order = get_object_or_404(Order, id=order_id)
+        
+        # Lấy các sản phẩm trong đơn hàng
+        order_items = PhoneVariant_Order.objects.filter(order=order)
+        
+        items_data = []
+        for item in order_items:
+            item_data = {
+                'name': item.phonevariant.phone.name,
+                'color': item.phonevariant.color,
+                'ram': item.phonevariant.configuration.ram,
+                'rom': item.phonevariant.configuration.rom,
+                'quantity': item.quantity,
+                'price': item.price,
+                'subtotal': item.price * item.quantity,
+                'img': item.phonevariant.img.url if item.phonevariant.img else None
+            }
+            items_data.append(item_data)
+        
+        order_data = {
+            'id': order.id,
+            'status': order.status,
+            'date': order.time.strftime('%Y-%m-%d %H:%M:%S') if order.time else None,
+            'payment_method': order.payment_method,
+            'payment_screenshot': order.payment_screenshot.url if order.payment_screenshot else None,
+            'items': items_data,
+            'total': sum(item['subtotal'] for item in items_data),
+            'client': {
+                'username': order.client.username.username,
+                'fullname': order.client_name,
+                'phone': order.client_phone,
+                'email': order.email,
+                'address': order.address
+            },
+            'note': order.note
+        }
+        
+        return Response(order_data, status=status.HTTP_200_OK)
+    
+    except Order.DoesNotExist:
+        return Response({"message": "Không tìm thấy đơn hàng"}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({"message": f"Lỗi: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
