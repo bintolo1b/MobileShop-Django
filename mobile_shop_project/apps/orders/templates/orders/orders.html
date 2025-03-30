@@ -211,31 +211,45 @@
                     <button class="filter-btn">Thành công</button>
                 </div>
                 
-                <div class="order-details">
-                    <div class="order-info">
-                        <div class="order-id">
-                            <span>Đơn hàng: </span>
-                            <span class="order-number">#02388SH22110290582</span>
-                        </div>
-                        <div class="order-status">
-                            <span class="status-delivered">Đã nhận hàng</span>
-                        </div>
-                    </div>
-                    
-                    <div class="order-product">
-                        <div class="product-image">
-                            <img src="{% static 'img/iphone-16-plus---hồng_1726074852.png'%}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <h4 class="product-name">Iphone 16 Pro Max</h4>
-                        </div>
-                        <div class="product-price">
-                            <span class="total-price">29.900.00đ</span>
-                        </div>
-                    </div>
-                </div>
+                
 
-                <div class="order-details">
+                {% for order in orders %}
+                    <div class="order-details">
+                        <div class="order-info">
+                            <div class="order-id">
+                                <span>Đơn hàng: </span>
+                                <span class="order-number">#{{order.id}}</span>
+                            </div>
+                            <div class="order-status">
+                                <span class="status-delivered">{{order.status}}</span>
+                            </div>
+                        </div>
+                        {% for item in order.items %}
+                        <div class="order-product">
+                            <div class="product-image">
+                                <img src="/media/{{item.img}}" alt="">
+                            </div>
+                            <div class="product-info">
+                                <h4 class="product-name">{{item.name}}</h4>
+                            </div>
+
+                            {% comment %} css 2 cai div nay lai {% endcomment %}
+                            <div class="product-info">
+                                <span class="product-name">{{item.quantity}}</span>
+                            </div>
+                            <div class="product-info">
+                                <span class="product-name">{{item.ram}}/{{item.rom}}</span>
+                            </div>
+
+                            <div class="product-price">
+                                <span class="total-price">{{item.subtotal}}</span>
+                            </div>
+                            
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                {% comment %} <div class="order-details">
                     <div class="order-info">
                         <div class="order-id">
                             <span>Đơn hàng: </span>
@@ -257,6 +271,7 @@
                             <span class="total-price">19.900.00đ</span>
                         </div>
                     </div>
+                </div> {% endcomment %}
             </div>
         </div>
     </div>

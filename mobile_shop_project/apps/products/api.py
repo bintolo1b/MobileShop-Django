@@ -7,7 +7,6 @@ from django.contrib.auth import get_user_model
 
 @api_view(["GET"])
 def get_phone_variant(request):
-    print(get_user_model())
     phone_id = request.query_params.get("phone_id")
     ram = request.query_params.get("ram")
     rom = request.query_params.get("rom")
