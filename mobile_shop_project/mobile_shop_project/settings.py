@@ -103,7 +103,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'mobile_shop_django',
         'USER': 'root',
-        'PASSWORD': 'bulletsilver',
+        'PASSWORD': 'Trantai25022004',
         'HOST': 'localhost',
         'PORT': '3306',
     }
