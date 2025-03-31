@@ -36,6 +36,24 @@
                </div>
                <div class="region-search-content">
                     <input type="search" class="region-search-input" placeholder="Tìm kiếm sản phẩm trên dienthoaihay.vn">
+                    <div class="search-suggestions">
+                        <div class="suggestion-item">
+                            <img src="{% static 'img/iphone-16---xanh-mòng-két_1726074714.png'%}" alt="" class="suggestion-item-img">
+                            <span>iPhone 15 Pro Max</span>
+                        </div>
+                        <div class="suggestion-item">
+                            <img src="{% static 'img/iphone-16---xanh-mòng-két_1726074714.png'%}" alt="" class="suggestion-item-img">
+                            <span>Samsung Galaxy S24 Ultra</span>
+                        </div>
+                        <div class="suggestion-item">
+                            <img src="{% static 'img/iphone-16---xanh-mòng-két_1726074714.png'%}" alt="" class="suggestion-item-img">
+                            <span>Xiaomi 14 Pro</span>
+                        </div>
+                        <div class="suggestion-item">
+                            <img src="{% static 'img/iphone-16---xanh-mòng-két_1726074714.png'%}" alt="" class="suggestion-item-img">
+                            <span>Realme GT5 Pro</span>
+                        </div>
+                    </div>
                </div>
             </div>
             <div class="header-item">
@@ -149,7 +167,7 @@
                     <span class="sub2-item-title">Sản phẩm</span>
                 </div>
             </div>
-            <div class="header-item user-item" onClick="window.location.href = '/cart'">
+            <div class="header-item" onClick="window.location.href = '/cart'">
                 <div class="item-icon-container">
                     <i class="fa-solid fa-cart-shopping header-icon"></i>
                 </div>
@@ -157,15 +175,15 @@
                     <span class="sub2-item-title">Giỏ hàng</span>
                 </div>
             </div>
-            <div class="header-item">
-                {% if not request.session.username %}
+            <div class="header-item user-item">
+                {% if not request.session.username%}
                 <a href="/login" id="loginLink">Đăng nhập</a>
                 {% else %}
                 <span id="usernameDisplay">{{ request.session.username }}</span>
                 <div id="userPopup" class="popup">
-                    <div class="info-item">
-                        <i class="fa-solid fa-circle-info"></i>
-                        Thông tin cá nhân
+                    <div class="info-item" onClick="window.location.href = '/orders'">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        Đơn hàng
                     </div>
                     <button id="logoutButton">
                         <i class="fa-solid fa-right-from-bracket"></i>
@@ -181,6 +199,7 @@
     
     <!-- main -->
     <div class="container">
+        {% csrf_token %}
         {% for item in cart_items  %}
             <div class="order-product">
                 <div class="product-card">
@@ -216,13 +235,13 @@
         <div class="customer-info">
             <div class="info-title">THÔNG TIN KHÁCH HÀNG</div>
             <div class="input-group">
-                <input type="text" placeholder="Họ và tên" value="{{client_name}}">
+                <input type="text" placeholder="Họ và tên" value="{{client_name}}" >
             </div>
             <div class="input-group">
-                <input type="tel" placeholder="Số điện thoại" value="{{phone_number}}">
+                <input type="tel" placeholder="Số điện thoại" value="{{phone_number}}" >
             </div>
             <div class="input-group">
-                <input type="email" placeholder="Email của bạn" value="{{email}}">
+                <input type="email" placeholder="Email của bạn" value="{{email}}" >
             </div>
         </div>
         
@@ -245,7 +264,7 @@
             </div>
             
             <div class="input-group">
-                <input type="text" placeholder="Nhập địa chỉ cụ thể" value="{{address}}">
+                <input type="text" placeholder="Nhập địa chỉ cụ thể" value="{{address}}" >
             </div>
             
             <div class="input-group">
@@ -296,7 +315,8 @@
                 </div>
             </div>
         </div>
-        <button class="continue-button" onclick="window.location.href='/orders'">Đặt hàng</button>
+        <button class="continue-button">Đặt hàng</button>
     </div>
 </body>
+<script src="{%static 'js/home.js'%}"></script>
 </html>

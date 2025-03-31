@@ -7,9 +7,10 @@
     <title>Document</title>
     <!-- <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
-    <link rel="stylesheet" href= "{% static 'orders/css/customer_info.css'%}">
+    
     <link rel="stylesheet" href="{% static 'css/base.css'%}">
     <link rel="stylesheet" href="{% static 'css/home.css'%}">
+    <link rel="stylesheet" href= "{% static 'orders/css/customer_info.css'%}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -221,7 +222,7 @@
     
                     <div class="form-group">
                         <label>Địa chỉ</label>
-                        <textarea placeholder="Nhập địa chỉ" value="{{address}}"></textarea>
+                        <textarea placeholder="Nhập địa chỉ">{{address}}</textarea>
                     </div>
     
                     <div class="form-actions">

@@ -214,41 +214,56 @@
                 
 
                 {% for order in orders %}
-                    <div class="order-details">
-                        <div class="order-info">
-                            <div class="order-id">
-                                <span>Đơn hàng: </span>
-                                <span class="order-number">#{{order.id}}</span>
-                            </div>
-                            <div class="order-status">
-                                <span class="status-delivered">{{order.status}}</span>
-                            </div>
+                <div class="order-details">
+                    <div class="order-info">
+                        <div class="order-id">
+                            <span>Đơn hàng: </span>
+                            <span class="order-number">#{{order.id}}</span>
                         </div>
-                        {% for item in order.items %}
-                        <div class="order-product">
-                            <div class="product-image">
-                                <img src="/media/{{item.img}}" alt="">
-                            </div>
-                            <div class="product-info">
-                                <h4 class="product-name">{{item.name}}</h4>
-                            </div>
-
-                            {% comment %} css 2 cai div nay lai {% endcomment %}
-                            <div class="product-info">
-                                <span class="product-name">{{item.quantity}}</span>
-                            </div>
-                            <div class="product-info">
-                                <span class="product-name">{{item.ram}}/{{item.rom}}</span>
-                            </div>
-
-                            <div class="product-price">
-                                <span class="total-price">{{item.subtotal}}</span>
-                            </div>
-                            
+                        <div class="order-date">
+                            <span>Ngày: </span>
+                            <span class="date">{{order.date}}</span>
                         </div>
-                        {% endfor %}
+                        <div class="order-status">
+                            <span class="status-delivered">{{order.status}}</span>
+                        </div>
                     </div>
-                {% endfor %}
+                    {% for item in order.items %}
+                    <div class="order-product">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="/media/{{item.img}}" alt="{{item.name}}">
+                            </div>
+                            <div class="product-details">
+                                <h4 class="product-name">{{item.name}}</h4>
+                                <div class="product-specs">
+                                    <div class="product-color">
+                                        <span class="label">Màu:</span>
+                                        <span class="value">{{item.color}}</span>
+                                    </div>
+                                    <div class="product-memory">
+                                        <span class="label">Dung lượng:</span>
+                                        <span class="value">{{item.ram}}/{{item.rom}}</span>
+                                    </div>
+                                    <div class="quantity">
+                                        <span class="label">Số lượng:</span>
+                                        <span class="value">{{item.quantity}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-price">
+                                <span class="sub-total">{{item.subtotal}}₫</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="order-summary">
+                        <span>Tổng cộng:</span>
+                        <span class="total">{{order.total}}₫</span>
+                    </div>
+                </div>
+            {% endfor %}
                 {% comment %} <div class="order-details">
                     <div class="order-info">
                         <div class="order-id">
@@ -287,6 +302,26 @@ document.querySelectorAll(".filter-btn").forEach((item) => {
         item.classList.add("active");
     });
 });
+function formatPrice() {
+    document.querySelectorAll('.total').forEach(priceElement => {
+        const price = priceElement.textContent.replace('₫', '').trim();
+        const formattedPrice = parseInt(price).toLocaleString('vi-VN') + '₫';
+        priceElement.textContent = formattedPrice;
+    });
+    document.querySelectorAll('.sub-total').forEach(priceElement => {
+        const price = priceElement.textContent.replace('₫', '').trim();
+        const formattedPrice = parseInt(price).toLocaleString('vi-VN') + '₫';
+        priceElement.textContent = formattedPrice;
+    });
 
+    // Format tổng tiền
+    const orderTotal = document.querySelector('.order-total span:last-child');
+    if (orderTotal) {
+        const totalPrice = orderTotal.textContent.replace('₫', '').trim();
+        const formattedTotal = parseInt(totalPrice).toLocaleString('vi-VN') + '₫';
+        orderTotal.textContent = formattedTotal;
+    }
+}
+formatPrice();
 </script>
 </html>

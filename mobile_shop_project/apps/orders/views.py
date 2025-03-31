@@ -37,7 +37,7 @@ def order_view(request):
             order_data = {
                 'id': order.id,
                 'status': order.status,
-                'date': order.time,  # Thay date bằng time vì trong model Order không có trường date mà có trường time
+                'date': order.time.strftime('%Y-%m-%d %H:%M:%S') if order.time else None,  # Định dạng thời gian để hiển thị
                 'items': items_data,
                 'total': sum(item['subtotal'] for item in items_data)
             }
