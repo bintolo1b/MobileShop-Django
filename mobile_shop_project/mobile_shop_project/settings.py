@@ -103,7 +103,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'mobile_shop_django',
         'USER': 'root',
-        'PASSWORD': 'bulletsilver',
+        'PASSWORD': 'nauts12345@',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -160,4 +160,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
-
+CORS_ALLOW_ALL_ORIGINS = True

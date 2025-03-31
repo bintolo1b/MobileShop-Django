@@ -72,7 +72,91 @@ document.addEventListener('DOMContentLoaded', function() {
     const paymentInputs = document.querySelectorAll('input[name="payment"]');
     const onlinePaymentDetails = document.getElementById('onlinePaymentDetails');
     const continueButton = document.querySelector('.continue-button');
+    continueButton.addEventListener('click', handleOrderSubmission);
 
+
+    async function handleOrderSubmission() {
+        try {
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            const formData = new FormData();
+
+            if (paymentMethod === 'online') {
+                const paymentProof = document.getElementById('payment-proof');
+                if (paymentProof.files.length > 0) {
+                    formData.append('payment_screenshot', paymentProof.files[0]);
+                } else {
+                    alert('Vui lòng tải lên ảnh chứng minh thanh toán');
+                    return;
+                }
+            }
+
+            const clientName = document.querySelector('.customer-info input[type="text"]').value;
+            const phoneNumber = document.querySelector('.customer-info input[type="tel"]').value;
+            const email = document.querySelector('.customer-info input[type="email"]').value;
+            const cityElement = document.getElementById('city');
+            const districtElement = document.getElementById('district');
+            const cityName = cityElement.options[cityElement.selectedIndex].text;
+            const districtName = districtElement.options[districtElement.selectedIndex].text;
+            const address = document.querySelector('.delivery-info input[type="text"]').value;
+            const note = document.querySelector('.delivery-info textarea').value;
+
+
+            // console.log('Payment Method:', paymentMethod);
+            // console.log('Client Name:', clientName);
+            // console.log('Phone Number:', phoneNumber);
+            // console.log('Email:', email);
+            // console.log('City:', cityName);
+            // console.log('District:', districtName);
+            // console.log('Address:', address);
+            // console.log('Note:', note);
+
+
+            // Validate thông tin
+            if (!clientName || !phoneNumber || !email || !address) {
+                alert('Vui lòng điền đầy đủ thông tin');
+                return;
+            }
+
+            // Tạo object data
+            const data = {
+                payment_method: paymentMethod === 'online' ? 'Thanh toán online' : 'Thanh toán khi nhận hàng',
+                client_name: clientName,
+                client_phone: phoneNumber,
+                email: email,
+                address: `${address}, ${districtName}, ${cityName}`,
+                note: note
+            };
+
+            console.log('Request Data Object:');
+            console.log('-------------------');
+            console.log(data);
+            formData.append('data', JSON.stringify(data));
+
+            // Lấy CSRF token từ cookie
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            const response = await fetch('/orders/confirm_payment/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert('Đặt hàng thành công!');
+                window.location.href = '/orders';
+            } else {
+                throw new Error(result.message || 'Có lỗi xảy ra');
+            }
+
+        } catch (error) {
+            alert(error.message);
+            console.error('Error:', error);
+        }
+    }
     paymentInputs.forEach(input => {
         input.addEventListener('change', function() {
             if (this.value === 'online') {
@@ -99,4 +183,5 @@ document.addEventListener('DOMContentLoaded', function() {
             reader.readAsDataURL(file);
         }
     });
+    
 });

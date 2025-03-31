@@ -1,7 +1,6 @@
-/* Orders CSS */
 .main-container {
     background-color: #f6f6f6;
-    padding-top: 80px;
+    padding-top: 30px;
     padding-bottom: 30px;
     min-height: 100vh;
 }
@@ -10,6 +9,7 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 15px;
+    position: relative;
     display: flex;
     gap: 30px;
 }
@@ -93,6 +93,8 @@
 .sidebar-item.logout span {
     color: #dd0000;
 }
+
+
 .out-btn{
     padding: 8px 15px;
     border: 1px solid #ddd;
@@ -114,7 +116,6 @@
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    margin-left: 30px;
 }
 
 .custom-title {
