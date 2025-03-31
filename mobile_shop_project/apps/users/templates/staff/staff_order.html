@@ -12,7 +12,7 @@
             padding: 0;
             min-height: 100vh;
             background: linear-gradient(135deg, #cc0000 0%, #e65100 100%);
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
 
         .dashboard-container {
@@ -201,6 +201,9 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
         }
 
         .modal-content {
@@ -208,9 +211,11 @@
             margin: 50px auto;
             padding: 20px;
             width: 90%;
-            max-width: 800px;
+            max-width: 900px;
             border-radius: 8px;
             position: relative;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
         }
 
         .close {
@@ -310,13 +315,9 @@
                     <i class="fas fa-users"></i>
                     Khách Hàng
                 </li>
-                <li class="nav-item">
-                    <i class="fas fa-chart-bar"></i>
-                    Báo Cáo
-                </li>
-                <li class="nav-item">
-                    <i class="fas fa-cog"></i>
-                    Cài Đặt
+                <li class="nav-item" id="logoutButton">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Đăng xuất
                 </li>
             </ul>
         </div>
@@ -353,7 +354,7 @@
                             </div>
                         </div>
                         <div class="order-actions">
-                            <button class="btn btn-details" onclick="showOrderDetails('{{order.id}}', '{{order.client.username}}', 'iPhone 13 Pro Max - 256GB', '29.990.000đ', '2', '{{order.total}}', '{{order.date}}', '{{order.client.fullname}}', '{{order.client.phone}}', '{{order.payment_method}}')">Chi tiết</button>
+                            <button class="btn btn-details" onclick="showOrderDetails('{{order.id}}')">Chi tiết</button>
                             <button class="btn btn-accept">Xác nhận</button>
                         </div>
                     </div>
@@ -387,13 +388,17 @@
                     <div class="info-value"><span id="modalPhone"></span></div>
                 </div>
                 <div class="info-group">
+                    <div class="info-label">Địa chỉ</div>
+                    <div class="info-value"><span id="modalAddress"></span></div>
+                </div>
+                <div class="info-group">
                     <div class="info-label">Phương thức thanh toán</div>
                     <div class="info-value"><span id="modalPayment"></span></div>
                 </div>
                 <div class="info-group" id="paymentScreenGroup" style="display: none;">
                     <div class="info-label">Màn hình thanh toán</div>
                     <div class="info-value">
-                        <img id="paymentScreen" src="" alt="Payment Screen" style="max-width: 100%; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <img id="paymentScreen" src="" alt="Payment Screen" style="max-width: 30%; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                     </div>
                 </div>
                 <div class="info-group">
@@ -408,6 +413,8 @@
                             <th>STT</th>
                             <th>Hình ảnh</th>
                             <th>Tên sản phẩm</th>
+                            <th>Màu sắc</th>
+                            <th>Cấu hình</th>
                             <th>Đơn giá</th>
                             <th>Số lượng</th>
                             <th>Thành tiền</th>
@@ -418,51 +425,97 @@
                     </tbody>
                     <tfoot>
                         <tr class="total-row">
-                            <td colspan="5" style="text-align: right;">Tổng cộng:</td>
+                            <td colspan="7" style="text-align: right;">Tổng cộng:</td>
                             <td><span id="modalTotalPrice"></span></td>
                         </tr>
                     </tfoot>
                 </table>
+
+                <div class="info-group" id="orderNoteGroup">
+                    <div class="info-label">Ghi chú</div>
+                    <div class="info-value"><span id="modalNote"></span></div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        function showOrderDetails(orderId, username, product, pricePerProduct, quantity, totalPrice, time, fullName, phone, payment) {
-            document.getElementById('modalOrderCode').textContent = orderId;
-            document.getElementById('modalOrderId').textContent = orderId;
-            document.getElementById('modalUsername').textContent = username;
-            document.getElementById('modalFullName').textContent = fullName;
-            document.getElementById('modalPhone').textContent = phone;
-            document.getElementById('modalPayment').textContent = payment;
-            document.getElementById('modalTime').textContent = time;
-            document.getElementById('modalTotalPrice').textContent = totalPrice;
-
-            // Handle payment screen display
-            const paymentScreenGroup = document.getElementById('paymentScreenGroup');
-            const paymentScreen = document.getElementById('paymentScreen');
-            
-            if (payment === "Thanh toán online") {
-                paymentScreenGroup.style.display = 'block';
-                paymentScreen.src = '/mobile_shop_project/media/payment_screens/' + orderId + '.jpg';
-            } else {
-                paymentScreenGroup.style.display = 'none';
+        // Get CSRF token from cookies
+        function getCSRFToken() {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith("csrftoken=")) {
+                        cookieValue = cookie.substring("csrftoken=".length, cookie.length);
+                        break;
+                    }
+                }
             }
+            return cookieValue;
+        }
 
-            // Update product table
-            const tableBody = document.getElementById('productTableBody');
-            tableBody.innerHTML = `
-                <tr>
-                    <td>1</td>
-                    <td><img src="/mobile_shop_project/media/11-pro-den_1684809857.jpg.jpg" alt="${product}" class="product-image"></td>
-                    <td>${product}</td>
-                    <td>${pricePerProduct}</td>
-                    <td>${quantity}</td>
-                    <td>${totalPrice}</td>
-                </tr>
-            `;
+        async function showOrderDetails(orderId) {
+            try {
+                const response = await fetch(`/orders/order_detail/${orderId}/`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCSRFToken()
+                    },
+                    credentials: "include"
+                });
 
-            document.getElementById('orderModal').style.display = 'block';
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Update modal with order details
+                    document.getElementById('modalOrderCode').textContent = data.id;
+                    document.getElementById('modalOrderId').textContent = data.id;
+                    document.getElementById('modalUsername').textContent = data.client.username;
+                    document.getElementById('modalFullName').textContent = data.client.fullname;
+                    document.getElementById('modalPhone').textContent = data.client.phone;
+                    document.getElementById('modalAddress').textContent = data.client.address;
+                    document.getElementById('modalPayment').textContent = data.payment_method;
+                    document.getElementById('modalTime').textContent = data.date;
+                    document.getElementById('modalTotalPrice').textContent = data.total.toLocaleString('vi-VN') + ' ₫';
+                    document.getElementById('modalNote').textContent = data.note || 'Không có ghi chú';
+
+                    // Handle payment screen display
+                    const paymentScreenGroup = document.getElementById('paymentScreenGroup');
+                    const paymentScreen = document.getElementById('paymentScreen');
+                    
+                    if (data.payment_method === "Thanh toán online") {
+                        paymentScreenGroup.style.display = 'block';
+                        paymentScreen.src = data.payment_screenshot || '';
+                    } else {
+                        paymentScreenGroup.style.display = 'none';
+                    }
+
+                    // Update product table
+                    const tableBody = document.getElementById('productTableBody');
+                    tableBody.innerHTML = data.items.map((item, index) => `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td><img src="${item.img}" alt="${item.name}" class="product-image"></td>
+                            <td>${item.name}</td>
+                            <td>${item.color}</td>
+                            <td>${item.ram}/${item.rom}</td>
+                            <td>${item.price.toLocaleString('vi-VN')} ₫</td>
+                            <td>${item.quantity}</td>
+                            <td>${item.subtotal.toLocaleString('vi-VN')} ₫</td>
+                        </tr>
+                    `).join('');
+
+                    document.getElementById('orderModal').style.display = 'flex';
+                } else {
+                    alert(`Error ${response.status}: ${data.message || "Unknown error"}`);
+                }
+            } catch (error) {
+                console.error("Network error:", error);
+                alert("Failed to fetch order details");
+            }
         }
 
         function closeOrderDetails() {
@@ -477,5 +530,6 @@
             }
         }
     </script>
+    <script src="{% static 'js/logout.js' %}"></script>
 </body>
 </html> 

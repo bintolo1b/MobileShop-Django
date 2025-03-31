@@ -24,7 +24,6 @@ document.querySelector("#logoutButton").onclick = async function () {
     })
     .then(response => response.json().then(data => {
         if (response.ok) {
-            alert("Đăng xuất thành công");
             window.location.href = "/login"; // Chuyển về trang login
         } else {
             alert(`❌ Lỗi ${response.status}: ${data.message || "Unknown error"}`);
