@@ -456,6 +456,11 @@
             return cookieValue;
         }
 
+        // Utility function for price formatting
+        function formatPrice(price) {
+            return price.toLocaleString('vi-VN') + 'đ';
+        }
+
         async function showOrderDetails(orderId) {
             try {
                 const response = await fetch(`/orders/order_detail/${orderId}/`, {
@@ -479,7 +484,7 @@
                     document.getElementById('modalAddress').textContent = data.client.address;
                     document.getElementById('modalPayment').textContent = data.payment_method;
                     document.getElementById('modalTime').textContent = data.date;
-                    document.getElementById('modalTotalPrice').textContent = data.total.toLocaleString('vi-VN') + ' ₫';
+                    document.getElementById('modalTotalPrice').textContent = formatPrice(data.total);
                     document.getElementById('modalNote').textContent = data.note || 'Không có ghi chú';
 
                     // Handle payment screen display
@@ -502,9 +507,9 @@
                             <td>${item.name}</td>
                             <td>${item.color}</td>
                             <td>${item.ram}/${item.rom}</td>
-                            <td>${item.price.toLocaleString('vi-VN')} ₫</td>
+                            <td>${formatPrice(item.price)}</td>
                             <td>${item.quantity}</td>
-                            <td>${item.subtotal.toLocaleString('vi-VN')} ₫</td>
+                            <td>${formatPrice(item.subtotal)}</td>
                         </tr>
                     `).join('');
 
