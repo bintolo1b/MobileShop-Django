@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from .models import Client, Order, PhoneVariant, PhoneVariant_Order
 from apps.cart.models import Cart, Cart_PhoneVariant
 from django.utils import timezone
+from django.utils.timezone import localtime
 import json
 
 @api_view(["POST"])
@@ -104,7 +105,7 @@ def order_detail_view(request, order_id):
         order_data = {
             'id': order.id,
             'status': order.status,
-            'date': order.time.strftime('%Y-%m-%d %H:%M:%S') if order.time else None,
+            'date': localtime(order.time).strftime('%H:%M:%S %d/%m/%Y'),
             'payment_method': order.payment_method,
             'payment_screenshot': order.payment_screenshot.url if order.payment_screenshot else None,
             'items': items_data,

@@ -295,23 +295,18 @@
             <div class="dashboard-stats">
                 <div class="stat-card">
                     <h3>Đơn Hàng Hôm Nay</h3>
-                    <div class="number">24</div>
-                    <div class="trend">+12% so với hôm qua</div>
+                    <div class="number">{{today_order_count}}</div>
+                    <div class="trend {% if order_percentage < 0 %}negative{% endif %}">{{order_percentage}}% so với hôm qua</div>
                 </div>
                 <div class="stat-card">
                     <h3>Doanh Thu Hôm Nay</h3>
-                    <div class="number">8.450.000đ</div>
-                    <div class="trend">+8% so với hôm qua</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Khách Hàng Hoạt Động</h3>
-                    <div class="number">156</div>
-                    <div class="trend negative">-3% so với hôm qua</div>
+                    <div class="number">{{today_revenue}}</div>
+                    <div class="trend {% if revenue_percentage < 0 %}negative{% endif %}">{{revenue_percentage}}% so với hôm qua</div>
                 </div>
                 <div class="stat-card">
                     <h3>Giá Trị Đơn Hàng TB</h3>
-                    <div class="number">352.000đ</div>
-                    <div class="trend">+5% so với hôm qua</div>
+                    <div class="number">{{today_avg_order_value}}đ</div>
+                    <div class="trend {% if avg_order_percentage < 0 %}negative{% endif %}">{{avg_order_percentage}}% so với hôm qua</div>
                 </div>
             </div>
 
@@ -319,77 +314,47 @@
                 <div class="recent-activity">
                     <h2>Đơn Hàng Gần Đây</h2>
                     <ul class="activity-list">
+                        {% for order in recent_orders %}
                         <li class="activity-item">
                             <div class="activity-icon">
                                 <i class="fas fa-shopping-cart"></i>
                             </div>
                             <div style="flex: 1;">
-                                <strong>Đơn #1234</strong>
-                                <p>iPhone 13 Pro Max - 256GB</p>
-                                <span class="status-badge status-pending">Chờ Xử Lý</span>
+                                <strong>Đơn #{{ order.id }}</strong>
+                                <p>
+                                    {% for item in order.items %}
+                                        {{ item.name }} {{ item.ram }}/{{ item.rom }} {{ item.color }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </p>
+                                <span class="status-badge status-{% if order.status == 'Đang xử lý' %}pending{% elif order.status == 'Đã giao' %}completed{% elif order.status == 'Đã hủy' %}cancelled{% endif %}">
+                                    {% if order.status == 'Đang xử lý' %}Chờ Xử Lý{% elif order.status == 'Đã giao' %}Đã giao{% elif order.status == 'Đã hủy' %}Đã Hủy{% endif %}
+                                </span>
                             </div>
                             <div style="text-align: right;">
-                                <div>29.990.000đ</div>
-                                <div style="font-size: 0.8em; color: #7f8c8d;">2 phút trước</div>
+                                <div>{{ order.total|floatformat:0 }}đ</div>
+                                <div style="font-size: 0.8em; color: #7f8c8d;">
+                                    {% with time_diff=order.date|timesince %}
+                                        {{ time_diff }} trước
+                                    {% endwith %}
+                                </div>
                             </div>
                         </li>
-                        <li class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                            <div style="flex: 1;">
-                                <strong>Đơn #1233</strong>
-                                <p>Samsung Galaxy S23 Ultra</p>
-                                <span class="status-badge status-completed">Hoàn Thành</span>
-                            </div>
-                            <div style="text-align: right;">
-                                <div>22.990.000đ</div>
-                                <div style="font-size: 0.8em; color: #7f8c8d;">15 phút trước</div>
-                            </div>
-                        </li>
-                        <li class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                            <div style="flex: 1;">
-                                <strong>Đơn #1232</strong>
-                                <p>Xiaomi 13 Pro</p>
-                                <span class="status-badge status-cancelled">Đã Hủy</span>
-                            </div>
-                            <div style="text-align: right;">
-                                <div>19.990.000đ</div>
-                                <div style="font-size: 0.8em; color: #7f8c8d;">1 giờ trước</div>
-                            </div>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
 
                 <div class="top-products">
                     <h2>Sản Phẩm Bán Chạy</h2>
+                    {% for phone in top_phones %}
                     <div class="product-item">
-                        <img src="{% static 'img/iphone-16-pro---titan-tự-nhiên_1726075065.png'%}" alt="iPhone" class="product-image">
+                        <img src="/media/{{ phone.img }}" alt="{{ phone.name }}" class="product-image">
                         <div class="product-info">
-                            <div class="product-name">iPhone 13 Pro Max</div>
-                            <div class="product-price">29.990.000đ</div>
-                            <div class="product-sales">45 sản phẩm đã bán</div>
+                            <div class="product-name">{{ phone.name }}</div>
+                            <div class="product-price">{{ phone.price|floatformat:0 }} ₫</div>
+                            <div class="product-sales">{{ phone.sold_quantity }} sản phẩm đã bán</div>
                         </div>
                     </div>
-                    <div class="product-item">
-                        <img src="{% static 'img/iphone-16-pro---titan-tự-nhiên_1726075065.png'%}" alt="iPhone" class="product-image">
-                        <div class="product-info">
-                            <div class="product-name">Samsung S23 Ultra</div>
-                            <div class="product-price">22.990.000đ</div>
-                            <div class="product-sales">38 sản phẩm đã bán</div>
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <img src="{% static 'img/iphone-16-pro---titan-tự-nhiên_1726075065.png'%}" alt="iPhone" class="product-image">
-                        <div class="product-info">
-                            <div class="product-name">Xiaomi 13 Pro</div>
-                            <div class="product-price">19.990.000đ</div>
-                            <div class="product-sales">32 sản phẩm đã bán</div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
