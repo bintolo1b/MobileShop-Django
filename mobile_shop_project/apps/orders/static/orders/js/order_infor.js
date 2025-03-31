@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const address = document.querySelector('.delivery-info input[type="text"]').value;
             const note = document.querySelector('.delivery-info textarea').value;
 
-
+            
             // console.log('Payment Method:', paymentMethod);
             // console.log('Client Name:', clientName);
             // console.log('Phone Number:', phoneNumber);
@@ -110,7 +110,14 @@ document.addEventListener('DOMContentLoaded', function() {
             // console.log('Address:', address);
             // console.log('Note:', note);
 
-
+            if (!cityElement.value) {
+                alert('Vui lòng chọn tỉnh/thành phố');
+                return;
+            }
+            if (!districtElement.value) {
+                alert('Vui lòng chọn quận/huyện');
+                return;
+            }
             // Validate thông tin
             if (!clientName || !phoneNumber || !email || !address) {
                 alert('Vui lòng điền đầy đủ thông tin');
