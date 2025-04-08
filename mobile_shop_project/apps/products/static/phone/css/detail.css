@@ -871,7 +871,7 @@ body {
     background-color: #bc2020;
 }
 .qa-section {
-    width: 1000px;
+    width: 900px;
     background: #f5f5f5;
     border-radius: 5px;
     padding: 20px;
@@ -906,6 +906,8 @@ body {
     font-weight: bold;
     color: #f39c12;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
@@ -913,6 +915,31 @@ body {
     font-size: 25px; 
     margin-left: 15px;
     line-height: 2.4;
+}
+.star-rating {
+    display: flex;
+    gap: 5px;
+    user-select: none;
+}
+
+.star-rating i {
+    color: #ddd;
+    cursor: pointer;
+    font-size: 24px;
+    transition: color 0.2s;
+}
+
+.star-rating i:hover,
+.star-rating i.active {
+    color: #ffd700;
+}
+
+.star-rating i:hover ~ i {
+    color: #ddd;
+}
+
+.star-rating:hover i {
+    color: #ffd700;
 }
 
 .qa-bars {
@@ -937,7 +964,6 @@ body {
     text-align: center;
     width: 230px;
     font-size: 16px;
-    margin-left: 100px;
     line-height: 2;
 }
 
