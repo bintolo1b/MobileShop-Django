@@ -69,3 +69,17 @@ class PhoneVariant(models.Model):
 
     def __str__(self):
         return f"{self.phone} - {self.color} - {self.configuration} - {self.price}$"
+    
+class Rating(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='ratings')
+    client = models.ForeignKey('users.Client', on_delete=models.CASCADE, related_name='ratings')
+    star = models.IntegerField(default=5, choices=[(i, i) for i in range(1, 6)])
+    comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = "rating"
+        unique_together = ("product", "client")
+        
+    def __str__(self):
+        return f"{self.client} - {self.product} - {self.star} sao"

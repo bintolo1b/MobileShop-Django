@@ -3,6 +3,8 @@ from .models import Phone, PhoneVariant, Product
 from django.core.paginator import Paginator
 from django.db.models import Min
 from . import service
+from apps.users.models import Client
+from .models import Rating
 
 
 # Create your views here.
@@ -28,10 +30,22 @@ def phone_detail(request, phone_id):
     phone_variants_distinct_color = PhoneVariant.objects.filter(id__in=[v['min_id'] for v in color_variants])
     phone_variants_distinct_configuration = PhoneVariant.objects.filter(id__in=[v['min_id'] for v in configuration_variants])
 
+    # Lấy rating của client hiện tại đối với phone này (nếu có)
+    client_rating = None
+    if request.user.is_authenticated:
+        try:
+            client = Client.objects.get(username=request.user.username)
+            client_rating = Rating.objects.filter(product=product, client=client).first()
+            if client_rating:
+                client_rating = client_rating.star
+        except:
+            # Xử lý trường hợp người dùng đăng nhập nhưng không phải client
+            pass
 
     return render(request, 'phone/detail.html', {
         'product': product,
         'phone': phone,
+        'client_rating': client_rating,
         'phone_variants': phone_variants,  # Truyền biến, không phải chuỗi
         'phone_variants_distinct_color': phone_variants_distinct_color,
         'phone_variants_distinct_configuration': phone_variants_distinct_configuration

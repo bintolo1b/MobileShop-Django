@@ -194,6 +194,23 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Có lỗi xảy ra khi thêm vào giỏ hàng');
         });
     });
+    const stars = document.querySelectorAll('.star-rating i');
+    
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            const rating = this.getAttribute('data-rating');
+            stars.forEach(s => s.classList.remove('active'));
+            
+            stars.forEach(s => {
+                if (s.getAttribute('data-rating') <= rating) {
+                    s.classList.add('active');
+                }
+            });
+            
+            console.log('Rating selected:', rating);
+        });
+    });
+    
 
 
 });
