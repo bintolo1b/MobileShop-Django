@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import user_passes_test
 from . models import Client
 from apps.cart.models import Cart, Cart_PhoneVariant
 from .models import Order, PhoneVariant_Order
+from django.utils.timezone import localtime
 
 def is_client(user):
     return user.is_authenticated and user.role == "client"
@@ -37,15 +38,19 @@ def order_view(request):
             order_data = {
                 'id': order.id,
                 'status': order.status,
-                'date': order.time.strftime('%Y-%m-%d %H:%M:%S') if order.time else None,  # Định dạng thời gian để hiển thị
+                'date': localtime(order.time).strftime('%H:%M:%S %d/%m/%Y'),  # Định dạng thời gian để hiển thị
                 'items': items_data,
                 'total': sum(item['subtotal'] for item in items_data)
             }
             
             orders_data.append(order_data)
         
+        # Thêm full name vào context
+        fullname = client.username.first_name + " " + client.username.last_name
+        
         context = {
-            'orders': orders_data
+            'orders': orders_data,
+            'fullname': fullname
         }
 
         
@@ -88,7 +93,6 @@ def order_infor_view(request):
 
 
         fullname = client.username.first_name +" "+client.username.last_name
-        print(fullname)
         context = {
             'cart_items': cart_data,
             'total_price': total_price,

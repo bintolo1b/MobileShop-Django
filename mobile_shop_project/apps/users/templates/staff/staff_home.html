@@ -333,9 +333,7 @@
                             <div style="text-align: right;">
                                 <div class="total-price" data-price="{{order.total}}">{{ order.total|floatformat:0 }}đ</div>
                                 <div style="font-size: 0.8em; color: #7f8c8d;">
-                                    {% with time_diff=order.date|timesince %}
-                                        {{ time_diff }} trước
-                                    {% endwith %}
+                                    {{ order.date|timesince }} trước
                                 </div>
                             </div>
                         </li>
