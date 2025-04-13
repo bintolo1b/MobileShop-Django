@@ -147,7 +147,7 @@ def get_product_rating_details(request, product_id):
     
     # Chuyển đổi dữ liệu đánh giá thành định dạng JSON
     ratings_data = []
-    for rating in ratings:
+    for rating in ratings:  
         ratings_data.append({
             "id": rating.id,
             "client": rating.client.username.first_name + " " + rating.client.username.last_name,

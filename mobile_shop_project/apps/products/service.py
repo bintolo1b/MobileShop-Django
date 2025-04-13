@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator
-from django.db.models import OuterRef, Subquery
+from django.db.models import OuterRef, Subquery, Sum
+from django.db.models.functions import Coalesce
 from .models import Product, PhoneVariant
 import math
 
@@ -16,11 +17,19 @@ def get_phones_by_brand(brand, page_index, per_page=15):
         phone=OuterRef("pk")  # Cần tham chiếu đến phone từ product
     ).order_by("id").values("id")[:1]
 
+    # Calculate total sold quantity for each phone
+    sold_quantity_subquery = PhoneVariant.objects.filter(
+        phone=OuterRef("pk")
+    ).values("phone").annotate(
+        total_sold=Sum("sold_quantity")
+    ).values("total_sold")
+
     # Lấy ảnh và giá của biến thể đại diện
     products_qs = products_qs.annotate(
         variant_id=Subquery(min_variant_subquery),
         img=Subquery(PhoneVariant.objects.filter(id=OuterRef("variant_id")).values("img")[:1]),
         price=Subquery(PhoneVariant.objects.filter(id=OuterRef("variant_id")).values("price")[:1]),
+        sold_quantity=Coalesce(Subquery(sold_quantity_subquery), 0)
     )
 
     # Phân trang
