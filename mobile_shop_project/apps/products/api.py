@@ -6,6 +6,8 @@ from .models import PhoneVariant, PhoneConfiguration
 from django.contrib.auth import get_user_model
 from apps.users.models import Client
 from .models import Product, Rating
+from django.utils import timezone
+
 
 @api_view(["GET"])
 def get_phone_variant(request):
@@ -81,6 +83,7 @@ def create_rating(request):
     if not created:
         rating.star = star
         rating.comment = comment
+        rating.created_at = timezone.now()
         rating.save()
         message = "Cập nhật đánh giá thành công"
     else:
