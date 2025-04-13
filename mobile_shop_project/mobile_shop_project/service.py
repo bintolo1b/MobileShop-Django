@@ -1,6 +1,31 @@
 from apps.products.models import Phone, PhoneVariant, Product
 from django.db.models import Case, When, IntegerField, Sum, Value, Subquery, OuterRef, QuerySet
 
+from apps.products.models import Rating
+from django.db.models import Avg
+import math
+
+def get_average_rating(product_id):
+    """
+    Tính số sao trung bình của một sản phẩm và làm tròn đến 0.5
+    
+    Args:
+        product_id: ID của sản phẩm cần tính rating
+        
+    Returns:
+        float: Số sao trung bình đã làm tròn đến 0.5 (0.5, 1, 1.5, 2, 2.5,...)
+    """
+    # Lấy giá trị trung bình từ database
+    avg_rating = Rating.objects.filter(product_id=product_id).aggregate(avg=Avg('star'))['avg']
+    
+    # Nếu không có rating nào, trả về 0
+    if avg_rating is None:
+        return 0
+    
+    # Làm tròn đến 0.5 gần nhất
+    return round(avg_rating * 2) / 2
+
+
 def get_top_selling_phones():
     top_phones_qs = (
         PhoneVariant.objects
@@ -25,13 +50,19 @@ def get_top_selling_phones():
         output_field=IntegerField()
     )
 
-    return Product.objects.filter(id__in=top_phone_ids).annotate(
+    products = Product.objects.filter(id__in=top_phone_ids).annotate(
         variant_id=Subquery(min_variant),
         img=Subquery(PhoneVariant.objects.filter(id=OuterRef("variant_id")).values("img")[:1]),
         price=Subquery(PhoneVariant.objects.filter(id=OuterRef("variant_id")).values("price")[:1]),
         sold_quantity=sold_quantity_subquery,
         order_index=order_case  # Thêm trường này để sắp xếp
     ).order_by("order_index")  # Sắp xếp theo thứ tự mong muốn
+    
+    # Thêm average_rating cho từng sản phẩm
+    for product in products:
+        product.average_rating = get_average_rating(product.id)
+    
+    return products
 
 def get_top_selling_phones_by_brand(brand):
     top_phones_qs = (
