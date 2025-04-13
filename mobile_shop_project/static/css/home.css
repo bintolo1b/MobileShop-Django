@@ -661,8 +661,16 @@ select option {
 }
 
 .product-item-stars {
-    color: #f49d2c;
+    color: #ddd;
     margin-right: 15px;
+}
+
+.product-item-stars i {
+    font-size: 12px;
+}
+
+.product-item-stars i.active {
+    color: #f49d2c;
 }
 
 .product-item-vote-number {

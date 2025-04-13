@@ -159,7 +159,7 @@
                 {% if not request.session.username%}
                 <a href="/login" id="loginLink">Đăng nhập</a>
                 {% else %}
-                <span id="usernameDisplay">{{ request.session.username }}</span>
+                <span id="usernameDisplay"">{{ request.session.username }}</span>
                 <div id="userPopup" class="popup">
                     <div class="info-item" onClick="window.location.href = '/orders'">
                         <i class="fa-solid fa-bag-shopping"></i>
@@ -471,23 +471,45 @@
                                 <i class="fa-solid fa-star" data-rating="4"></i>
                                 <i class="fa-solid fa-star" data-rating="5"></i>
                             </div>
-                            <div class="qa-ask">
-                                <button class="qa-button">Gửi đánh giá</button>
-                            </div>
-                        </div>
-                        <div class="qa-bars">
-                            <div class="qa-row"><span>5 sao</span><div class="bar"></div><span>0</span></div>
-                            <div class="qa-row"><span>4 sao</span><div class="bar"></div><span>0</span></div>
-                            <div class="qa-row"><span>3 sao</span><div class="bar"></div><span>0</span></div>
-                            <div class="qa-row"><span>2 sao</span><div class="bar"></div><span>0</span></div>
-                            <div class="qa-row"><span>1 sao</span><div class="bar"></div><span>0</span></div>
                         </div>
                     </div>
-                    
-                    
+                    <div class="qa-bars">
+                        <div class="qa-row">
+                            <span>5 sao</span>
+                            <div class="bar" style="--rating-percent: 0%"></div>
+                            <span id="star5-count">0</span>
+                        </div>
+                        <div class="qa-row">
+                            <span>4 sao</span>
+                            <div class="bar" style="--rating-percent: 0%"></div>
+                            <span id="star4-count">0</span>
+                        </div>
+                        <div class="qa-row">
+                            <span>3 sao</span>
+                            <div class="bar" style="--rating-percent: 0%"></div>
+                            <span id="star3-count">0</span>
+                        </div>
+                        <div class="qa-row">
+                            <span>2 sao</span>
+                            <div class="bar" style="--rating-percent: 0%"></div>
+                            <span id="star2-count">0</span>
+                        </div>
+                        <div class="qa-row">
+                            <span>1 sao</span>
+                            <div class="bar" style="--rating-percent: 0%"></div>
+                            <span id="star1-count">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rating-input">
+                    <textarea id="ratingComment" placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm..."></textarea>
+                    <button id="submitRating">Gửi đánh giá</button>
                 </div>
                 
-                <input type="text" class="qa-search" placeholder="Tìm câu hỏi...">
+                <div class="ratings-list">
+                    <!-- Rating items will be dynamically inserted here -->
+                </div>
             </div>
             <div class="review-section">
                 <div class="review-header">

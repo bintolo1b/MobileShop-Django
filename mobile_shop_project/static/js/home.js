@@ -291,3 +291,45 @@ function showBrandPhones(brand) {
         nextBtn.style.display = 'none';
     }
 }
+async function updateProductStars(productId, starsContainer) {
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/products/api/rating/count/${productId}`);
+        const data = await response.json();
+        
+        // Calculate average rating
+        let totalStars = 0;
+        let totalRatings = 0;
+        
+        for (let i = 1; i <= 5; i++) {
+            totalStars += i * data[i];
+            totalRatings += data[i];
+        }
+        
+        const averageRating = totalRatings > 0 ? totalStars / totalRatings : 0;
+        
+        // Update stars display
+        const stars = starsContainer.querySelectorAll('i');
+        stars.forEach((star, index) => {
+            if (index < Math.round(averageRating)) {
+                star.classList.add('active');
+            } else {
+                star.classList.remove('active');
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching rating:', error);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Update stars for all products
+    document.querySelectorAll('.product-item').forEach(item => {
+        const productId = item.getAttribute('data-id');
+        const starsContainer = item.querySelector('.product-item-stars');
+        if (productId && starsContainer) {
+            updateProductStars(productId, starsContainer);
+        }
+    });
+    
+    // ... rest of your DOMContentLoaded code ...
+});

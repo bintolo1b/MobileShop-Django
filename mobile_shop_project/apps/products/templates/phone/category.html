@@ -296,7 +296,7 @@
                 <div class="products-details-container">
                     {% if phones %}
                     {% for phone in phones %}
-                        <div class="product-item" onClick='window.location.href="/products/phone/{{phone.id}}"'>
+                        <div class="product-item" onClick='window.location.href="/products/phone/{{phone.id}}"' data-id="{{phone.id}}">
                             <img src="/media/{{phone.img}}" alt="" class="product-item-img">
                             <span class="product-item-note">Đã Unlock Sim</span>
                             <div class="product-item-sale">
@@ -311,15 +311,15 @@
                             </div>
                             <div class="product-item-vote">
                                 <div class="product-item-stars">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
                                 </div>
                                 <div class="product-item-vote-number">
-                                    <span>1</span>
-                                    <span>đánh giá</span>
+                                    <span>{{ phone.sold_quantity }}</span>
+                                    <span>Lượt bán</span>
                                 </div>
                             </div>
                         </div>
@@ -360,6 +360,54 @@
         }
     }
 
+    async function updateProductStars(productId, starsContainer) {
+        try {
+            const response = await fetch(`/products/api/rating/count/${productId}`);
+            const data = await response.json();
+            
+            // Calculate average rating
+            let totalStars = 0;
+            let totalCount = 0;
+            
+            // Your API returns data in format {"1": x, "2": y, "3": z, "4": w, "5": v}
+            for (let star = 1; star <= 5; star++) {
+                totalStars += star * (parseInt(data[star]) || 0);
+                totalCount += (parseInt(data[star]) || 0);
+            }
+            
+            const averageRating = totalCount > 0 ? Math.round(totalStars / totalCount) : 0;
+            
+            // Update stars display
+            const stars = starsContainer.querySelectorAll('i');
+            stars.forEach((star, index) => {
+                if (index < averageRating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        } catch (error) {
+            console.error('Error fetching rating:', error);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Format prices
+        const priceElements = document.querySelectorAll('.product-item-new-price');
+        priceElements.forEach(item => {
+            const price = parseInt(item.dataset.price); 
+            item.textContent = price.toLocaleString('vi-VN') + 'đ';
+        });
+
+        // Initialize star ratings for all products
+        document.querySelectorAll('.product-item').forEach(item => {
+            const productId = item.getAttribute('data-id');
+            const starsContainer = item.querySelector('.product-item-stars');
+            if (productId && starsContainer) {
+                updateProductStars(productId, starsContainer);
+            }
+        });
+    });
 </script>
 <script src="{% static 'js/home.js' %}"></script>
 
