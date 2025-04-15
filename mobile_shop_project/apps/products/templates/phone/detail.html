@@ -159,7 +159,7 @@
                 {% if not request.session.username%}
                 <a href="/login" id="loginLink">Đăng nhập</a>
                 {% else %}
-                <span id="usernameDisplay"">{{ request.session.username }}</span>
+                <span id="usernameDisplay">{{ request.session.username }}</span>
                 <div id="userPopup" class="popup">
                     <div class="info-item" onClick="window.location.href = '/orders'">
                         <i class="fa-solid fa-bag-shopping"></i>
@@ -474,6 +474,10 @@
                         </div>
                     </div>
                     <div class="qa-bars">
+                        <div class="star-quantity">
+                            <span class="label-rating-total"> Lượt đánh giá:  </span>
+                            <span id="rating-total"> 0</span>
+                        </div>
                         <div class="qa-row">
                             <span>5 sao</span>
                             <div class="bar" style="--rating-percent: 0%"></div>

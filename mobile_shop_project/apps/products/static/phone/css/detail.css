@@ -943,15 +943,14 @@ body {
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin: 30px auto;
-    position: relative;
+    margin-right: 14px;
 }
 
 .qa-header {
     background: #ffffff;
     color: #333;
     font-weight: bold;
-    padding: 15px 0;
+    padding-bottom: 15px;
     border-bottom: 2px solid #f0f0f0;
     text-align: center;
     font-size: 24px;
@@ -994,7 +993,12 @@ body {
     width: 35px;
     text-align: center;
 }
-
+.star-rating i:hover ~ i {
+    color: #ddd;
+}
+.star-rating:hover i {
+    color: #ffd700;
+}
 .star-rating i:hover,
 .star-rating i.active {
     color: #ffd700;
@@ -1002,16 +1006,26 @@ body {
 
 .qa-bars {
     width: 100%;
-    padding: 20px;
 }
-
+.star-quantity{
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+    margin-left: 100px;
+    font-size: 24px;
+    text-align: center;
+}
+.label-rating-total{
+    color: #333;
+    margin-right: 8px;
+}
 .qa-row {
-    display: grid;
+    display: grid;  
     grid-template-columns: 60px 1fr 40px;
     align-items: center;
     gap: 10px;
     margin-bottom: 12px;
-    font-size: 14px;
+    font-size: 16px;
     color: #666;
 }
 
@@ -1031,7 +1045,7 @@ body {
     height: 100%;
     background: linear-gradient(90deg, #ffd700, #ffc107);
     border-radius: 4px;
-    width: var(--rating-percent, 0%);
+    width: var(--rating-percent);
     transition: width 0.3s ease;
 }
 
@@ -1051,8 +1065,7 @@ body {
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 14px;
-    resize: vertical;
-    min-height: 45px;
+    resize: none;
 }
 
 #submitRating {

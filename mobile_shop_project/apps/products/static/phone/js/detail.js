@@ -220,11 +220,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateStarCounts(ratings) {
         const counts = [0, 0, 0, 0, 0];
+        // Đếm số lượng đánh giá cho mỗi mức sao
         ratings.forEach(rating => {
             counts[rating.star - 1]++;
         });
+    
+        // Tính tổng số đánh giá
+        const total = counts.reduce((sum, count) => sum + count, 0);
+        document.getElementById('rating-total').textContent = total;
+        // Cập nhật số lượng và phần trăm cho mỗi mức sao
         for (let i = 1; i <= 5; i++) {
+            // Cập nhật số lượng
             document.getElementById(`star${i}-count`).textContent = counts[i-1];
+            
+            // Tính và cập nhật phần trăm
+            const percent = total > 0 ? (counts[i-1] / total * 100) : 0;
+            const bar = document.querySelector(`.qa-row:nth-child(${6-i}) .bar`);
+            bar.style.setProperty('--rating-percent', `${percent}%`);
         }
     }
 
