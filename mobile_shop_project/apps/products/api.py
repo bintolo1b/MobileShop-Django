@@ -2,11 +2,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from .models import PhoneVariant, PhoneConfiguration
+from .models import PhoneVariant, PhoneConfiguration, Phone
 from django.contrib.auth import get_user_model
 from apps.users.models import Client
 from .models import Product, Rating
 from django.utils import timezone
+from django.db import models
 
 
 @api_view(["GET"])
@@ -200,4 +201,46 @@ def get_client_product_rating(request, product_id):
             "message": "Bạn chưa đánh giá sản phẩm này",
             "star": 0
         }, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def search_products_by_name(request):
+    """
+    API tìm kiếm sản phẩm theo tên và trả về thông tin cơ bản kèm hình ảnh đại diện
+    """
+    search_query = request.data.get('search_query', '')
+    
+    if not search_query:
+        return Response({"message": "Vui lòng nhập từ khóa tìm kiếm"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    try:
+        # Tìm các phone có tên chứa search_query (không phân biệt hoa thường)
+        phones = Phone.objects.filter(name__icontains=search_query)
+        
+        results = []
+        for phone in phones:
+            # Lấy phone_variant đầu tiên của mỗi phone để lấy hình ảnh đại diện
+            first_variant = PhoneVariant.objects.filter(phone=phone).first()
+            
+            if first_variant:
+                results.append({
+                    'id': phone.id,
+                    'name': phone.name,
+                    'brand': phone.brand,
+                    'image_url': first_variant.img.url if first_variant.img else None,
+                    'min_price': first_variant.price  # Giá của variant đầu tiên
+                })
+        
+        return Response({
+            'count': len(results),
+            'results': results
+        }, status=status.HTTP_200_OK)
+        
+    except Exception as e:
+        return Response(
+            {"message": f"Lỗi khi tìm kiếm: {str(e)}"}, 
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+
+
 

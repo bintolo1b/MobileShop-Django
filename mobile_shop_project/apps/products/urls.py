@@ -10,4 +10,5 @@ urlpatterns = [
     path('api/rating/count/<int:product_id>/', api.get_product_ratings),
     path('api/rating/<int:product_id>/', api.get_product_rating_details),
     path('api/rating/client/<int:product_id>/', api.get_client_product_rating),
+    path('api/search/', api.search_products_by_name),
 ]
