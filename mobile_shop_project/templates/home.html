@@ -357,43 +357,11 @@
                                 </div>
                                 <div class="product-item-vote">
                                     <div class="product-item-stars">
-                                        {% if phone.average_rating >= 1 %}
-                                            <i class="fa-solid fa-star"></i>
-                                        {% else %}
-                                            <i class="fa-regular fa-star"></i>
-                                        {% endif %}
-                                        
-                                        {% if phone.average_rating >= 2 %}
-                                            <i class="fa-solid fa-star"></i>
-                                        {% elif phone.average_rating >= 1.5 %}
-                                            <i class="fa-solid fa-star-half-stroke"></i>
-                                        {% else %}
-                                            <i class="fa-regular fa-star"></i>
-                                        {% endif %}
-                                        
-                                        {% if phone.average_rating >= 3 %}
-                                            <i class="fa-solid fa-star"></i>
-                                        {% elif phone.average_rating >= 2.5 %}
-                                            <i class="fa-solid fa-star-half-stroke"></i>
-                                        {% else %}
-                                            <i class="fa-regular fa-star"></i>
-                                        {% endif %}
-                                        
-                                        {% if phone.average_rating >= 4 %}
-                                            <i class="fa-solid fa-star"></i>
-                                        {% elif phone.average_rating >= 3.5 %}
-                                            <i class="fa-solid fa-star-half-stroke"></i>
-                                        {% else %}
-                                            <i class="fa-regular fa-star"></i>
-                                        {% endif %}
-                                        
-                                        {% if phone.average_rating >= 5 %}
-                                            <i class="fa-solid fa-star"></i>
-                                        {% elif phone.average_rating >= 4.5 %}
-                                            <i class="fa-solid fa-star-half-stroke"></i>
-                                        {% else %}
-                                            <i class="fa-regular fa-star"></i>
-                                        {% endif %}
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
                                     </div>
                                     <div class="product-item-vote-number">
                                         <span>{{ phone.sold_quantity }}</span>

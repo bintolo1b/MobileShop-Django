@@ -182,10 +182,25 @@ document.addEventListener("click", function (event) {
 const searchInput = document.querySelector('.region-search-input');
 const searchSuggestions = document.querySelector('.search-suggestions');
 
-// Show suggestions when input is focused
-searchInput.addEventListener('focus', () => {
-    searchSuggestions.classList.add('active');
-});
+// Clear default suggestions
+searchSuggestions.innerHTML = '';
+
+// Get CSRF token from cookies
+function getCSRFToken() {
+    const name = 'csrftoken';
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 // Hide suggestions when clicking outside
 document.addEventListener('click', (e) => {
@@ -194,36 +209,137 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Handle suggestion item click
-document.querySelectorAll('.suggestion-item').forEach(item => {
-    item.addEventListener('click', () => {
-        searchInput.value = item.querySelector('span').textContent;
-        searchSuggestions.classList.remove('active');
-        // Here you can add the logic to perform the search
-    });
-});
+// Debounce function to limit API calls
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 
-// Handle input changes
-searchInput.addEventListener('input', (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    const suggestions = document.querySelectorAll('.suggestion-item');
-    
-    suggestions.forEach(suggestion => {
-        const text = suggestion.querySelector('span').textContent.toLowerCase();
-        if (text.includes(searchTerm)) {
-            suggestion.style.display = 'flex';
-            // Highlight matching text
-            const span = suggestion.querySelector('span');
-            if (searchTerm) {
-                const regex = new RegExp(`(${searchTerm})`, 'gi');
-                span.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
-            } else {
-                span.textContent = text;
-            }
-        } else {
-            suggestion.style.display = 'none';
+// Function to format price
+function formatPrice(price) {
+    return price.toLocaleString('vi-VN') + 'đ';
+}
+
+// Function to perform search
+async function performSearch(searchTerm) {
+    if (!searchTerm.trim()) {
+        searchSuggestions.innerHTML = '';
+        searchSuggestions.classList.remove('active');
+        return;
+    }
+
+    try {
+        const csrfToken = getCSRFToken();
+        const response = await fetch('/products/api/search/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({
+                "search_query": searchTerm
+            }),
+            credentials: 'same-origin'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    });
+
+        const data = await response.json();
+        console.log('Search response:', data); // Debug log
+        
+        // Clear previous suggestions
+        searchSuggestions.innerHTML = '';
+
+        if (data.results && data.results.length > 0) {
+            // Display results
+            data.results.forEach(phone => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.className = 'suggestion-item';
+                suggestionItem.innerHTML = `
+                    <img src="${phone.image_url}" alt="${phone.name}" class="suggestion-item-img">
+                    <div class="suggestion-item-info">
+                        <span class="suggestion-item-name">${phone.name}</span>
+                        <span class="suggestion-item-price">${formatPrice(phone.min_price)}</span>
+                    </div>
+                `;
+                
+                // Add click handler to navigate to product detail
+                suggestionItem.addEventListener('click', () => {
+                    window.location.href = `/products/phone/${phone.id}`;
+                });
+                
+                searchSuggestions.appendChild(suggestionItem);
+            });
+            searchSuggestions.classList.add('active');
+        } else {
+            // Show no results message
+            const noResults = document.createElement('div');
+            noResults.className = 'suggestion-item no-results';
+            noResults.textContent = 'Không tìm thấy sản phẩm';
+            searchSuggestions.appendChild(noResults);
+            searchSuggestions.classList.add('active');
+        }
+    } catch (error) {
+        console.error('Search error:', error); // Debug log
+        searchSuggestions.innerHTML = '';
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'suggestion-item no-results';
+        errorMessage.textContent = 'Có lỗi xảy ra khi tìm kiếm';
+        searchSuggestions.appendChild(errorMessage);
+        searchSuggestions.classList.add('active');
+    }
+}
+
+// Handle input changes with debounce
+searchInput.addEventListener('input', debounce((e) => {
+    const searchTerm = e.target.value;
+    if (searchTerm.length >= 2) { // Only search if 2 or more characters
+        performSearch(searchTerm);
+    } else {
+        searchSuggestions.innerHTML = '';
+        searchSuggestions.classList.remove('active');
+    }
+}, 300)); // Wait 300ms after user stops typing
+
+// Add keyboard navigation
+searchInput.addEventListener('keydown', (e) => {
+    const suggestions = searchSuggestions.querySelectorAll('.suggestion-item');
+    const current = searchSuggestions.querySelector('.suggestion-item.selected');
+    
+    if (suggestions.length === 0) return;
+
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        
+        let next;
+        if (!current) {
+            next = e.key === 'ArrowDown' ? suggestions[0] : suggestions[suggestions.length - 1];
+        } else {
+            const currentIndex = Array.from(suggestions).indexOf(current);
+            current.classList.remove('selected');
+            
+            if (e.key === 'ArrowDown') {
+                next = suggestions[currentIndex + 1] || suggestions[0];
+            } else {
+                next = suggestions[currentIndex - 1] || suggestions[suggestions.length - 1];
+            }
+        }
+        
+        next.classList.add('selected');
+        searchInput.value = next.querySelector('.suggestion-item-name').textContent;
+    } else if (e.key === 'Enter' && current) {
+        e.preventDefault();
+        window.location.href = `/products/phone/${current.dataset.id}`;
+    }
 });
 
 function showBrandPhones(brand) {
@@ -310,10 +426,18 @@ async function updateProductStars(productId, starsContainer) {
         // Update stars display
         const stars = starsContainer.querySelectorAll('i');
         stars.forEach((star, index) => {
-            if (index < Math.round(averageRating)) {
-                star.classList.add('active');
+            // Remove all existing classes
+            star.className = '';
+            
+            if (index + 0.5 < averageRating) {
+                // Full star
+                star.className = 'fa-solid fa-star active';
+            } else if (index < averageRating) {
+                // Half star
+                star.className = 'fa-solid fa-star-half-stroke active';
             } else {
-                star.classList.remove('active');
+                // Empty star
+                star.className = 'fa-regular fa-star';
             }
         });
     } catch (error) {

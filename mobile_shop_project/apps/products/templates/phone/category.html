@@ -380,10 +380,18 @@
             // Update stars display
             const stars = starsContainer.querySelectorAll('i');
             stars.forEach((star, index) => {
-                if (index < averageRating) {
-                    star.classList.add('active');
+                // Remove all existing classes
+                star.className = '';
+                
+                if (index + 0.5 < averageRating) {
+                    // Full star
+                    star.className = 'fa-solid fa-star active';
+                } else if (index < averageRating) {
+                    // Half star
+                    star.className = 'fa-solid fa-star-half-stroke active';
                 } else {
-                    star.classList.remove('active');
+                    // Empty star
+                    star.className = 'fa-regular fa-star';
                 }
             });
         } catch (error) {
