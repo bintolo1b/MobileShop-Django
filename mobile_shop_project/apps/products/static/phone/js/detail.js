@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
             
             // Tính và cập nhật phần trăm
             const percent = total > 0 ? (counts[i-1] / total * 100) : 0;
-            const bar = document.querySelector(`.qa-row:nth-child(${6-i}) .bar`);
+            const bar = document.querySelector(`.qa-row:nth-child(${7-i}) .bar`);
             bar.style.setProperty('--rating-percent', `${percent}%`);
         }
     }

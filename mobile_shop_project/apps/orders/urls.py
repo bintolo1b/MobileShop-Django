@@ -8,4 +8,5 @@ urlpatterns = [
     path('customer_infor/', views.customer_infor),
     path('confirm_payment/', api.confirm_payment_view),
     path('order_detail/<int:order_id>/', api.order_detail_view),
+    path('update_order_status/<int:order_id>/', api.update_order_status_view),
 ]

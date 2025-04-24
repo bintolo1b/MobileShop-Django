@@ -11,4 +11,6 @@ urlpatterns = [
     path('api/rating/<int:product_id>/', api.get_product_rating_details),
     path('api/rating/client/<int:product_id>/', api.get_client_product_rating),
     path('api/search/', api.search_products_by_name),
+    path('api/phone/', api.add_new_phone),
+    path('api/phonevariant/add/', api.add_phone_variant),
 ]
