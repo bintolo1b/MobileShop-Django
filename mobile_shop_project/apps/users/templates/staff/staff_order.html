@@ -305,7 +305,11 @@
                 </li>
                 <li class="nav-item">
                     <i class="fas fa-box"></i>
-                    Sản Phẩm
+                    Thêm Điện Thoại
+                </li>
+                <li class="nav-item">
+                    <i class="fas fa-box"></i>
+                    Thêm Biến Thể
                 </li>
                 <li class="nav-item active" onclick="window.location.href=''">
                     <i class="fas fa-shopping-cart"></i>
@@ -314,6 +318,10 @@
                 <li class="nav-item">
                     <i class="fas fa-users"></i>
                     Khách Hàng
+                </li>
+                <li class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    Báo Cáo
                 </li>
                 <li class="nav-item" id="logoutButton">
                     <i class="fa-solid fa-right-from-bracket"></i>
@@ -355,7 +363,7 @@
                         </div>
                         <div class="order-actions">
                             <button class="btn btn-details" onclick="showOrderDetails('{{order.id}}')">Chi tiết</button>
-                            <button class="btn btn-accept">Xác nhận</button>
+                            <button class="btn btn-accept" onclick="confirmOrder('{{order.id}}')">Xác nhận</button>
                         </div>
                     </div>
                 {% endfor %}
@@ -439,6 +447,44 @@
         </div>
     </div>
 
+    <!-- Add Notification Modal -->
+    <div id="notificationModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close" onclick="closeNotification()">&times;</span>
+            <div class="modal-header" style="border-bottom: none; margin-bottom: 0;">
+                <h3 id="notificationTitle" style="margin: 0; color: #2c3e50;"></h3>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <div id="notificationMessage" style="margin: 20px 0;"></div>
+                <div id="statusSelectionForm" style="display: none; text-align: left; margin: 20px 0;">
+                    <div style="margin-bottom: 15px;">Chọn trạng thái mới:</div>
+                    <form id="statusForm" style="display: flex; flex-direction: column; gap: 10px;">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="radio" name="orderStatus" value="Đang xử lý">
+                            <span>Đang xử lý</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="radio" name="orderStatus" value="Đang vận chuyển">
+                            <span>Đang vận chuyển</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="radio" name="orderStatus" value="Đã giao hàng">
+                            <span>Đã giao hàng</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="radio" name="orderStatus" value="Đã hủy">
+                            <span>Đã hủy</span>
+                        </label>
+                    </form>
+                    <div style="margin-top: 20px; display: flex; justify-content: center; gap: 10px;">
+                        <button class="btn" style="background-color: #3498db; color: white;" onclick="submitStatusUpdate()">Cập nhật</button>
+                        <button class="btn" style="background-color: #95a5a6; color: white;" onclick="closeNotification()">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Get CSRF token from cookies
         function getCSRFToken() {
@@ -459,6 +505,142 @@
         // Utility function for price formatting
         function formatPrice(price) {
             return price.toLocaleString('vi-VN') + 'đ';
+        }
+
+        // Function to get available next statuses
+        function getNextStatuses(currentStatus) {
+            // Staff can only set these statuses
+            const staffPermittedStatuses = ['Đang xử lý', 'Đang vận chuyển', 'Đã hủy'];
+            
+            switch (currentStatus) {
+                case "Đang xử lý":
+                    return ['Đang vận chuyển', 'Đã hủy'];
+                case "Đang vận chuyển":
+                    return ['Đã hủy'];
+                case "Đã giao hàng":
+                case "Đã hủy":
+                default:
+                    return [];
+            }
+        }
+
+        let currentOrderId = null;
+
+        // Function to show notification
+        function showNotification(title, message, isError = false, showStatusSelection = false) {
+            const modal = document.getElementById('notificationModal');
+            const titleEl = document.getElementById('notificationTitle');
+            const messageEl = document.getElementById('notificationMessage');
+            const statusSelectionForm = document.getElementById('statusSelectionForm');
+            
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            titleEl.style.color = isError ? '#e74c3c' : '#2ecc71';
+            
+            // Show/hide status selection form
+            statusSelectionForm.style.display = showStatusSelection ? 'block' : 'none';
+            messageEl.style.display = showStatusSelection ? 'none' : 'block';
+            
+            modal.style.display = 'flex';
+        }
+
+        // Function to show status selection
+        function showStatusSelection(orderId, currentStatus) {
+            currentOrderId = orderId;
+            const nextStatuses = getNextStatuses(currentStatus);
+            
+            if (nextStatuses.length === 0) {
+                showNotification(
+                    'Thông báo',
+                    'Không thể thay đổi trạng thái của đơn hàng này',
+                    true
+                );
+                return;
+            }
+
+            // Generate radio buttons for available next statuses
+            const statusForm = document.getElementById('statusForm');
+            statusForm.innerHTML = nextStatuses.map(status => `
+                <label style="display: flex; align-items: center; gap: 10px;">
+                    <input type="radio" name="orderStatus" value="${status}">
+                    <span>${status}</span>
+                </label>
+            `).join('');
+
+            // Select the first available status by default
+            const firstRadio = statusForm.querySelector('input[type="radio"]');
+            if (firstRadio) {
+                firstRadio.checked = true;
+            }
+
+            showNotification(
+                'Cập nhật trạng thái',
+                '',
+                false,
+                true
+            );
+        }
+
+        // Function to submit status update
+        async function submitStatusUpdate() {
+            const selectedStatus = document.querySelector('input[name="orderStatus"]:checked');
+            
+            if (!selectedStatus) {
+                showNotification('Lỗi', 'Vui lòng chọn trạng thái', true);
+                return;
+            }
+
+            await updateOrderStatus(currentOrderId, selectedStatus.value);
+        }
+
+        // Function to update order status
+        async function updateOrderStatus(orderId, newStatus) {
+            try {
+                const response = await fetch(`/orders/update_order_status/${orderId}/`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCSRFToken()
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({
+                        status: newStatus
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showNotification(
+                        'Thành công',
+                        `Đơn hàng đã được cập nhật thành "${newStatus}"!`
+                    );
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    const errorMessage = data.message || "Lỗi không xác định";
+                    showNotification(
+                        'Lỗi',
+                        `${response.status === 403 ? 'Bạn không có quyền thực hiện thao tác này' : errorMessage}`,
+                        true
+                    );
+                }
+            } catch (error) {
+                console.error("Lỗi mạng:", error);
+                showNotification(
+                    'Lỗi',
+                    'Không thể cập nhật trạng thái đơn hàng',
+                    true
+                );
+            }
+        }
+
+        // Update the confirmOrder function to use the new status selection
+        function confirmOrder(orderId) {
+            const orderElement = document.querySelector(`[onclick="confirmOrder('${orderId}')"]`).closest('.order-item');
+            const currentStatus = orderElement.querySelector('.status-badge').textContent;
+            showStatusSelection(orderId, currentStatus);
         }
 
         async function showOrderDetails(orderId) {
@@ -527,11 +709,18 @@
             document.getElementById('orderModal').style.display = 'none';
         }
 
-        // Close modal when clicking outside
+        function closeNotification() {
+            document.getElementById('notificationModal').style.display = 'none';
+            currentOrderId = null;
+        }
+
+        // Update window.onclick to handle both modals
         window.onclick = function(event) {
-            var modal = document.getElementById('orderModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                if (event.target.id === 'notificationModal') {
+                    currentOrderId = null;
+                }
             }
         }
     </script>
