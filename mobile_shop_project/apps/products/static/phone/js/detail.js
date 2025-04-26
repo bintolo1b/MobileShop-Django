@@ -1,10 +1,119 @@
 function changeImage(src) {
     document.getElementById('main-image').src = src;
 }
+async function performSearch(searchTerm) {
+    if (!searchTerm.trim()) {
+        searchSuggestions.innerHTML = '';
+        searchSuggestions.classList.remove('active');
+        return;
+    }
+
+    try {
+        const csrfToken = getCSRFToken();
+        const response = await fetch('/products/api/search/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({
+                "search_query": searchTerm
+            }),
+            credentials: 'same-origin'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Search response:', data);
+        
+        searchSuggestions.innerHTML = '';
+
+        if (data.results && data.results.length > 0) {
+            data.results.forEach(phone => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.className = 'suggestion-item';
+                suggestionItem.innerHTML = `
+                    <img src="${phone.image_url}" alt="${phone.name}" class="suggestion-item-img">
+                    <div class="suggestion-item-info">
+                        <span class="suggestion-item-name">${phone.name}</span>
+                        <span class="suggestion-item-price">${formatPrice(phone.min_price)}</span>
+                    </div>
+                `;
+                
+                suggestionItem.addEventListener('click', () => {
+                    window.location.href = `/products/phone/${phone.id}`;
+                });
+                
+                searchSuggestions.appendChild(suggestionItem);
+            });
+            searchSuggestions.classList.add('active');
+        } else {
+            const noResults = document.createElement('div');
+            noResults.className = 'suggestion-item no-results';
+            noResults.textContent = 'Không tìm thấy sản phẩm';
+            searchSuggestions.appendChild(noResults);
+            searchSuggestions.classList.add('active');
+        }
+    } catch (error) {
+        console.error('Search error:', error);
+        searchSuggestions.innerHTML = '';
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'suggestion-item no-results';
+        errorMessage.textContent = 'Có lỗi xảy ra khi tìm kiếm';
+        searchSuggestions.appendChild(errorMessage);
+        searchSuggestions.classList.add('active');
+    }
+}
 document.addEventListener('DOMContentLoaded', function () {
     const button = document.getElementById('btn-info-ev');
     const modal = document.getElementById('modal1');
     const overlay = document.querySelector('.modal__overlay');
+
+    const searchInput = document.querySelector('.region-search-input');
+    const searchSuggestions = document.querySelector('.search-suggestions');
+    searchInput.addEventListener('input', debounce((e) => {
+        const searchTerm = e.target.value;
+        if (searchTerm.length >= 2) {
+            performSearch(searchTerm);
+        } else {
+            searchSuggestions.innerHTML = '';
+            searchSuggestions.classList.remove('active');
+        }
+    }, 300));
+
+    searchInput.addEventListener('keydown', (e) => {
+        const suggestions = searchSuggestions.querySelectorAll('.suggestion-item');
+        const current = searchSuggestions.querySelector('.suggestion-item.selected');
+        
+        if (suggestions.length === 0) return;
+
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            
+            let next;
+            if (!current) {
+                next = e.key === 'ArrowDown' ? suggestions[0] : suggestions[suggestions.length - 1];
+            } else {
+                const currentIndex = Array.from(suggestions).indexOf(current);
+                current.classList.remove('selected');
+                
+                if (e.key === 'ArrowDown') {
+                    next = suggestions[currentIndex + 1] || suggestions[0];
+                } else {
+                    next = suggestions[currentIndex - 1] || suggestions[suggestions.length - 1];
+                }
+            }
+            
+            next.classList.add('selected');
+            searchInput.value = next.querySelector('.suggestion-item-name').textContent;
+        } else if (e.key === 'Enter' && current) {
+            e.preventDefault();
+            window.location.href = `/products/phone/${current.dataset.id}`;
+        }
+    });
 
     button.addEventListener('click', function () {
         modal.style.display = 'flex';
@@ -58,7 +167,29 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 console.log("Dữ liệu API nhận được:", data);
                 priceElement.textContent = parseInt(data.price).toLocaleString('vi-VN') + "đ";
-                statusElemnt.textContent = data.stock;
+                
+                const stock = parseInt(data.stock);
+                if (stock === 0) {
+                    statusElemnt.innerHTML = '<span style="color: red;">Hết hàng</span>';
+                    // Disable nút thêm vào giỏ hàng
+                    const addToCartBtn = document.getElementById('add-to-cart-btn');
+                    if (addToCartBtn) {
+                        addToCartBtn.disabled = true;
+                        addToCartBtn.style.opacity = '0.6';
+                        addToCartBtn.style.cursor = 'not-allowed';
+                        addToCartBtn.innerHTML = '<i class="fa-solid fa-ban"></i> Hết hàng';
+                    }
+                } else {
+                    statusElemnt.textContent = data.stock;
+                    // Enable lại nút thêm vào giỏ hàng
+                    const addToCartBtn = document.getElementById('add-to-cart-btn');
+                    if (addToCartBtn) {
+                        addToCartBtn.disabled = false;
+                        addToCartBtn.style.opacity = '1';
+                        addToCartBtn.style.cursor = 'pointer';
+                        addToCartBtn.innerHTML = '<i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ';
+                    }
+                }
             })
             .catch(error => console.error("Lỗi khi fetch dữ liệu:", error));
     }

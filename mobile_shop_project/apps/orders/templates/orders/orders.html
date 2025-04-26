@@ -251,6 +251,7 @@
                             </div>
                             <div class="product-price">
                                 <span class="sub-total">{{item.subtotal}}₫</span>
+                                
                             </div>
                         </div>
                     </div>
@@ -260,6 +261,7 @@
                         <span>Tổng cộng:</span>
                         <span class="total">{{order.total}}₫</span>
                     </div>
+                    <button class="detail-btn" onclick="showOrderDetails('{{order.id}}')">Chi tiết</button>
                 </div>
             {% endfor %}
                 {% comment %} <div class="order-details">
@@ -288,6 +290,185 @@
             </div>
         </div>
     </div>
+
+    
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeOrderDetails()">&times;</span>
+            <div class="modal-header">
+                <h2>Chi Tiết Đơn Hàng #<span id="modalOrderCode"></span></h2>
+            </div>
+            <div class="modal-body">
+                <div class="info-group">
+                    <div class="info-label">Mã đơn hàng</div>
+                    <div class="info-value">#<span id="modalOrderId"></span></div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Họ và tên</div>
+                    <div class="info-value"><span id="modalFullName"></span></div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Số điện thoại</div>
+                    <div class="info-value"><span id="modalPhone"></span></div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Địa chỉ</div>
+                    <div class="info-value"><span id="modalAddress"></span></div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Phương thức thanh toán</div>
+                    <div class="info-value"><span id="modalPayment"></span></div>
+                </div>
+                <div class="info-group" id="paymentScreenGroup" style="display: none;">
+                    <div class="info-label">Màn hình thanh toán</div>
+                    <div class="info-value">
+                        <img id="paymentScreen" src="" alt="Payment Screen" style="max-width: 30%; border-radius: 4px;">
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Thời gian đặt hàng</div>
+                    <div class="info-value"><span id="modalTime"></span></div>
+                </div>
+
+                <h3 style="margin: 20px 0;">Chi tiết sản phẩm</h3>
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Hình ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Màu sắc</th>
+                            <th>Cấu hình</th>
+                            <th>Đơn giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td colspan="7" style="text-align: right;">Tổng cộng:</td>
+                            <td><span id="modalTotalPrice"></span></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div class="info-group" id="orderNoteGroup">
+                    <div class="info-label">Ghi chú</div>
+                    <div class="info-value"><span id="modalNote"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getCSRFToken() {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith("csrftoken=")) {
+                        cookieValue = cookie.substring("csrftoken=".length, cookie.length);
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+        function formatPrice() {
+            document.querySelectorAll('.total').forEach(priceElement => {
+                const price = priceElement.textContent.replace('₫', '').trim();
+                const formattedPrice = parseInt(price).toLocaleString('vi-VN') + '₫';
+                priceElement.textContent = formattedPrice;
+            });
+            document.querySelectorAll('.sub-total').forEach(priceElement => {
+                const price = priceElement.textContent.replace('₫', '').trim();
+                const formattedPrice = parseInt(price).toLocaleString('vi-VN') + '₫';
+                priceElement.textContent = formattedPrice;
+            });
+        
+            // Format tổng tiền
+            const orderTotal = document.querySelector('.order-total span:last-child');
+            if (orderTotal) {
+                const totalPrice = orderTotal.textContent.replace('₫', '').trim();
+                const formattedTotal = parseInt(totalPrice).toLocaleString('vi-VN') + '₫';
+                orderTotal.textContent = formattedTotal;
+            }
+        }
+        formatPrice();
+        
+        async function showOrderDetails(orderId) {
+            try {
+                const response = await fetch(`/orders/order_detail/${orderId}/`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCSRFToken()
+                    },
+                    credentials: "include"
+                });
+        
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('modalOrderCode').textContent = data.id;
+                    document.getElementById('modalOrderId').textContent = data.id;
+                    document.getElementById('modalFullName').textContent = data.client.fullname;
+                    document.getElementById('modalPhone').textContent = data.client.phone;
+                    document.getElementById('modalAddress').textContent = data.client.address;
+                    document.getElementById('modalPayment').textContent = data.payment_method;
+                    document.getElementById('modalTime').textContent = data.date;
+                    document.getElementById('modalTotalPrice').textContent = formatPrice(data.total);
+                    document.getElementById('modalNote').textContent = data.note || 'Không có ghi chú';
+        
+                    const paymentScreenGroup = document.getElementById('paymentScreenGroup');
+                    const paymentScreen = document.getElementById('paymentScreen');
+                    
+                    if (data.payment_method === "Thanh toán online") {
+                        paymentScreenGroup.style.display = 'block';
+                        paymentScreen.src = data.payment_screenshot || '';
+                    } else {
+                        paymentScreenGroup.style.display = 'none';
+                    }
+        
+                    const tableBody = document.getElementById('productTableBody');
+                    tableBody.innerHTML = data.items.map((item, index) => `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td><img src="${item.img}" alt="${item.name}" class="product-image"></td>
+                            <td>${item.name}</td>
+                            <td>${item.color}</td>
+                            <td>${item.ram}/${item.rom}</td>
+                            <td>${formatPrice(item.price)}</td>
+                            <td>${item.quantity}</td>
+                            <td>${formatPrice(item.subtotal)}</td>
+                        </tr>
+                    `).join('');
+        
+                    document.getElementById('orderModal').style.display = 'flex';
+                } else {
+                    alert(`Lỗi ${response.status}: ${data.message || "Lỗi không xác định"}`);
+                }
+            } catch (error) {
+                console.error("Lỗi mạng:", error);
+                alert("Không thể tải thông tin đơn hàng");
+            }
+        }
+        
+        function closeOrderDetails() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+        
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+        </script>
+
 </body>
 <script src="{%static 'js/home.js'%}"></script>
 <script>
@@ -300,26 +481,43 @@ document.querySelectorAll(".filter-btn").forEach((item) => {
         item.classList.add("active");
     });
 });
-function formatPrice() {
-    document.querySelectorAll('.total').forEach(priceElement => {
-        const price = priceElement.textContent.replace('₫', '').trim();
-        const formattedPrice = parseInt(price).toLocaleString('vi-VN') + '₫';
-        priceElement.textContent = formattedPrice;
-    });
-    document.querySelectorAll('.sub-total').forEach(priceElement => {
-        const price = priceElement.textContent.replace('₫', '').trim();
-        const formattedPrice = parseInt(price).toLocaleString('vi-VN') + '₫';
-        priceElement.textContent = formattedPrice;
-    });
 
-    // Format tổng tiền
-    const orderTotal = document.querySelector('.order-total span:last-child');
-    if (orderTotal) {
-        const totalPrice = orderTotal.textContent.replace('₫', '').trim();
-        const formattedTotal = parseInt(totalPrice).toLocaleString('vi-VN') + '₫';
-        orderTotal.textContent = formattedTotal;
+
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const orderDetails = document.querySelectorAll('.order-details');
+
+    const statusMapping = {
+        'Tất cả': '',
+        'Đang xử lý': 'Đang xử lý',
+        'Đang vận chuyển': 'Đang vận chuyển',
+        'Đã giao hàng': 'Đã giao hàng',
+        'Đã hủy': 'Đã hủy'
+    };
+
+    function filterOrders(status) {
+        orderDetails.forEach(order => {
+            const orderStatus = order.querySelector('.order-status .status-delivered').textContent.trim();
+            if (status === '' || orderStatus === status) {
+                order.style.display = 'block';
+            } else {
+                order.style.display = 'none';
+            }
+        });
     }
-}
-formatPrice();
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            this.classList.add('active');
+            
+            const status = statusMapping[this.textContent.trim()];
+            filterOrders(status);
+        });
+    });
+});
+
+
 </script>
 </html>
