@@ -262,7 +262,13 @@
                         <span>Tổng cộng:</span>
                         <span class="total">{{order.total}}₫</span>
                     </div>
-                    <button class="detail-btn" onclick="showOrderDetails('{{order.id}}')">Chi tiết</button>
+                    
+                    <div class="button-group">
+                        <button class="detail-btn" onclick="showOrderDetails('{{order.id}}')">Chi tiết</button>
+                        {% if order.status == "Đang vận chuyển" %}
+                        <button class="confirm-btn" onclick="confirmDelivery('{{order.id}}')">Xác nhận nhận hàng</button>
+                        {% endif %}
+                    </div>
                 </div>
             {% endfor %}
                 {% comment %} <div class="order-details">
@@ -516,6 +522,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const status = statusMapping[this.textContent.trim()];
             filterOrders(status);
         });
+    });
+    document.querySelectorAll('.status-delivered').forEach(status => {
+        const statusText = status.textContent.trim();
+        switch(statusText) {
+            case 'Đang xử lý':
+                status.style.color = '#ffc107';
+                break;
+            case 'Đang vận chuyển':
+                status.style.color = '#28a745';
+                break;
+            case 'Đã giao hàng':
+                status.style.color = '#28a745';
+                break;
+            case 'Đã hủy':
+                status.style.color = '#dc3545';
+                break;
+        }
     });
 });
 

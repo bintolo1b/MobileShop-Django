@@ -274,7 +274,6 @@
 .detail-btn {
     display: flex;
     align-items: center;
-    padding-left: 20px;
     padding-bottom: 10px;
     background: none;
     border: none;
@@ -387,25 +386,45 @@
 }
 
 .status-processing {
-    color: #FFA500; /* Yellow/Orange color for processing */
-    /* font-weight: bold; */
+    color: #FFA500;
 }
 
 .status-shipping {
-    color: green; /* Blue color for shipping */
-    /* font-weight: bold; */
+    color: green;
 }
 
 .status-canceled {
-    color: #FF0000; /* Red color for canceled */
-    /* font-weight: bold; */
+    color: #FF0000;
 }
 
 .status-delivered {
-    color: #28a745; /* Green color for delivered (existing) */
-    /* font-weight: bold; */
+    color: #28a745;
+}
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 8px 20px;
+    justify-content: space-between;
+}
+.confirm-btn {
+    padding: 8px 15px;
+    background-color: #1e7acf;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s;
+
 }
 
+.confirm-btn:hover {
+    background-color: #0965b5;
+}
 
 
 
