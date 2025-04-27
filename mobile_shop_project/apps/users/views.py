@@ -177,3 +177,11 @@ def staff_order(request):
     
     except Exception as e:
         return render(request, 'staff/staff_order.html', {'error': str(e)})
+    
+@user_passes_test(is_staff)
+def add_phone(request):
+    return render(request, 'staff/staff_add_phone.html')
+
+@user_passes_test(is_staff)
+def add_phone_variant(request):
+    return render(request, 'staff/staff_add_phonevariant.html')

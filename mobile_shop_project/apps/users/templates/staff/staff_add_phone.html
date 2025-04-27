@@ -1,4 +1,4 @@
-
+{% load static%}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -284,7 +284,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-col">
+                        {% comment %} <div class="form-col">
                             <div class="form-group">
                                 <label for="category" class="required-field">Danh mục</label>
                                 <select id="category" name="category" class="form-control" required>
@@ -292,7 +292,7 @@
                                     <option value="Điện thoại">Điện thoại</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> {% endcomment %}
                     </div>
 
                     <div class="form-group">
