@@ -269,8 +269,144 @@
     color: #e60012;
     background-color: #fff;
     border-top: 2px solid #f0f0f0;
-    margin-top: 15px;
+    margin-top: 5px;
 }
+.detail-btn {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    background: none;
+    border: none;
+    color: #1a73e8;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.detail-btn:hover {
+    text-decoration: underline;
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.modal-content {
+    background-color: white;
+    margin: 50px auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 8px;
+    position: relative;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.modal-header {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-body {
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.info-group {
+    margin-bottom: 15px;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    color: #666;
+}
+
+/* Product Table Styles */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #f8f9fa;
+}
+
+.product-table th,
+.product-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.product-table th {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: 500;
+}
+
+.product-table .product-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.product-table tr:hover {
+    background-color: #f1f3f5;
+}
+
+.product-table .total-row {
+    background-color: #e9ecef;
+    font-weight: bold;
+}
+
+.product-table .total-row td {
+    border-top: 2px solid #dee2e6;
+}
+
+.status-processing {
+    color: #FFA500; /* Yellow/Orange color for processing */
+    /* font-weight: bold; */
+}
+
+.status-shipping {
+    color: green; /* Blue color for shipping */
+    /* font-weight: bold; */
+}
+
+.status-canceled {
+    color: #FF0000; /* Red color for canceled */
+    /* font-weight: bold; */
+}
+
+.status-delivered {
+    color: #28a745; /* Green color for delivered (existing) */
+    /* font-weight: bold; */
+}
+
+
 
 
 /* Responsive styles */
@@ -292,6 +428,8 @@
         justify-content: center;
     }
 }
+
+
 
 @media (max-width: 768px) {
     .order-title {
