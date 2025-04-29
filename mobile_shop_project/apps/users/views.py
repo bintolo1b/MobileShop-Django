@@ -10,6 +10,7 @@ from apps.products.models import PhoneVariant
 from django.utils import timezone
 from datetime import datetime, timedelta
 from mobile_shop_project.service import get_top_selling_phones
+from apps.products.models import Phone, PhoneConfiguration, Category
 
 # Create your views here.
 def is_staff(user):
@@ -184,4 +185,18 @@ def add_phone(request):
 
 @user_passes_test(is_staff)
 def add_phone_variant(request):
-    return render(request, 'staff/staff_add_phonevariant.html')
+    # Get all phone products (category is phone)
+    
+    # Get phone category and all phones
+    phone_category = Category.objects.filter(name__icontains='Điện thoại').first()
+    all_phones = Phone.objects.filter(category=phone_category) if phone_category else Phone.objects.all()
+    
+    # Get all phone configurations
+    all_configurations = PhoneConfiguration.objects.all()
+    
+    context = {
+        'phones': all_phones,
+        'configurations': all_configurations
+    }
+    
+    return render(request, 'staff/staff_add_phonevariant.html', context)

@@ -326,9 +326,9 @@
                         <label for="phone" class="required-field">Điện thoại</label>
                         <select id="phone" name="phone" class="form-control" required>
                             <option value="">Chọn loại điện thoại</option>
-                            <!-- {% for phone in phones %}
+                            {% for phone in phones %}
                             <option value="{{ phone.id }}">{{ phone.name }}</option>
-                            {% endfor %} -->
+                            {% endfor %}
                         </select>
                     </div>
 
@@ -336,6 +336,9 @@
                         <label for="configuration" class="required-field">Cấu hình</label>
                         <select id="configuration" name="configuration" class="form-control" required>
                             <option value="">Chọn cấu hình</option>
+                            {% for conf in configurations %}
+                            <option value="{{ conf.id }}">{{ conf.ram }}/{{ conf.rom }}</option>
+                            {% endfor %}
                         </select>
                     </div>
 
