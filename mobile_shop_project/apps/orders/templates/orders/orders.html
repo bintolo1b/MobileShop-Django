@@ -212,7 +212,7 @@
                 
 
                 {% for order in orders %}
-                <div class="order-details">
+                <div class="order-details" data-order-id="{{order.id}}">
                     <div class="order-info">
                         <div class="order-id">
                             <span>Đơn hàng: </span>
@@ -407,6 +407,50 @@
         }
         formatPrice();
         
+        async function confirmDelivery(orderId) {
+            if (!confirm('Bạn xác nhận đã nhận được hàng?')) {
+                return;
+            }
+        
+            try {
+                const response = await fetch(`/orders/update_order_status/${orderId}/`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken()
+                    },
+                    body: JSON.stringify({
+                        status: 'Đã giao hàng'
+                    }),
+                    credentials: 'include'
+                });
+        
+                const data = await response.json();
+                console.log(data);
+        
+                if (response.ok) {
+                    // Cập nhật UI
+                    const orderElement = document.querySelector(`.order-details[data-order-id="${orderId}"]`);
+                    const statusElement = orderElement.querySelector('.status-delivered');
+                    statusElement.textContent = 'Đã giao hàng';
+                    statusElement.style.color = '#28a745';
+        
+                    // Ẩn nút xác nhận
+                    const confirmBtn = orderElement.querySelector('.confirm-btn');
+                    if (confirmBtn) {
+                        confirmBtn.remove();
+                    }
+        
+                    alert('Xác nhận đã nhận hàng thành công!');
+                } else {
+                    alert(data.message || 'Có lỗi xảy ra khi cập nhật trạng thái đơn hàng');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra khi xác nhận đơn hàng');
+            }
+        }
+
         async function showOrderDetails(orderId) {
             try {
                 const response = await fetch(`/orders/order_detail/${orderId}/`, {

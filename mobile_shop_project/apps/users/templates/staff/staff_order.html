@@ -183,12 +183,9 @@
 
         .status-badge {
             display: inline-block;
-            padding: 4px 8px;
             border-radius: 4px;
-            font-size: 0.8em;
+            font-size: 1em;
             font-weight: bold;
-            background-color: #f1c40f;
-            color: white;
         }
 
         /* Modal Styles */
@@ -723,6 +720,24 @@
                 }
             }
         }
+
+        document.querySelectorAll('.status-badge').forEach(status => {
+            const statusText = status.textContent.trim();
+            switch(statusText) {
+                case 'Đang xử lý':
+                    status.style.color = '#ffc107';
+                    break;
+                case 'Đang vận chuyển':
+                    status.style.color = '#28a745';
+                    break;
+                case 'Đã giao hàng':
+                    status.style.color = '#28a745';
+                    break;
+                case 'Đã hủy':
+                    status.style.color = '#dc3545';
+                    break;
+            }
+        });
     </script>
     <script src="{% static 'js/logout.js' %}"></script>
 </body>
