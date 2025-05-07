@@ -315,3 +315,14 @@ def add_phone_variant(request):
                 'error': str(e)
             }
             return render(request, 'staff/staff_add_phonevariant.html', context)
+
+@user_passes_test(is_staff)
+@ensure_csrf_cookie
+def staff_revenue(request):
+    months = range(1, 13)
+    return render(request, 'staff/staff_revenue.html', {'months': months})
+
+@user_passes_test(is_staff)
+@ensure_csrf_cookie
+def staff_client(request):
+    return render(request, 'staff/staff_client.html')

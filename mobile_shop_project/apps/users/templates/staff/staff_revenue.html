@@ -1,0 +1,290 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doanh Thu Nhân Viên - Cửa Hàng Điện Thoại</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Roboto', sans-serif; 
+        }
+        .dashboard-container { 
+            display: flex; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 0; 
+        }
+        .sidebar { 
+            width: 250px; 
+            background-color: #2c3e50; 
+            color: white; 
+            padding: 20px 0; 
+        }
+        .sidebar-header { 
+            padding: 0 20px; 
+            margin-bottom: 30px; 
+            text-align: center; 
+        }
+        .sidebar-header img { 
+            width: 120px; 
+            margin-bottom: 10px; 
+        }
+        .nav-menu { 
+            list-style: none; 
+            padding: 0; 
+        }
+        .nav-item { 
+            padding: 15px 20px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+            display: flex; 
+            align-items: center; 
+        }
+        .nav-item:hover { 
+            background-color: #34495e; 
+        }
+        .nav-item.active { 
+            background-color: #3498db; 
+        }
+        .nav-item i { 
+            margin-right: 10px; 
+            width: 20px; 
+        }
+        .main-content { 
+            flex: 1; 
+            padding: 20px; 
+            background-color: #f5f6fa; 
+        }
+        .top-bar { 
+            background-color: white; 
+            padding: 15px 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+            margin-bottom: 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .welcome-text { 
+            font-size: 1.2em; 
+            color: #2c3e50; 
+        }
+        .user-info { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        .filter-section { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+            display: flex; 
+            gap: 20px; 
+            align-items: center; 
+        }
+        .filter-section label { 
+            margin-right: 10px; 
+            font-weight: bold; 
+        }
+        .filter-section select, 
+        .filter-section input { 
+            padding: 8px; 
+            border: 1px solid #ddd; 
+            border-radius: 4px; 
+            font-size: 14px; 
+        }
+        .filter-section button { 
+            padding: 8px 16px; 
+            background-color: #3498db; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 14px; 
+            transition: background-color 0.3s; 
+        }
+        .filter-section button:hover { 
+            background-color: #2980b9; 
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .chart-container { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <img src="{% static 'img/logo-dth_1592615391.png'%}" alt="Logo">
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item" onclick="window.location.href = '/users/staff/'">
+                    <i class="fas fa-home"></i>
+                    Tổng Quan
+                </li>
+                <li class="nav-item" onclick="window.location.href = '/users/staff/add_phone/'">
+                    <i class="fas fa-box"></i>
+                    Thêm Điện Thoại
+                </li>
+                <li class="nav-item" onclick="window.location.href = '/users/staff/add_phonevariant/'">
+                    <i class="fas fa-box"></i>
+                    Thêm Biến Thể
+                </li>
+                <li class="nav-item" onclick="window.location.href = '/users/staff/orders/'">
+                    <i class="fas fa-shopping-cart"></i>
+                    Đơn Hàng
+                </li>
+                <li class="nav-item" onclick="window.location.href = '/users/staff/clients/'">
+                    <i class="fas fa-users"></i>
+                    Khách Hàng
+                </li>
+                <li class="nav-item active" onclick="window.location.href = '/users/staff/revenue/'">
+                    <i class="fas fa-chart-bar"></i>
+                    Doanh thu
+                </li>
+                <li class="nav-item" id="logoutButton">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Đăng xuất
+                </li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="top-bar">
+                <div class="welcome-text">
+                    Chào mừng trở lại, {{request.session.username}}
+                </div>
+                <div class="user-info">
+                    <i class="fas fa-bell"></i>
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+            <div class="filter-section">
+                <label for="year">Năm:</label>
+                <input type="number" id="year" min="2000" max="2100" value="2025">
+                <label for="start_month">Từ tháng:</label>
+                <select id="start_month">
+                    {% for m in months %}
+                    <option value="{{m}}" {% if m == 1 %}selected{% endif %}>{{m}}</option>
+                    {% endfor %}
+                </select>
+                <label for="end_month">Đến tháng:</label>
+                <select id="end_month">
+                    {% for m in months %}
+                    <option value="{{m}}" {% if m == 12 %}selected{% endif %}>{{m}}</option>
+                    {% endfor %}
+                </select>
+                <button id="filterBtn">Lọc</button>
+            </div>
+            <div class="chart-container">
+                <h2>Doanh thu</h2>
+                <canvas id="revenueChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Add active class to clicked nav items
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Chart.js setup
+        let chart;
+        function drawChart(labels, data) {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            if (chart) chart.destroy();
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Doanh thu (VNĐ)',
+                        data: data,
+                        backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                        borderColor: 'rgba(41, 128, 185, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toLocaleString('vi-VN') + '₫';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        async function fetchRevenue(year, start_month, end_month) {
+            const csrftoken = getCookie('csrftoken');
+            const response = await fetch('http://127.0.0.1:8000/users/api/revenue/monthly/', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({ year, start_month, end_month })
+            });
+            if (!response.ok) return null;
+            return await response.json();
+        }
+
+        async function updateChart() {
+            const year = document.getElementById('year').value;
+            const start_month = document.getElementById('start_month').value;
+            const end_month = document.getElementById('end_month').value;
+            const data = await fetchRevenue(year, start_month, end_month);
+            console.log('API Response:', data);
+            if (data && data.monthly_revenue) {
+                const labels = data.monthly_revenue.map(item => 'Tháng ' + item.month);
+                const revenue = data.monthly_revenue.map(item => item.revenue);
+                drawChart(labels, revenue);
+            }
+        }
+
+        document.getElementById('filterBtn').addEventListener('click', updateChart);
+        window.onload = updateChart;
+    </script>
+    <script src="{% static 'js/logout.js' %}"></script>
+</body>
+</html> 
