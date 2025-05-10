@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
 from .models import Client
 from apps.orders.models import Order, PhoneVariant_Order
@@ -6,17 +6,20 @@ from datetime import date
 from django.utils.timezone import localtime
 from datetime import datetime, timedelta
 from django.db.models import Sum, Avg, Count, F
-from apps.products.models import PhoneVariant
+from apps.products.models import PhoneVariant, Phone, PhoneConfiguration, Category
 from django.utils import timezone
 from datetime import datetime, timedelta
 from mobile_shop_project.service import get_top_selling_phones
-from apps.products.models import Phone, PhoneConfiguration, Category
+from django.http import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
+import json
 
 # Create your views here.
 def is_staff(user):
     return user.is_authenticated and user.role == "staff"
 
 @user_passes_test(is_staff)
+@ensure_csrf_cookie
 def staff_home(request):
     # Lấy ngày hôm nay và hôm qua
     today = timezone.localtime(timezone.now()).date()
@@ -125,6 +128,7 @@ def staff_home(request):
     return render(request, 'staff/staff_home.html', context)
 
 @user_passes_test(is_staff)
+@ensure_csrf_cookie
 def staff_order(request):
     try: 
         # Lấy tất cả đơn hàng trong hệ thống
@@ -180,10 +184,79 @@ def staff_order(request):
         return render(request, 'staff/staff_order.html', {'error': str(e)})
     
 @user_passes_test(is_staff)
+@ensure_csrf_cookie
 def add_phone(request):
-    return render(request, 'staff/staff_add_phone.html')
+    if request.method == 'GET':
+        return render(request, 'staff/staff_add_phone.html')
+    
+    elif request.method == 'POST':
+        # Check if the request is AJAX/JSON
+        if request.headers.get('Content-Type') == 'application/json':
+            try:
+                data = json.loads(request.body)
+                phone_category = Category.objects.filter(name__icontains='Điện thoại').first()
+                if not phone_category:
+                    phone_category = Category.objects.create(name='Điện thoại')
+                phone = Phone.objects.create(
+                    name=data.get('name'),
+                    brand=data.get('brand'),
+                    youtube_link=data.get('youtube_link', ''),
+                    screen=data.get('screen'),
+                    cpu=data.get('cpu'),
+                    ram=data.get('ram'),
+                    rom=data.get('rom'),
+                    front_camera=data.get('front_camera'),
+                    back_camera=data.get('back_camera'),
+                    battery=data.get('battery'),
+                    charger=data.get('charger'),
+                    speaker=data.get('speaker'),
+                    category=phone_category
+                )
+                return JsonResponse({
+                    'message': 'Điện thoại đã được thêm thành công!',
+                    'phone_id': phone.id
+                })
+            except json.JSONDecodeError:
+                return JsonResponse({
+                    'message': 'Invalid JSON data'
+                }, status=400)
+            except Exception as e:
+                return JsonResponse({
+                    'message': f'Error adding phone: {str(e)}'
+                }, status=500)
+        else:
+            # Regular form POST
+            try:
+                phone_category = Category.objects.filter(name__icontains='Điện thoại').first()
+                if not phone_category:
+                    phone_category = Category.objects.create(name='Điện thoại')
+                phone = Phone.objects.create(
+                    name=request.POST.get('name'),
+                    brand=request.POST.get('brand'),
+                    youtube_link=request.POST.get('youtube_link', ''),
+                    screen=request.POST.get('screen'),
+                    cpu=request.POST.get('cpu'),
+                    ram=request.POST.get('ram'),
+                    rom=request.POST.get('rom'),
+                    front_camera=request.POST.get('front_camera'),
+                    back_camera=request.POST.get('back_camera'),
+                    battery=request.POST.get('battery'),
+                    charger=request.POST.get('charger'),
+                    speaker=request.POST.get('speaker'),
+                    category=phone_category
+                )
+                context = {
+                    'success_message': 'Điện thoại đã được thêm thành công!'
+                }
+                return render(request, 'staff/staff_add_phone.html', context)
+            except Exception as e:
+                context = {
+                    'error': f'Lỗi khi thêm điện thoại: {str(e)}'
+                }
+                return render(request, 'staff/staff_add_phone.html', context)
 
 @user_passes_test(is_staff)
+@ensure_csrf_cookie
 def add_phone_variant(request):
     # Get all phone products (category is phone)
     
@@ -194,9 +267,62 @@ def add_phone_variant(request):
     # Get all phone configurations
     all_configurations = PhoneConfiguration.objects.all()
     
-    context = {
-        'phones': all_phones,
-        'configurations': all_configurations
-    }
+    if request.method == 'GET':
+        context = {
+            'phones': all_phones,
+            'configurations': all_configurations
+        }
+        return render(request, 'staff/staff_add_phonevariant.html', context)
     
-    return render(request, 'staff/staff_add_phonevariant.html', context)
+    elif request.method == 'POST':
+        try:
+            # Get form data
+            phone_id = request.POST.get('phone')
+            configuration_id = request.POST.get('configuration')
+            color = request.POST.get('color')
+            price = request.POST.get('price')
+            stock = request.POST.get('stock')
+            sold_quantity = request.POST.get('sold_quantity')
+            img = request.FILES.get('img')
+            
+            # Get the phone and configuration objects
+            phone = Phone.objects.get(id=phone_id)
+            configuration = PhoneConfiguration.objects.get(id=configuration_id)
+            
+            # Create the phone variant
+            phone_variant = PhoneVariant.objects.create(
+                phone=phone,
+                configuration=configuration,
+                color=color,
+                price=price,
+                stock=stock,
+                sold_quantity=sold_quantity,
+                img=img
+            )
+            
+            # Set success message and redirect to the same page
+            context = {
+                'phones': all_phones,
+                'configurations': all_configurations,
+                'success_message': 'Biến thể điện thoại đã được thêm thành công!'
+            }
+            return render(request, 'staff/staff_add_phonevariant.html', context)
+            
+        except Exception as e:
+            context = {
+                'phones': all_phones,
+                'configurations': all_configurations,
+                'error': str(e)
+            }
+            return render(request, 'staff/staff_add_phonevariant.html', context)
+
+@user_passes_test(is_staff)
+@ensure_csrf_cookie
+def staff_revenue(request):
+    months = range(1, 13)
+    return render(request, 'staff/staff_revenue.html', {'months': months})
+
+@user_passes_test(is_staff)
+@ensure_csrf_cookie
+def staff_client(request):
+    return render(request, 'staff/staff_client.html')

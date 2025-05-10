@@ -36,8 +36,9 @@
     object-fit: contain;
 }
 
-.product-info {
+.product-details {
     flex-grow: 1;
+    margin-left: 40px;
 }
 
 .product-name {
@@ -47,7 +48,8 @@
 }
 .product-specs {
     display: grid;
-    gap: 8px;
+    gap: 6px;
+    font-size: 12px;
 }
 
 .product-color,
@@ -74,7 +76,7 @@
 }
 
 .total-price {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500;
     color: #dd0000;
 }
