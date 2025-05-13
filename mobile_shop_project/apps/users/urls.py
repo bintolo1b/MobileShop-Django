@@ -9,6 +9,7 @@ urlpatterns = [
     path('api/clients/', api.get_all_clients),
     path('api/revenue/monthly/', api.get_monthly_revenue),
     path('api/change-password/', api.change_password),
+    path('api/update-profile/', api.update_client_info),
     path('staff/', views.staff_home, name='staff_home'),
     path('staff/orders/', views.staff_order, name='staff_order'),
     path('staff/add_phone/', views.add_phone, name='add_phone'),

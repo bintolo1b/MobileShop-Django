@@ -277,3 +277,60 @@ def change_password(request):
         return Response({
             "message": f"Lỗi khi đổi mật khẩu: {str(e)}"
         }, status=500)
+
+@api_view(["POST"])
+def update_client_info(request):
+    """
+    API cho phép client cập nhật thông tin cá nhân: họ tên, số điện thoại, email, địa chỉ
+    """
+    # Kiểm tra xem người dùng đã đăng nhập chưa
+    if not request.user.is_authenticated:
+        return Response({"message": "Bạn cần đăng nhập để thực hiện chức năng này"}, status=401)
+    
+    # Kiểm tra quyền hạn (chỉ client mới có quyền cập nhật thông tin của mình)
+    if request.user.role != 'client':
+        return Response({"message": "Chức năng này chỉ dành cho khách hàng"}, status=403)
+    
+    try:
+        # Lấy các tham số từ request
+        first_name = request.data.get('first_name')
+        last_name = request.data.get('last_name')
+        phone = request.data.get('phone')
+        email = request.data.get('email')
+        address = request.data.get('address')
+        
+        # Kiểm tra các tham số bắt buộc
+        if not all([first_name, last_name, phone, email, address]):
+            return Response({
+                "message": "Thiếu thông tin bắt buộc (first_name, last_name, phone, email, address)"
+            }, status=400)
+        
+        # Kiểm tra email đã tồn tại chưa (nếu email thay đổi)
+        if email != request.user.email and CustomUser.objects.filter(email=email).exists():
+            return Response({"message": "Email đã được sử dụng bởi tài khoản khác"}, status=400)
+        
+        # Cập nhật thông tin người dùng
+        user = request.user
+        user.first_name = first_name
+        user.last_name = last_name
+        user.phone = phone
+        user.email = email
+        user.address = address
+        user.save()
+        
+        return Response({
+            "message": "Cập nhật thông tin thành công",
+            "user_info": {
+                "username": user.username,
+                "full_name": f"{user.first_name} {user.last_name}",
+                "phone": user.phone,
+                "email": user.email,
+                "address": user.address
+            }
+        }, status=200)
+        
+    except Exception as e:
+        return Response({
+            "message": f"Lỗi khi cập nhật thông tin: {str(e)}"
+        }, status=500)
+
