@@ -78,7 +78,6 @@
 .sidebar-item.active i,
 .sidebar-item.active span {
     color: #1a73e8;
-    font-weight: 500;
 }
 
 .sidebar-item:hover {

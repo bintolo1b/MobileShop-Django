@@ -19,7 +19,10 @@ document.querySelector("form").onsubmit = async function (e) {
         }
         return cookieValue;
     }
-    
+    const existingError = document.querySelector('.error-message');
+    if (existingError) {
+        existingError.remove();
+    }
 
     fetch("/users/login/", {
         method: "POST",
@@ -37,11 +40,20 @@ document.querySelector("form").onsubmit = async function (e) {
             else if (data.role == 'client')
                 window.location.href = '/'; 
         } else {
-            alert(`❌ Lỗi ${response.status}: ${data.message || "Unknown error"}`);
+            // Hiển thị thông báo lỗi
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = "Tên đăng nhập hoặc mật khẩu không chính xác";
+            document.querySelector('.login-box').insertBefore(errorDiv, document.querySelector('form'));
         }
     }))
     .catch(error => {
         console.error("🚨 Lỗi mạng:", error);
+        // Hiển thị thông báo lỗi kết nối
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.textContent = "Lỗi kết nối, vui lòng thử lại sau";
+        document.querySelector('.login-box').insertBefore(errorDiv, document.querySelector('form'));
     });
 }
     
