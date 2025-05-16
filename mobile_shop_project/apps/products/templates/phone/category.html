@@ -268,7 +268,7 @@
             <div class="products-details">
                 <div class="products-forehead">
                     <span class="category-name">{{brand}}</span>
-                    <div class="price-filter-container">
+                    <!-- <div class="price-filter-container">
                         <div class="price-filter">
                             <span>Giá</span>
                             <i class="fa-solid fa-caret-down"></i>
@@ -300,15 +300,11 @@
                                 Trên 10 triệu
                             </a>
                         </div>
-                    </div>
-                    <select name="arrange" id="arrange">
-                        <option value="">Sắp xếp theo</option>
-                        <option value="">Bán chạy nhất</option>
-                        <option value="">Khuyến mãi</option>
-                        <option value="">Giá từ thấp tới cao</option>
-                        <option value="">Giá từ cao tới thấp</option>
-                        <option value="">Mới nhất</option>
-                        <option value="">Xem nhiều</option>
+                    </div> -->
+                    <select name="arrange" id="arrange" onchange="sortProducts(this.value)">
+                        <option value="default">Sắp xếp theo</option>
+                        <option value="asc">Giá từ thấp tới cao</option>
+                        <option value="desc">Giá từ cao tới thấp</option>
                     </select>
                 </div>
                 <div class="products-details-container">
@@ -549,6 +545,37 @@
             }
         });
     });
+
+    function sortProducts(sortOrder) {
+        // Get all product items
+        const productItems = Array.from(document.querySelectorAll('.product-item'));
+        const productsContainer = document.querySelector('.products-details-container');
+        
+        if (sortOrder === 'default') {
+            window.location.reload();
+            return;
+        }
+        
+        
+        productItems.sort((a, b) => {
+            const priceA = parseInt(a.querySelector('.product-item-new-price').getAttribute('data-price').replace(/\D/g, ''));
+            const priceB = parseInt(b.querySelector('.product-item-new-price').getAttribute('data-price').replace(/\D/g, ''));
+            
+            if (sortOrder === 'asc') {
+                return priceA - priceB; 
+            } else if (sortOrder === 'desc') {
+                return priceB - priceA; 
+            }
+        });
+        
+        // Clear the container
+        productsContainer.innerHTML = '';
+        
+        // Add sorted products back to container
+        productItems.forEach(item => {
+            productsContainer.appendChild(item);
+        });
+    }
 </script>
 <script src="{% static 'js/home.js' %}"></script>
 

@@ -176,7 +176,7 @@
 }
 
 #arrange {
-    width: 100px; 
+    width: 150px; 
     padding: 0 10px; 
     border: 1px solid #ccc; 
     border-radius: 0; 
@@ -184,6 +184,7 @@
     appearance: none; 
     margin-left: auto;
     color: #333;
+    text-align: center;
 }
 
 #arrange option {
