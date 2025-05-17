@@ -2,6 +2,43 @@ document.addEventListener('DOMContentLoaded', function() {
     const citySelect = document.getElementById('city');
     const districtSelect = document.getElementById('district');
 
+    // Custom notification function (if not available in global scope)
+    function showNotification(message, type = 'info', duration = 5000) {
+        const popup = document.getElementById('notificationPopup');
+        const messageElement = document.getElementById('notificationMessage');
+        
+        // Reset classes
+        popup.className = 'notification-popup';
+        
+        // Add type class
+        if (type === 'success' || type === 'error' || type === 'warning') {
+            popup.classList.add(type);
+        }
+        
+        // Set message
+        messageElement.textContent = message;
+        
+        // Show popup
+        popup.style.display = 'block';
+        
+        // Auto hide after duration
+        if (duration > 0) {
+            setTimeout(() => {
+                closeNotification();
+            }, duration);
+        }
+    }
+    
+    function closeNotification() {
+        const popup = document.getElementById('notificationPopup');
+        popup.style.animation = 'fadeOut 0.3s';
+        
+        setTimeout(() => {
+            popup.style.display = 'none';
+            popup.style.animation = 'slideIn 0.3s ease-out';
+        }, 300);
+    }
+
     async function fetchCities() {
         try {
             const response = await fetch('https://provinces.open-api.vn/api/p/');
@@ -85,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (paymentProof.files.length > 0) {
                     formData.append('payment_screenshot', paymentProof.files[0]);
                 } else {
-                    alert('Vui lòng tải lên ảnh chứng minh thanh toán');
+                    showNotification('Vui lòng tải lên ảnh chứng minh thanh toán', 'error');
                     return;
                 }
             }
@@ -111,16 +148,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // console.log('Note:', note);
 
             if (!cityElement.value) {
-                alert('Vui lòng chọn tỉnh/thành phố');
+                showNotification('Vui lòng điền đầy đủ thông tin', 'error');
                 return;
             }
             if (!districtElement.value) {
-                alert('Vui lòng chọn quận/huyện');
+                showNotification('Vui lòng điền đầy đủ thông tin', 'error');
                 return;
             }
             // Validate thông tin
             if (!clientName || !phoneNumber || !email || !address) {
-                alert('Vui lòng điền đầy đủ thông tin');
+                showNotification('Vui lòng điền đầy đủ thông tin', 'error');
                 return;
             }
 
@@ -153,14 +190,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const result = await response.json();
 
             if (response.ok) {
-                alert('Đặt hàng thành công!');
-                window.location.href = '/orders';
+                showNotification('Đặt hàng thành công!', 'success');
+                setTimeout(() => {
+                    window.location.href = '/orders';
+                }, 1500);
             } else {
                 throw new Error(result.message || 'Có lỗi xảy ra');
             }
 
         } catch (error) {
-            alert(error.message);
+            showNotification('Vui lòng điền đầy đủ thông tin','error');
             console.error('Error:', error);
         }
     }
