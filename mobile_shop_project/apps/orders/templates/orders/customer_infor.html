@@ -244,6 +244,13 @@
 
         
     </div>
+    <!-- Notification Popup -->
+    <div id="notificationPopup" class="notification-popup">
+        <div class="notification-content">
+            <div id="notificationMessage" class="notification-message"></div>
+            <!-- <button class="notification-close" onclick="closeNotification()">&times;</button> -->
+        </div>
+    </div>
     <script>
 function getCSRFToken() {
     let cookieValue = null;
@@ -260,6 +267,43 @@ function getCSRFToken() {
     return cookieValue;
 }
 
+// Custom notification function
+function showNotification(message, type = 'info', duration = 5000) {
+    const popup = document.getElementById('notificationPopup');
+    const messageElement = document.getElementById('notificationMessage');
+    
+    // Reset classes
+    popup.className = 'notification-popup';
+    
+    // Add type class
+    if (type === 'success' || type === 'error' || type === 'warning') {
+        popup.classList.add(type);
+    }
+    
+    // Set message
+    messageElement.textContent = message;
+    
+    // Show popup
+    popup.style.display = 'block';
+    
+    // Auto hide after duration
+    if (duration > 0) {
+        setTimeout(() => {
+            closeNotification();
+        }, duration);
+    }
+}
+
+function closeNotification() {
+    const popup = document.getElementById('notificationPopup');
+    popup.style.animation = 'fadeOut 0.3s';
+    
+    setTimeout(() => {
+        popup.style.display = 'none';
+        popup.style.animation = 'slideIn 0.3s ease-out';
+    }, 300);
+}
+
 async function updateProfile() {
     try {
         const fullname = document.getElementById('fullname').value;
@@ -269,7 +313,7 @@ async function updateProfile() {
 
         // Validate input
         if (!fullname || !phone || !email || !address) {
-            alert('Vui lòng điền đầy đủ thông tin');
+            showNotification('Vui lòng điền đầy đủ thông tin', 'error');
             return;
         }
 
@@ -294,15 +338,18 @@ async function updateProfile() {
         const data = await response.json();
         console.log('Response:', data);
         if (response.ok) {
-            alert('Cập nhật thông tin thành công');
-            location.reload();
+            
+            showNotification('Cập nhật thông tin thành công', 'success');
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+            
         } else {
-            alert(data.message || 'Có lỗi xảy ra khi cập nhật thông tin');
+            showNotification(data.message || 'Có lỗi xảy ra khi cập nhật thông tin', 'error');
         }
     } catch (error) {
         console.error('Error:', error);
-
-        alert('Có lỗi xảy ra khi kết nối với server');
+        showNotification('Có lỗi xảy ra khi kết nối với server', 'error');
     }
 }
 
@@ -349,7 +396,7 @@ async function changePassword() {
         const data = await response.json();
 
         if (response.ok) {
-            alert('Đổi mật khẩu thành công! Vui lòng đăng nhập lại.');
+            showNotification('Đổi mật khẩu thành công! Vui lòng đăng nhập lại.', 'success');
             
             await fetch('/users/api/logout/', {
                 method: 'POST',
@@ -359,7 +406,9 @@ async function changePassword() {
                 credentials: 'include'
             });
 
-            window.location.href = '/login';
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 2000);
         } else {
             errorElement.textContent = data.message || 'Có lỗi xảy ra khi đổi mật khẩu';
             errorElement.style.display = 'block';
@@ -370,18 +419,6 @@ async function changePassword() {
         errorElement.style.display = 'block';
     }
 }
-
-{% comment %} if (response.ok) {
-            document.getElementById('current_password').value = '';
-            document.getElementById('new_password').value = '';
-            document.getElementById('confirm_password').value = '';
-            
-            alert('Đổi mật khẩu thành công!');
-            errorElement.style.display = 'none';
-        } else {
-            errorElement.textContent = data.message || 'Có lỗi xảy ra khi đổi mật khẩu';
-            errorElement.style.display = 'block';
-        } {% endcomment %}
 </script>
 </body>
 </html>
