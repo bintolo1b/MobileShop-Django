@@ -387,6 +387,43 @@
             return cookieValue;
         }
         
+        // Custom notification function
+        function showNotification(message, type = 'info', duration = 5000) {
+            const popup = document.getElementById('notificationPopup');
+            const messageElement = document.getElementById('notificationMessage');
+            
+            // Reset classes
+            popup.className = 'notification-popup';
+            
+            // Add type class
+            if (type === 'success' || type === 'error' || type === 'warning') {
+                popup.classList.add(type);
+            }
+            
+            // Set message
+            messageElement.textContent = message;
+            
+            // Show popup
+            popup.style.display = 'block';
+            
+            // Auto hide after duration
+            if (duration > 0) {
+                setTimeout(() => {
+                    closeNotification();
+                }, duration);
+            }
+        }
+        
+        function closeNotification() {
+            const popup = document.getElementById('notificationPopup');
+            popup.style.animation = 'fadeOut 0.3s';
+            
+            setTimeout(() => {
+                popup.style.display = 'none';
+                popup.style.animation = 'slideIn 0.3s ease-out';
+            }, 300);
+        }
+        
         function formatPrice() {
             document.querySelectorAll('.total').forEach(priceElement => {
                 const price = priceElement.textContent.replace('₫', '').trim();
@@ -410,10 +447,6 @@
         formatPrice();
         
         async function confirmDelivery(orderId) {
-            if (!confirm('Bạn xác nhận đã nhận được hàng?')) {
-                return;
-            }
-        
             try {
                 const response = await fetch(`/orders/update_order_status/${orderId}/`, {
                     method: 'PUT',
@@ -443,13 +476,13 @@
                         confirmBtn.remove();
                     }
         
-                    alert('Xác nhận đã nhận hàng thành công!');
+                    showNotification('Xác nhận đã nhận hàng thành công!', 'success');
                 } else {
-                    alert(data.message || 'Có lỗi xảy ra khi cập nhật trạng thái đơn hàng');
+                    showNotification(data.message || 'Có lỗi xảy ra khi cập nhật trạng thái đơn hàng', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Có lỗi xảy ra khi xác nhận đơn hàng');
+                showNotification('Có lỗi xảy ra khi xác nhận đơn hàng', 'error');
             }
         }
 
@@ -503,11 +536,11 @@
         
                     document.getElementById('orderModal').style.display = 'flex';
                 } else {
-                    alert(`Lỗi ${response.status}: ${data.message || "Lỗi không xác định"}`);
+                    showNotification(`Lỗi ${response.status}: ${data.message || "Lỗi không xác định"}`, 'error');
                 }
             } catch (error) {
                 console.error("Lỗi mạng:", error);
-                alert("Không thể tải thông tin đơn hàng");
+                showNotification("Không thể tải thông tin đơn hàng", 'error');
             }
         }
         
@@ -518,6 +551,30 @@
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = 'none';
+            }
+        }
+
+        async function logout() {
+            try {
+                const response = await fetch('/users/api/logout/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCSRFToken()
+                    },
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    showNotification('Đăng xuất thành công!', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 1500);
+                } else {
+                    showNotification('Có lỗi xảy ra khi đăng xuất', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Có lỗi xảy ra khi kết nối với server', 'error');
             }
         }
         </script>
@@ -590,4 +647,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 </script>
+    <!-- Notification Popup -->
+    <div id="notificationPopup" class="notification-popup">
+        <div class="notification-content">
+            <div id="notificationMessage" class="notification-message"></div>
+            <!-- <button class="notification-close" onclick="closeNotification()">&times;</button> -->
+        </div>
+    </div>
 </html>
