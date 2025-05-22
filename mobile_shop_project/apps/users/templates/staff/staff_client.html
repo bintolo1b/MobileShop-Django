@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh Sách Khách Hàng - Cửa Hàng Điện Thoại</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="{% static 'img/logo-dth_1592615391.png'%}" type="image/png">
     <style>
         body {
             margin: 0;
@@ -101,7 +102,7 @@
         tr:hover {
             background-color: #f0f8ff;
         }
-        .view-btn {
+        .view-btn, .change-pwd-btn {
             padding: 6px 14px;
             background-color: #3498db;
             color: white;
@@ -110,8 +111,9 @@
             cursor: pointer;
             font-size: 14px;
             transition: background-color 0.3s;
+            margin-right: 5px;
         }
-        .view-btn:hover {
+        .view-btn:hover, .change-pwd-btn:hover {
             background-color: #2980b9;
         }
         /* Modal styles */
@@ -153,6 +155,58 @@
         }
         .modal-content p {
             margin: 10px 0;
+        }
+        .modal-content input {
+            width: 95%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .modal-content button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .modal-content button:hover {
+            background-color: #2980b9;
+        }
+        /* Toast styles */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+        .toast {
+            min-width: 250px;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+        .toast.success {
+            background-color: #28a745;
+        }
+        .toast.error {
+            background-color: #dc3545;
+        }
+        .toast .close-toast {
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -208,10 +262,11 @@
                 <table id="clientTable">
                     <thead>
                         <tr>
-                            <th>Username</th>
+                            <th>Tên người dùng</th>
                             <th>Email</th>
-                            <th>Phone</th>
+                            <th>Số điện thoại</th>
                             <th>Chi tiết</th>
+                            <th>Đổi mật khẩu</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -221,17 +276,73 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
+    <!-- Modal for client details -->
     <div id="clientModal" class="modal">
         <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
+            <span class="close" id="closeModal">×</span>
             <h3>Thông Tin Khách Hàng</h3>
             <div id="modalBody">
                 <!-- Client details will be loaded here -->
             </div>
         </div>
     </div>
+    <!-- Modal for changing password -->
+    <div id="changePasswordModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closePasswordModal">×</span>
+            <h3>Đổi Mật Khẩu</h3>
+            <input type="text" id="clientUsername" placeholder="Username" readonly>
+            <input type="password" id="newPassword" placeholder="Mật khẩu mới">
+            <input type="password" id="confirmPassword" placeholder="Xác nhận mật khẩu">
+            <button onclick="changePassword()">Lưu</button>
+        </div>
+    </div>
+    <!-- Toast container -->
+    <div class="toast-container" id="toastContainer"></div>
     <script>
+        // Function to get CSRF token
+        function getCSRFToken() {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith("csrftoken=")) {
+                        cookieValue = cookie.substring("csrftoken=".length, cookie.length);
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Toast notification function
+        function showToast(message, type = 'success') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${message}</span>
+                <span class="close-toast">×</span>
+            `;
+            toastContainer.appendChild(toast);
+
+            // Show toast
+            setTimeout(() => toast.classList.add('show'), 100);
+
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+
+            // Close on click
+            toast.querySelector('.close-toast').onclick = () => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            };
+        }
+
         // Fetch clients and populate table
         async function fetchClients() {
             const response = await fetch('/users/api/clients/');
@@ -245,6 +356,7 @@
                     <td>${client.email}</td>
                     <td>${client.phone}</td>
                     <td><button class="view-btn" onclick='showClientDetail(${JSON.stringify(client)})'>Xem</button></td>
+                    <td><button class="change-pwd-btn" onclick='showChangePasswordModal("${client.username}")'>Đổi mật khẩu</button></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -265,13 +377,85 @@
             modal.style.display = 'block';
         }
 
-        // Close modal
+        // Show modal for changing password
+        function showChangePasswordModal(username) {
+            const modal = document.getElementById('changePasswordModal');
+            document.getElementById('clientUsername').value = username;
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            modal.style.display = 'block';
+        }
+
+        // Change password
+        async function changePassword() {
+            const username = document.getElementById('clientUsername').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                showToast('Mật khẩu mới và xác nhận mật khẩu không khớp!', 'error');
+                return;
+            }
+
+            const response = await fetch('http://127.0.0.1:8000/users/api/change-client-password/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken()
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    client_username: username,
+                    new_password: newPassword,
+                    confirm_password: confirmPassword
+                })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                showToast(result.message, 'success');
+                document.getElementById('changePasswordModal').style.display = 'none';
+            } else {
+                showToast(result.message || 'Có lỗi xảy ra!', 'error');
+            }
+        }
+
+        // Logout function
+        document.querySelector("#logoutButton").onclick = async function () {
+            fetch("/users/logout/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCSRFToken()
+                },
+                credentials: "include"
+            })
+            .then(response => response.json().then(data => {
+                if (response.ok) {
+                    window.location.href = "/login"; // Chuyển về trang login
+                } else {
+                    showToast(`❌ Lỗi ${response.status}: ${data.message || "Unknown error"}`, 'error');
+                }
+            }))
+            .catch(error => {
+                console.error("🚨 Lỗi mạng:", error);
+                showToast('Lỗi mạng, vui lòng thử lại!', 'error');
+            });
+        };
+
+        // Close modals
         document.getElementById('closeModal').onclick = function() {
             document.getElementById('clientModal').style.display = 'none';
+        };
+        document.getElementById('closePasswordModal').onclick = function() {
+            document.getElementById('changePasswordModal').style.display = 'none';
         };
         window.onclick = function(event) {
             if (event.target == document.getElementById('clientModal')) {
                 document.getElementById('clientModal').style.display = 'none';
+            }
+            if (event.target == document.getElementById('changePasswordModal')) {
+                document.getElementById('changePasswordModal').style.display = 'none';
             }
         };
 
@@ -280,4 +464,4 @@
     </script>
     <script src="{% static 'js/logout.js' %}"></script>
 </body>
-</html> 
+</html>

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bảng Điều Khiển Nhân Viên - Cửa Hàng Điện Thoại</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="{% static 'img/logo-dth_1592615391.png'%}" type="image/png">
     <style>
         body {
             margin: 0;
@@ -230,7 +231,7 @@
             font-size: 0.8em;
             font-weight: bold;
         }
-
+        .status-shipping,
         .status-pending {
             background-color: #f1c40f;
             color: #fff;
@@ -330,8 +331,8 @@
                                         {{ item.name }} {{ item.ram }}/{{ item.rom }} {{ item.color }}{% if not forloop.last %}, {% endif %}
                                     {% endfor %}
                                 </p>
-                                <span class="status-badge status-{% if order.status == 'Đang xử lý' %}pending{% elif order.status == 'Đã giao' %}completed{% elif order.status == 'Đã hủy' %}cancelled{% endif %}">
-                                    {% if order.status == 'Đang xử lý' %}Chờ Xử Lý{% elif order.status == 'Đã giao' %}Đã giao{% elif order.status == 'Đã hủy' %}Đã Hủy{% endif %}
+                                <span class="status-badge status-{% if order.status == 'Đang xử lý' %}pending{% elif order.status == 'Đang vận chuyển' %}shipping{% elif order.status == 'Đã giao hàng' %}completed{% elif order.status == 'Đã hủy' %}cancelled{% endif %}">
+                                    {% if order.status == 'Đang xử lý' %}Chờ xử lý{% elif order.status == 'Đang vận chuyển' %}Đang Vận Chuyển{% elif order.status == 'Đã giao hàng' %}Đã giao hàng{% elif order.status == 'Đã hủy' %}Đã Hủy{% endif %}
                                 </span>
                             </div>
                             <div style="text-align: right;">

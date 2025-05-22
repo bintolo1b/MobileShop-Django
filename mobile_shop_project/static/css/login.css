@@ -223,6 +223,11 @@ body {
   }
 }
 
+.signup-box .user-box:last-child,
+.login-box .user-box:last-child {
+  display: flex;
+}
+
 .signup-box .user-box a,
 .login-box .user-box a {
   display: flex;
@@ -235,7 +240,7 @@ body {
 
 .signup-box .user-box a:last-child,
 .login-box .user-box a:last-child {
-  float: right;
+  margin-left: 60px;
 }
 
 .signup-box .user-box a:hover,

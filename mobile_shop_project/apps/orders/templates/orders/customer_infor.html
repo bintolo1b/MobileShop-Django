@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dienthoaihay</title>
     <!-- <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
     
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{% static 'css/home.css'%}">
     <link rel="stylesheet" href= "{% static 'orders/css/customer_info.css'%}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="{% static 'img/logo-dth_1592615391.png'%}" type="image/png">
 </head>
 <body>
     <header>
@@ -36,6 +37,24 @@
                </div>
                <div class="region-search-content">
                     <input type="search" class="region-search-input" placeholder="Tìm kiếm sản phẩm trên dienthoaihay.vn">
+                    <div class="search-suggestions">
+                        <div class="suggestion-item">
+                            <img src="{% static 'img/iphone-16---xanh-mòng-két_1726074714.png'%}" alt="" class="suggestion-item-img">
+                            <span>iPhone 15 Pro Max</span>
+                        </div>
+                        <div class="suggestion-item">
+                            <img src="{% static 'img/iphone-16---xanh-mòng-két_1726074714.png'%}" alt="" class="suggestion-item-img">
+                            <span>Samsung Galaxy S24 Ultra</span>
+                        </div>
+                        <div class="suggestion-item">
+                            <img src="{% static 'img/iphone-16---xanh-mòng-két_1726074714.png'%}" alt="" class="suggestion-item-img">
+                            <span>Xiaomi 14 Pro</span>
+                        </div>
+                        <div class="suggestion-item">
+                            <img src="{% static 'img/iphone-16---xanh-mòng-két_1726074714.png'%}" alt="" class="suggestion-item-img">
+                            <span>Realme GT5 Pro</span>
+                        </div>
+                    </div>
                </div>
             </div>
             <div class="header-item">
@@ -149,7 +168,7 @@
                     <span class="sub2-item-title">Sản phẩm</span>
                 </div>
             </div>
-            <div class="header-item user-item" onClick="window.location.href = '/cart'">
+            <div class="header-item" onClick="window.location.href = '/cart'">
                 <div class="item-icon-container">
                     <i class="fa-solid fa-cart-shopping header-icon"></i>
                 </div>
@@ -157,15 +176,15 @@
                     <span class="sub2-item-title">Giỏ hàng</span>
                 </div>
             </div>
-            <div class="header-item">
-                {% if not request.session.username %}
+            <div class="header-item user-item">
+                {% if not request.session.username%}
                 <a href="/login" id="loginLink">Đăng nhập</a>
                 {% else %}
                 <span id="usernameDisplay">{{ request.session.username }}</span>
                 <div id="userPopup" class="popup">
-                    <div class="info-item">
-                        <i class="fa-solid fa-circle-info"></i>
-                        Thông tin cá nhân
+                    <div class="info-item" onClick="window.location.href = '/orders'">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        Đơn hàng
                     </div>
                     <button id="logoutButton">
                         <i class="fa-solid fa-right-from-bracket"></i>
@@ -419,6 +438,192 @@ async function changePassword() {
         errorElement.style.display = 'block';
     }
 }
+
+// Search functionality
+const searchInput = document.querySelector('.region-search-input');
+const searchSuggestions = document.querySelector('.search-suggestions');
+
+// Clear default suggestions
+searchSuggestions.innerHTML = '';
+
+// Get CSRF token from cookies
+function getCSRFToken() {
+    const name = 'csrftoken';
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Hide suggestions when clicking outside
+document.addEventListener('click', (e) => {
+    if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+        searchSuggestions.classList.remove('active');
+    }
+});
+
+// Debounce function to limit API calls
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Function to format price
+function formatPrice(price) {
+    return price.toLocaleString('vi-VN') + 'đ';
+}
+
+// Function to perform search
+async function performSearch(searchTerm) {
+    if (!searchTerm.trim()) {
+        searchSuggestions.innerHTML = '';
+        searchSuggestions.classList.remove('active');
+        return;
+    }
+
+    try {
+        const csrfToken = getCSRFToken();
+        const response = await fetch('/products/api/search/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({
+                "search_query": searchTerm
+            }),
+            credentials: 'same-origin'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Search response:', data); // Debug log
+        
+        // Clear previous suggestions
+        searchSuggestions.innerHTML = '';
+
+        if (data.results && data.results.length > 0) {
+            // Display results
+            data.results.forEach(phone => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.className = 'suggestion-item';
+                suggestionItem.innerHTML = `
+                    <img src="${phone.image_url}" alt="${phone.name}" class="suggestion-item-img">
+                    <div class="suggestion-item-info">
+                        <span class="suggestion-item-name">${phone.name}</span>
+                        <span class="suggestion-item-price">${formatPrice(phone.min_price)}</span>
+                    </div>
+                `;
+                
+                // Add click handler to navigate to product detail
+                suggestionItem.addEventListener('click', () => {
+                    window.location.href = `/products/phone/${phone.id}`;
+                });
+                
+                searchSuggestions.appendChild(suggestionItem);
+            });
+            searchSuggestions.classList.add('active');
+        } else {
+            // Show no results message
+            const noResults = document.createElement('div');
+            noResults.className = 'suggestion-item no-results';
+            noResults.textContent = 'Không tìm thấy sản phẩm';
+            searchSuggestions.appendChild(noResults);
+            searchSuggestions.classList.add('active');
+        }
+    } catch (error) {
+        console.error('Search error:', error); // Debug log
+        searchSuggestions.innerHTML = '';
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'suggestion-item no-results';
+        errorMessage.textContent = 'Có lỗi xảy ra khi tìm kiếm';
+        searchSuggestions.appendChild(errorMessage);
+        searchSuggestions.classList.add('active');
+    }
+}
+
+// Handle input changes with debounce
+searchInput.addEventListener('input', debounce((e) => {
+    const searchTerm = e.target.value;
+    if (searchTerm.length >= 2) { // Only search if 2 or more characters
+        performSearch(searchTerm);
+    } else {
+        searchSuggestions.innerHTML = '';
+        searchSuggestions.classList.remove('active');
+    }
+}, 300)); // Wait 300ms after user stops typing
+
+// Add keyboard navigation
+searchInput.addEventListener('keydown', (e) => {
+    const suggestions = searchSuggestions.querySelectorAll('.suggestion-item');
+    const current = searchSuggestions.querySelector('.suggestion-item.selected');
+    
+    if (suggestions.length === 0) return;
+
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        
+        let next;
+        if (!current) {
+            next = e.key === 'ArrowDown' ? suggestions[0] : suggestions[suggestions.length - 1];
+        } else {
+            const currentIndex = Array.from(suggestions).indexOf(current);
+            current.classList.remove('selected');
+            
+            if (e.key === 'ArrowDown') {
+                next = suggestions[currentIndex + 1] || suggestions[0];
+            } else {
+                next = suggestions[currentIndex - 1] || suggestions[suggestions.length - 1];
+            }
+        }
+        
+        next.classList.add('selected');
+        searchInput.value = next.querySelector('.suggestion-item-name').textContent;
+    } else if (e.key === 'Enter' && current) {
+        e.preventDefault();
+        window.location.href = `/products/phone/${current.dataset.id}`;
+    }
+});
+
+document.addEventListener("DOMContentLoaded", async function () {
+const loginLink = document.querySelector(".header-item a[href='/login']");
+const logoutButton = document.querySelector("#logoutButton");
+
+const usernameDisplay = document.getElementById("usernameDisplay");
+const userPopup = document.getElementById("userPopup");
+
+usernameDisplay.addEventListener("click", function (event) {
+    event.stopPropagation(); 
+    userPopup.classList.add("show");
+});
+
+document.addEventListener("click", function (event) {
+    if (!userPopup.contains(event.target) && event.target !== usernameDisplay) {
+        userPopup.classList.remove("show");
+    }
+});
+
+    logoutButton.onclick = logout;
+});
 </script>
+
 </body>
 </html>
