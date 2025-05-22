@@ -334,3 +334,61 @@ def update_client_info(request):
             "message": f"Lỗi khi cập nhật thông tin: {str(e)}"
         }, status=500)
 
+@api_view(["POST"])
+def change_client_password(request):
+    """
+    API cho phép Staff/Admin đổi mật khẩu cho Client
+    """
+    # Kiểm tra xem người dùng đã đăng nhập chưa
+    if not request.user.is_authenticated:
+        return Response({"message": "Bạn cần đăng nhập để thực hiện chức năng này"}, status=401)
+    
+    # Kiểm tra quyền hạn (chỉ admin và staff mới có quyền)
+    if request.user.role not in ['admin', 'staff']:
+        return Response({"message": "Bạn không có quyền thực hiện chức năng này"}, status=403)
+    
+    try:
+        # Lấy các tham số từ request
+        client_username = request.data.get('client_username')
+        new_password = request.data.get('new_password')
+        confirm_password = request.data.get('confirm_password')
+        
+        # Kiểm tra các tham số bắt buộc
+        if not all([client_username, new_password, confirm_password]):
+            return Response({
+                "message": "Thiếu thông tin bắt buộc (client_username, new_password, confirm_password)"
+            }, status=400)
+        
+        # Kiểm tra client có tồn tại không
+        try:
+            client = CustomUser.objects.get(username=client_username, role='client')
+        except CustomUser.DoesNotExist:
+            return Response({
+                "message": "Không tìm thấy client với username này"
+            }, status=404)
+        
+        # Kiểm tra mật khẩu mới và xác nhận mật khẩu có khớp nhau không
+        if new_password != confirm_password:
+            return Response({
+                "message": "Mật khẩu mới và xác nhận mật khẩu không khớp"
+            }, status=400)
+        
+        # Kiểm tra độ dài mật khẩu mới (ít nhất 8 ký tự)
+        if len(new_password) < 8:
+            return Response({
+                "message": "Mật khẩu mới phải có ít nhất 8 ký tự"
+            }, status=400)
+        
+        # Đổi mật khẩu
+        client.set_password(new_password)
+        client.save()
+        
+        return Response({
+            "message": f"Đã đổi mật khẩu thành công cho client {client_username}"
+        }, status=200)
+        
+    except Exception as e:
+        return Response({
+            "message": f"Lỗi khi đổi mật khẩu: {str(e)}"
+        }, status=500)
+
