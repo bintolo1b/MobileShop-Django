@@ -25,12 +25,24 @@
             padding: 0;
         }
 
+        :root {
+            --sidebar-width: 250px;
+            --sidebar-collapsed-width: 70px;
+        }
+        
         .sidebar {
-            width: 250px;
+            width: var(--sidebar-width);
             background-color: #2c3e50;
             color: white;
             padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            transition: width 0.3s ease;
         }
+
 
         .sidebar-header {
             padding: 0 20px;
@@ -73,6 +85,11 @@
             flex: 1;
             padding: 20px;
             background-color: #f5f6fa;
+            overflow: auto;
+            margin-left: var(--sidebar-width); /* Thêm margin-left bằng với width của sidebar */
+            width: calc(100% - var(--sidebar-width)); /* Điều chỉnh width để tránh overflow */
+            min-height: 100vh;
+            transition: margin-left 0.3s ease, width 0.3s ease;
         }
 
         .top-bar {
